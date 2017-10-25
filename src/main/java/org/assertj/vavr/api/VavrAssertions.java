@@ -22,16 +22,15 @@ import org.assertj.core.util.CheckReturnValue;
  * @author Grzegorz Piwowarek
  */
 @CheckReturnValue
-public class VavrAssertions {
+public final class VavrAssertions {
 
-    protected VavrAssertions() {
+    private VavrAssertions() {
     }
 
     /**
      * Create assertion for {@link io.vavr.control.Option}.
      *
      * @return the created assertion object.
-     * @since 3.5.0
      */
     @CheckReturnValue
     public static <VALUE> OptionAssert<VALUE> assertThat(Option<VALUE> actual) {

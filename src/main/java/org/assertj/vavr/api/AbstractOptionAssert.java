@@ -31,9 +31,9 @@ import java.util.function.Function;
 import static org.assertj.core.error.OptionalShouldContainInstanceOf.shouldContainInstanceOf;
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
-import static org.assertj.vavr.error.OptionShouldContain.shouldContain;
-import static org.assertj.vavr.error.OptionShouldContain.shouldContainSame;
+import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
+import static org.assertj.vavr.api.OptionShouldContain.shouldContainSame;
 
 /**
  * Assertions for {@link io.vavr.control.Option}.
@@ -42,14 +42,14 @@ import static org.assertj.vavr.error.OptionShouldContain.shouldContainSame;
  * @param <VALUE> type of the value contained in the {@link io.vavr.control.Option}.
  * @author Grzegorz Piwowarek
  */
-public abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALUE>, VALUE> extends
+abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALUE>, VALUE> extends
   AbstractAssert<SELF, Option<VALUE>> {
 
     private Conditions conditions = Conditions.instance();
 
     private ComparisonStrategy optionValueComparisonStrategy;
 
-    public AbstractOptionAssert(Option<VALUE> actual, Class<?> selfType) {
+    AbstractOptionAssert(Option<VALUE> actual, Class<?> selfType) {
         super(actual, selfType);
         this.optionValueComparisonStrategy = StandardComparisonStrategy.instance();
     }

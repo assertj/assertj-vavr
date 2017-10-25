@@ -21,7 +21,7 @@ import io.vavr.control.Option;
  * @author Grzegorz Piwowarek
  */
 public class OptionAssert<VALUE> extends AbstractOptionAssert<OptionAssert<VALUE>, VALUE> {
-    protected OptionAssert(Option<VALUE> actual) {
+    OptionAssert(Option<VALUE> actual) {
         super(actual, OptionAssert.class);
     }
 }

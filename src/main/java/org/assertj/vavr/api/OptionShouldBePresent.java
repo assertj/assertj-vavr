@@ -10,7 +10,7 @@
  * <p>
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.error;
+package org.assertj.vavr.api;
 
 import org.assertj.core.error.BasicErrorMessageFactory;
 
@@ -21,10 +21,10 @@ import static java.lang.String.format;
  *
  * @author Grzegorz Piwowarek
  */
-public class OptionShouldBePresent extends BasicErrorMessageFactory {
+class OptionShouldBePresent extends BasicErrorMessageFactory {
 
     private OptionShouldBePresent() {
-        super(format("%nExpecting Option to contain a value but was None."));
+        super(format("%nExpecting Option to contain a value but it didn't."));
     }
 
     /**
@@ -33,7 +33,7 @@ public class OptionShouldBePresent extends BasicErrorMessageFactory {
      * @return a error message factory.
      * @throws java.lang.NullPointerException if option is null.
      */
-    public static OptionShouldBePresent shouldBePresent() {
+    static OptionShouldBePresent shouldBePresent() {
         return new OptionShouldBePresent();
     }
 }
