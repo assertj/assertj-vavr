@@ -59,18 +59,28 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
      *
      * @return this assertion object.
      */
+    public SELF isDefined() {
+        assertValueIsPresent();
+        return myself;
+    }
+
+    /**
+     * Verifies that there is a value present in the actual {@link io.vavr.control.Option}.
+     *
+     * @return this assertion object.
+     */
     public SELF isPresent() {
         assertValueIsPresent();
         return myself;
     }
 
     /**
-     * Verifies that there is a value present in the actual {@link io.vavr.control.Option}, it's an alias of {@link #isPresent()}.
+     * Verifies that there is a value present in the actual {@link io.vavr.control.Option}, it's an alias of {@link #isDefined()}.
      *
      * @return this assertion object.
      */
     public SELF isNotEmpty() {
-        return isPresent();
+        return isDefined();
     }
 
     /**
