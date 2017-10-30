@@ -23,7 +23,7 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class OptionAssert_contains_usingFieldByFieldValueComparator_Test extends BaseTest {
 
     @Test
-    public void should_fail_when_optional_is_null() {
+    public void should_fail_when_option_is_null() {
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<Foo>) null).usingFieldByFieldValueComparator().contains(new Foo("something"));
@@ -37,13 +37,13 @@ public class OptionAssert_contains_usingFieldByFieldValueComparator_Test extends
     }
 
     @Test
-    public void should_pass_if_optional_contains_expected_value() {
+    public void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator()
           .contains(new Foo("something"));
     }
 
     @Test
-    public void should_fail_if_optional_does_not_contain_expected_value() {
+    public void should_fail_if_option_does_not_contain_expected_value() {
         Option<Foo> actual = Option.of(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
@@ -53,7 +53,7 @@ public class OptionAssert_contains_usingFieldByFieldValueComparator_Test extends
     }
 
     @Test
-    public void should_fail_if_optional_is_empty() {
+    public void should_fail_if_option_is_empty() {
         Foo expectedValue = new Foo("test");
 
         thrown.expectAssertionError(shouldContain(expectedValue).create());

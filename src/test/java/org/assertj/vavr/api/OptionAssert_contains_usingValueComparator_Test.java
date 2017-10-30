@@ -27,7 +27,7 @@ public class OptionAssert_contains_usingValueComparator_Test extends BaseTest {
     private static Comparator<Foo> FOO_COMPARATOR = Comparator.comparing(o -> o.getValue().toLowerCase());
 
     @Test
-    public void should_fail_when_optional_is_null() throws Exception {
+    public void should_fail_when_option_is_null() throws Exception {
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<Foo>) null).usingValueComparator(FOO_COMPARATOR).contains(new Foo("something"));
@@ -41,12 +41,12 @@ public class OptionAssert_contains_usingValueComparator_Test extends BaseTest {
     }
 
     @Test
-    public void should_pass_if_optional_contains_expected_value() throws Exception {
+    public void should_pass_if_option_contains_expected_value() throws Exception {
         assertThat(Option.of(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(new Foo("SoMething"));
     }
 
     @Test
-    public void should_fail_if_optional_does_not_contain_expected_value() throws Exception {
+    public void should_fail_if_option_does_not_contain_expected_value() throws Exception {
         Option<Foo> actual = Option.of(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
@@ -56,7 +56,7 @@ public class OptionAssert_contains_usingValueComparator_Test extends BaseTest {
     }
 
     @Test
-    public void should_fail_if_optional_is_empty() throws Exception {
+    public void should_fail_if_option_is_empty() throws Exception {
         Foo expectedValue = new Foo("test");
 
         thrown.expectAssertionError(shouldContain(expectedValue).create());
@@ -68,11 +68,11 @@ public class OptionAssert_contains_usingValueComparator_Test extends BaseTest {
 
         private final String value;
 
-        public Foo(String value) {
+        Foo(String value) {
             this.value = value;
         }
 
-        public String getValue() {
+        String getValue() {
             return value;
         }
 

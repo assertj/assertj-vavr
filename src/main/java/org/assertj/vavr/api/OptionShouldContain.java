@@ -32,7 +32,7 @@ class OptionShouldContain extends BasicErrorMessageFactory {
     }
 
     private OptionShouldContain(Object expected) {
-        super("%nExpecting Optional to contain:%n  <%s>%nbut was empty.", expected);
+        super("%nExpecting Option to contain:%n  <%s>%nbut was empty.", expected);
     }
 
     /**
