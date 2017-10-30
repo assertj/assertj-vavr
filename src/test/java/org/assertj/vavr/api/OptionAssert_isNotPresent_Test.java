@@ -10,10 +10,10 @@
  * <p>
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.option;
+package org.assertj.vavr.api;
 
 /**
  * TODO
  */
-public class OptionAssert_contains_usingValueComparator_Test {
+public class OptionAssert_isNotPresent_Test {
 }

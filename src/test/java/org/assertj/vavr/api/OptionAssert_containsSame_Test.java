@@ -1,4 +1,4 @@
-/*
+/**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  * <p>
@@ -10,10 +10,10 @@
  * <p>
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.option;
+package org.assertj.vavr.api;
 
 /**
  * TODO
  */
-public class OptionAssert_hasValueSatisfying_Test {
+public class OptionAssert_containsSame_Test {
 }
