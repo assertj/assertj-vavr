@@ -12,8 +12,31 @@
  */
 package org.assertj.vavr.api;
 
-/**
- * TODO
- */
-public class OptionAssert_isNotEmpty_Test {
+import io.vavr.control.Option;
+import org.assertj.vavr.test.BaseTest;
+import org.junit.Test;
+
+import static org.assertj.core.util.FailureMessages.actualIsNull;
+import static org.assertj.vavr.api.VavrAssertions.assertThat;
+
+public class OptionAssert_isNotEmpty_Test extends BaseTest {
+
+    @Test
+    public void should_pass_when_option_is_present() throws Exception {
+        assertThat(Option.of("present")).isNotEmpty();
+    }
+
+    @Test
+    public void should_fail_when_option_is_empty() throws Exception {
+        thrown.expectAssertionError(OptionShouldBePresent.shouldBePresent().create());
+
+        assertThat(Option.none()).isNotEmpty();
+    }
+
+    @Test
+    public void should_fail_when_option_is_null() throws Exception {
+        thrown.expectAssertionError(actualIsNull());
+
+        assertThat((Option<String>) null).isNotEmpty();
+    }
 }
