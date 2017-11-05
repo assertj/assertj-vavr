@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  * <p>
@@ -12,8 +12,34 @@
  */
 package org.assertj.vavr.api;
 
-/**
- * TODO
- */
-public class OptionAssert_isEmpty_Test {
+import io.vavr.control.Option;
+import org.assertj.vavr.test.BaseTest;
+import org.junit.Test;
+
+import static org.assertj.core.util.FailureMessages.actualIsNull;
+import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.vavr.api.VavrAssertions.assertThat;
+
+public class OptionAssert_isEmpty_Test extends BaseTest {
+
+    @Test
+    public void should_pass_if_Option_is_empty() throws Exception {
+        assertThat(Option.none()).isEmpty();
+    }
+
+    @Test
+    public void should_fail_when_Option_is_null() throws Exception {
+        thrown.expectAssertionError(actualIsNull());
+
+        assertThat((Option<String>) null).isEmpty();
+    }
+
+    @Test
+    public void should_fail_if_Option_is_present() throws Exception {
+        Option<String> actual = Option.of("not-empty");
+
+        thrown.expectAssertionError(shouldBeEmpty(actual).create());
+
+        assertThat(actual).isEmpty();
+    }
 }
