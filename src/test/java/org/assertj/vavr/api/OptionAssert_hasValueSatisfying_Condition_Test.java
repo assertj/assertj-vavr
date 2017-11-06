@@ -29,13 +29,13 @@ public class OptionAssert_hasValueSatisfying_Condition_Test extends BaseTest {
     private Condition<String> notPassingCondition = new TestCondition<>();
 
     @Test
-    public void should_fail_when_optional_is_null() {
+    public void should_fail_when_option_is_null() {
         thrown.expectAssertionError(actualIsNull());
         assertThat((Option<String>) null).hasValueSatisfying(passingCondition);
     }
 
     @Test
-    public void should_fail_when_optional_is_empty() {
+    public void should_fail_when_option_is_empty() {
         thrown.expectAssertionError(shouldBePresent().create());
         assertThat(Option.<String>none()).hasValueSatisfying(passingCondition);
     }

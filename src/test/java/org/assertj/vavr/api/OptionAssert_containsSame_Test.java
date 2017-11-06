@@ -24,7 +24,7 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class OptionAssert_containsSame_Test extends BaseTest {
 
     @Test
-    public void should_fail_when_optional_is_null() {
+    public void should_fail_when_option_is_null() {
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<String>) null).containsSame("something");
@@ -38,14 +38,14 @@ public class OptionAssert_containsSame_Test extends BaseTest {
     }
 
     @Test
-    public void should_pass_if_optional_contains_the_expected_object_reference() {
+    public void should_pass_if_option_contains_the_expected_object_reference() {
         String containedAndExpected = "something";
 
         assertThat(Option.of(containedAndExpected)).containsSame(containedAndExpected);
     }
 
     @Test
-    public void should_fail_if_optional_does_not_contain_the_expected_object_reference() {
+    public void should_fail_if_option_does_not_contain_the_expected_object_reference() {
         Option<String> actual = Option.of("not-expected");
         String expectedValue = "something";
 
@@ -56,7 +56,7 @@ public class OptionAssert_containsSame_Test extends BaseTest {
 
     @SuppressWarnings("RedundantStringConstructorCall")
     @Test
-    public void should_fail_if_optional_contains_equal_but_not_same_value() {
+    public void should_fail_if_option_contains_equal_but_not_same_value() {
         Option<String> actual = Option.of(new String("something"));
         String expectedValue = new String("something");
 
@@ -66,7 +66,7 @@ public class OptionAssert_containsSame_Test extends BaseTest {
     }
 
     @Test
-    public void should_fail_if_optional_is_empty() {
+    public void should_fail_if_option_is_empty() {
         String expectedValue = "something";
 
         thrown.expectAssertionError(shouldContain(expectedValue).create());

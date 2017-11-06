@@ -23,14 +23,14 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class OptionAssert_hasValueSatisfying_Test extends BaseTest {
 
     @Test
-    public void should_fail_when_optional_is_null() {
+    public void should_fail_when_option_is_null() {
         thrown.expectAssertionError(actualIsNull());
         assertThat((Option<String>) null).hasValueSatisfying(s -> {
         });
     }
 
     @Test
-    public void should_fail_when_optional_is_empty() {
+    public void should_fail_when_option_is_empty() {
         thrown.expectAssertionError(OptionShouldBePresent.shouldBePresent().create());
         assertThat(Option.none()).hasValueSatisfying(o -> {});
     }

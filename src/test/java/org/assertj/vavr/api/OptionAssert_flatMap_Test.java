@@ -27,19 +27,19 @@ public class OptionAssert_flatMap_Test extends BaseTest {
       ? Option.none() : Option.of(s.toUpperCase());
 
     @Test
-    public void should_fail_when_optional_is_null() {
+    public void should_fail_when_option_is_null() {
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING);
     }
 
     @Test
-    public void should_pass_when_optional_is_empty() {
+    public void should_pass_when_option_is_empty() {
         assertThat(Option.<String>none()).flatMap(UPPER_CASE_OPTIONAL_STRING).isEmpty();
     }
 
     @Test
-    public void should_pass_when_optional_contains_a_value() {
+    public void should_pass_when_option_contains_a_value() {
         assertThat(Option.of("present")).contains("present")
           .flatMap(UPPER_CASE_OPTIONAL_STRING)
           .contains("PRESENT");

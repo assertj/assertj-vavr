@@ -26,11 +26,11 @@ public class TestCondition<T> extends Condition<T> {
 
     private boolean matches;
 
-    public TestCondition() {
+    TestCondition() {
         super();
     }
 
-    public TestCondition(boolean matches) {
+    TestCondition(boolean matches) {
         this.matches = matches;
     }
 
