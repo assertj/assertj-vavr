@@ -13,6 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
+import io.vavr.control.Try;
 import org.assertj.core.util.CheckReturnValue;
 
 /**
@@ -35,5 +36,15 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <VALUE> OptionAssert<VALUE> assertThat(Option<VALUE> actual) {
         return new OptionAssert<>(actual);
+    }
+
+    /**
+     * Create assertion for {@link io.vavr.control.Try}.
+     *
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
+        return new TryAssert<>(actual);
     }
 }
