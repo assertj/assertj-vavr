@@ -77,7 +77,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @return this assertion object.
      */
     public SELF hasValueSatisfying(Consumer<VALUE> requirement) {
-        assertValueIsPresent();
+        assertIsSuccess();
         requirement.accept(actual.get());
         return myself;
     }
@@ -92,7 +92,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @throws AssertionError       if the actual value does not satisfy the given condition.
      */
     public SELF hasValueSatisfying(Condition<? super VALUE> condition) {
-        assertValueIsPresent();
+        assertIsSuccess();
         conditions.assertIs(info, actual.get(), condition);
         return myself;
     }
@@ -104,7 +104,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @return this assertion object.
      */
     public SELF containsInstanceOf(Class<?> clazz) {
-        assertValueIsPresent();
+        assertIsSuccess();
         if (!clazz.isInstance(actual.get())) throwAssertionError(shouldContainInstanceOf(actual, clazz));
         return myself;
     }
@@ -195,7 +195,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
         checkArgument(expectedValue != null, "The expected value should not be <null>.");
     }
 
-    private void assertValueIsPresent() {
+    private void assertIsSuccess() {
         isNotNull();
         if (actual.isEmpty()) throwAssertionError(shouldBeSuccess());
     }
