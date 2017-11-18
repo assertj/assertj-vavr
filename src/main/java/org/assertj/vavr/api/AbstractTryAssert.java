@@ -195,7 +195,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
 
     /**
      * Verifies that the actual @{@link io.vavr.control.Try} fails because of specific {@link Throwable}.
-
+     *
      * @param reason the expected exception class.
      * @return this assertion object.
      */
@@ -204,6 +204,20 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
         checkNotNull(reason);
         assertIsFailure();
         assertThat(actual.getCause()).isInstanceOf(reason);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual @{@link io.vavr.control.Try} fails with specific message.
+     *
+     * @param exceptionMessage the expected exception message.
+     * @return this assertion object.
+     */
+    public <U extends Throwable> SELF failReasonHasMessage(String exceptionMessage){
+        isNotNull();
+        checkNotNull(exceptionMessage);
+        assertIsFailure();
+        assertThat(actual.getCause()).hasMessage(exceptionMessage);
         return myself;
     }
 
