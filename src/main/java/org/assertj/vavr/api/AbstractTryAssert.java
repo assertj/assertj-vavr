@@ -213,7 +213,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @param exceptionMessage the expected exception message.
      * @return this assertion object.
      */
-    public <U extends Throwable> SELF failReasonHasMessage(String exceptionMessage){
+    public SELF failReasonHasMessage(String exceptionMessage){
         isNotNull();
         checkNotNull(exceptionMessage);
         assertIsFailure();
