@@ -28,7 +28,9 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Preconditions.checkArgument;
+import static org.assertj.vavr.api.TryShouldBeFailure.shouldBeFailure;
 import static org.assertj.vavr.api.TryShouldBeSuccess.shouldBeSuccess;
 import static org.assertj.vavr.api.TryShouldContain.shouldContain;
 import static org.assertj.vavr.api.TryShouldContain.shouldContainSame;
@@ -191,6 +193,20 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
         return VavrAssertions.assertThat(actual.map(mapper));
     }
 
+    /**
+     * Verifies that the actual @{@link io.vavr.control.Try} fails because of specific {@link Throwable}.
+
+     * @param reason the expected exception class.
+     * @return this assertion object.
+     */
+    public <U extends Throwable> SELF failBecauseOf(Class<U> reason){
+        isNotNull();
+        checkNotNull(reason);
+        assertIsFailure();
+        assertThat(actual.getCause()).isInstanceOf(reason);
+        return myself;
+    }
+
     private void checkNotNull(Object expectedValue) {
         checkArgument(expectedValue != null, "The expected value should not be <null>.");
     }
@@ -198,6 +214,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     private void assertIsSuccess() {
         isNotNull();
         if (actual.isEmpty()) throwAssertionError(shouldBeSuccess());
+    }
+
+    private void assertIsFailure() {
+        isNotNull();
+        if (actual.isSuccess()) throwAssertionError(shouldBeFailure());
     }
 }
 
