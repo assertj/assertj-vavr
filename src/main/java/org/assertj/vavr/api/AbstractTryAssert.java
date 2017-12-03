@@ -154,7 +154,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Try} contains the instance given as an argument (i.e. it must be the
+     * Verifies that the actual {@link io.vavr.control.Try} contains the instance given as an argument.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Try}.
      * @return this assertion object.
