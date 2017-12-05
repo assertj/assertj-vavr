@@ -23,20 +23,33 @@ public class TryAssert_containsSame_Test extends BaseTest {
     }
 
     @Test
+    public void should_fail_when_success_try_contains_not_the_same_value() throws Exception {
+        thrown.expectAssertionError(
+            "\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
+        final String actual = "OK";
+        final String expected = new String(actual);
+        assertThat(Try.success(actual)).containsSame(expected);
+    }
+
+    @Test
     public void should_fail_when_success_try_contains_different_value() throws Exception {
         thrown.expectAssertionError(
-            "\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"not ok\">\nbut did not.");
-        assertThat(Try.success("OK")).containsSame("not ok");
+            "\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
+        final String actual = "OK";
+        final String expected = "different";
+        assertThat(Try.success(actual)).containsSame(expected);
     }
 
     @Test
     public void should_pass_when_success_try_contains_the_same_value() throws Exception {
-        assertThat(Try.success("OK")).containsSame("OK");
+        final String value = "OK";
+        assertThat(Try.success(value)).containsSame(value);
     }
 
     @Test
     public void should_fail_when_try_is_a_failure() throws Exception {
         thrown.expectAssertionError("\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
-        assertThat(Try.failure(new NullPointerException())).containsSame(new NullPointerException());
+        final NullPointerException exception = new NullPointerException();
+        assertThat(Try.failure(exception)).containsSame(exception);
     }
 }
