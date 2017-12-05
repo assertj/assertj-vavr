@@ -13,7 +13,7 @@ public class TryAssert_contains_Test extends BaseTest {
     @Test
     public void should_fail_when_try_is_null() throws Exception {
         thrown.expectAssertionError(actualIsNull());
-        assertThat((Try<String>) null).containsSame("");
+        assertThat((Try<String>) null).contains("");
     }
 
     @Test
