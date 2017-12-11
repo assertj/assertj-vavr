@@ -27,14 +27,14 @@ public class TryAssert_hasValueSatisfying_Test extends BaseTest {
   }
 
   @Test
-  public void should_fail_when_value_doea_not_satisfy_consumer() throws Exception {
+  public void should_fail_when_value_does_not_satisfy_consumer() throws Exception {
     thrown.expectAssertionError("\nExpecting blank but was:<\"OK\">");
     assertThat(Try.success("OK"))
         .hasValueSatisfying(val -> assertThat(val).isBlank());
   }
 
   @Test
-  public void should_pass_when_value_satisfyies_consumer() throws Exception {
+  public void should_pass_when_value_satisfies_consumer() throws Exception {
     assertThat(Try.success("OK"))
         .hasValueSatisfying(val -> assertThat(val).isNotBlank().isEqualTo("OK"));
   }
