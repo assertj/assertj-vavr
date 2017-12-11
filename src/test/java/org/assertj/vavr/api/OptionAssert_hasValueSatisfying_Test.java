@@ -13,6 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
+
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -22,31 +23,32 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_hasValueSatisfying_Test extends BaseTest {
 
-    @Test
-    public void should_fail_when_option_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Option<String>) null).hasValueSatisfying(s -> {
-        });
-    }
+  @Test
+  public void should_fail_when_option_is_null() {
+    thrown.expectAssertionError(actualIsNull());
+    assertThat((Option<String>) null).hasValueSatisfying(s -> {
+    });
+  }
 
-    @Test
-    public void should_fail_when_option_is_empty() {
-        thrown.expectAssertionError(OptionShouldBePresent.shouldBePresent().create());
-        assertThat(Option.none()).hasValueSatisfying(o -> {});
-    }
+  @Test
+  public void should_fail_when_option_is_empty() {
+    thrown.expectAssertionError(OptionShouldBePresent.shouldBePresent().create());
+    assertThat(Option.none()).hasValueSatisfying(o -> {
+    });
+  }
 
-    @Test
-    public void should_pass_when_consumer_passes() {
-        assertThat(Option.of("something")).hasValueSatisfying(s -> assertThat(s).isEqualTo("something")
-          .startsWith("some")
-          .endsWith("thing"));
-        assertThat(Option.of(10)).hasValueSatisfying(i -> assertThat(i).isGreaterThan(9));
-    }
+  @Test
+  public void should_pass_when_consumer_passes() {
+    assertThat(Option.of("something")).hasValueSatisfying(s -> assertThat(s).isEqualTo("something")
+                                                                            .startsWith("some")
+                                                                            .endsWith("thing"));
+    assertThat(Option.of(10)).hasValueSatisfying(i -> assertThat(i).isGreaterThan(9));
+  }
 
-    @Test
-    public void should_fail_from_consumer() {
-        thrown.expectAssertionError("expected:<\"something[]\"> but was:<\"something[ else]\">");
-        assertThat(Option.of("something else"))
-          .hasValueSatisfying(s -> assertThat(s).isEqualTo("something"));
-    }
+  @Test
+  public void should_fail_from_consumer() {
+    thrown.expectAssertionError("expected:<\"something[]\"> but was:<\"something[ else]\">");
+    assertThat(Option.of("something else"))
+        .hasValueSatisfying(s -> assertThat(s).isEqualTo("something"));
+  }
 }
