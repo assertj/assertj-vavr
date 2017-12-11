@@ -13,6 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
+
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -22,41 +23,41 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_contains_Test extends BaseTest {
 
-    @Test
-    public void should_fail_when_option_is_null() throws Exception {
-        thrown.expectAssertionError(actualIsNull());
+  @Test
+  public void should_fail_when_option_is_null() throws Exception {
+    thrown.expectAssertionError(actualIsNull());
 
-        assertThat((Option<String>) null).contains("something");
-    }
+    assertThat((Option<String>) null).contains("something");
+  }
 
-    @Test
-    public void should_fail_if_expected_value_is_null() throws Exception {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
+  @Test
+  public void should_fail_if_expected_value_is_null() throws Exception {
+    thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-        assertThat(Option.of("something")).contains(null);
-    }
+    assertThat(Option.of("something")).contains(null);
+  }
 
-    @Test
-    public void should_pass_if_option_contains_expected_value() throws Exception {
-        assertThat(Option.of("something")).contains("something");
-    }
+  @Test
+  public void should_pass_if_option_contains_expected_value() throws Exception {
+    assertThat(Option.of("something")).contains("something");
+  }
 
-    @Test
-    public void should_fail_if_option_does_not_contain_expected_value() throws Exception {
-        Option<String> actual = Option.of("not-expected");
-        String expectedValue = "something";
+  @Test
+  public void should_fail_if_option_does_not_contain_expected_value() throws Exception {
+    Option<String> actual = Option.of("not-expected");
+    String expectedValue = "something";
 
-        thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
+    thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
 
-        assertThat(actual).contains(expectedValue);
-    }
+    assertThat(actual).contains(expectedValue);
+  }
 
-    @Test
-    public void should_fail_if_option_is_empty() throws Exception {
-        String expectedValue = "something";
+  @Test
+  public void should_fail_if_option_is_empty() throws Exception {
+    String expectedValue = "something";
 
-        thrown.expectAssertionError(shouldContain(expectedValue).create());
+    thrown.expectAssertionError(shouldContain(expectedValue).create());
 
-        assertThat(Option.none()).contains(expectedValue);
-    }
+    assertThat(Option.none()).contains(expectedValue);
+  }
 }

@@ -24,26 +24,26 @@ import org.assertj.core.api.Condition;
  */
 public class TestCondition<T> extends Condition<T> {
 
-    private boolean matches;
+  private boolean matches;
 
-    TestCondition() {
-        super();
-    }
+  TestCondition() {
+    super();
+  }
 
-    TestCondition(boolean matches) {
-        this.matches = matches;
-    }
+  TestCondition(boolean matches) {
+    this.matches = matches;
+  }
 
-    public TestCondition(String description) {
-        super(description);
-    }
+  public TestCondition(String description) {
+    super(description);
+  }
 
-    public void shouldMatch(boolean val) {
-        matches = val;
-    }
+  public void shouldMatch(boolean val) {
+    matches = val;
+  }
 
-    @Override
-    public boolean matches(T value) {
-        return matches;
-    }
+  @Override
+  public boolean matches(T value) {
+    return matches;
+  }
 }

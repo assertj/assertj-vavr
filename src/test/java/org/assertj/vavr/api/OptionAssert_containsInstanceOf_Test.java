@@ -13,6 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
+
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -23,43 +24,44 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_containsInstanceOf_Test extends BaseTest {
 
-    @Test
-    public void should_fail_if_option_is_empty() {
-        Option<Object> actual = Option.none();
+  @Test
+  public void should_fail_if_option_is_empty() {
+    Option<Object> actual = Option.none();
 
-        Throwable thrown = catchThrowable(() -> assertThat(actual).containsInstanceOf(Object.class));
+    Throwable thrown = catchThrowable(() -> assertThat(actual).containsInstanceOf(Object.class));
 
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(OptionShouldBePresent.shouldBePresent().create());
-    }
+    assertThat(thrown).isInstanceOf(AssertionError.class)
+                      .hasMessage(OptionShouldBePresent.shouldBePresent().create());
+  }
 
-    @Test
-    public void should_pass_if_option_contains_required_type() {
-        assertThat(Option.of("something")).containsInstanceOf(String.class)
-          .containsInstanceOf(Object.class);
-    }
+  @Test
+  public void should_pass_if_option_contains_required_type() {
+    assertThat(Option.of("something")).containsInstanceOf(String.class)
+                                      .containsInstanceOf(Object.class);
+  }
 
-    @Test
-    public void should_pass_if_option_contains_required_type_subclass() {
-        assertThat(Option.of(new SubClass())).containsInstanceOf(ParentClass.class);
-    }
+  @Test
+  public void should_pass_if_option_contains_required_type_subclass() {
+    assertThat(Option.of(new SubClass())).containsInstanceOf(ParentClass.class);
+  }
 
-    @Test
-    public void should_fail_if_option_contains_other_type_than_required() {
-        Option<ParentClass> actual = Option.of(new ParentClass());
+  @Test
+  public void should_fail_if_option_contains_other_type_than_required() {
+    Option<ParentClass> actual = Option.of(new ParentClass());
 
-        Throwable thrown = catchThrowable(() -> assertThat(actual).containsInstanceOf(OtherClass.class));
+    Throwable thrown = catchThrowable(
+        () -> assertThat(actual).containsInstanceOf(OtherClass.class));
 
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(shouldContainInstanceOf(actual, OtherClass.class).create());
-    }
+    assertThat(thrown).isInstanceOf(AssertionError.class)
+                      .hasMessage(shouldContainInstanceOf(actual, OtherClass.class).create());
+  }
 
-    private static class ParentClass {
-    }
+  private static class ParentClass {
+  }
 
-    private static class SubClass extends ParentClass {
-    }
+  private static class SubClass extends ParentClass {
+  }
 
-    private static class OtherClass {
-    }
+  private static class OtherClass {
+  }
 }
