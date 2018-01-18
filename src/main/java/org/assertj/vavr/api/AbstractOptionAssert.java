@@ -174,7 +174,7 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Option} contains the instance given as an argument (i.e. it must be the
+     * Verifies that the actual {@link io.vavr.control.Option} contains the instance given as an argument.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Option}.
      * @return this assertion object.
