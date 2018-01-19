@@ -107,7 +107,7 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      *
      * @return this assertion object.
      */
-    public SELF containsSameRight(RIGHT expectedValue) {
+    public SELF containsRightSame(RIGHT expectedValue) {
         isNotNull();
         checkNotNull(expectedValue);
         if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
@@ -123,7 +123,7 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      *
      * @return this assertion object.
      */
-    public SELF containsSameLeft(LEFT expectedValue) {
+    public SELF containsLeftSame(LEFT expectedValue) {
         isNotNull();
         checkNotNull(expectedValue);
         if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));

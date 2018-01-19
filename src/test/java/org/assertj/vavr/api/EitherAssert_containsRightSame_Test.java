@@ -18,49 +18,49 @@ import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
+import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
+import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class EitherAssert_containsSameLeft_Test extends BaseTest {
+public class EitherAssert_containsRightSame_Test extends BaseTest {
 
   @Test
   public void should_fail_when_either_is_null() throws Exception {
     thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Either<String, String>) null).containsSameLeft("something");
+    assertThat((Either<String, String>) null).containsRightSame("something");
   }
 
   @Test
   public void should_fail_if_expected_value_is_null() throws Exception {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-    assertThat(Either.left("something")).containsSameLeft(null);
+    assertThat(Either.right("something")).containsRightSame(null);
   }
 
   @Test
-  public void should_pass_if_either_contains_same_instance_on_left_side() throws Exception {
+  public void should_pass_if_either_contains_same_instance_on_right_side() throws Exception {
     final String value = "something";
-    assertThat(Either.left(value)).containsSameLeft(value);
+    assertThat(Either.right(value)).containsRightSame(value);
   }
 
   @Test
-  public void should_fail_if_either_does_not_contain_same_instance_on_left_side() throws Exception {
-    Either<String, String> actual = Either.left("something");
+  public void should_fail_if_either_does_not_contain_same_instance_on_right_side() throws Exception {
+    Either<String, String> actual = Either.right("something");
     final String expectedValue = new String("something");
 
-    thrown.expectAssertionError(shouldContainSameOnLeft(actual, expectedValue).create());
+    thrown.expectAssertionError(shouldContainSameOnRight(actual, expectedValue).create());
 
-    assertThat(actual).containsSameLeft(expectedValue);
+    assertThat(actual).containsRightSame(expectedValue);
   }
 
   @Test
-  public void should_fail_if_either_is_right() throws Exception {
-    Either<String, String> actual = Either.right("nothing");
+  public void should_fail_if_either_is_left() throws Exception {
+    Either<String, String> actual = Either.left("nothing");
     String expectedValue = "something";
 
-    thrown.expectAssertionError(shouldBeLeft(actual).create());
+    thrown.expectAssertionError(shouldBeRight(actual).create());
 
-    assertThat(actual).containsSameLeft(expectedValue);
+    assertThat(actual).containsRightSame(expectedValue);
   }
 }
