@@ -24,6 +24,7 @@ import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
+import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
 
 /**
  * Assertions for {@link Either}.
@@ -95,6 +96,22 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
         if (!eitherValueComparisonStrategy.areEqual(actual.getLeft(), expectedValue))
             throwAssertionError(shouldContainOnLeft(actual, expectedValue));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} contains the instance given as an argument as the right value.
+     *
+     * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
+     *
+     * @return this assertion object.
+     */
+    public SELF containsSameRight(RIGHT expectedValue) {
+        isNotNull();
+        checkNotNull(expectedValue);
+        if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
+        if (actual.get() != expectedValue)
+            throwAssertionError(shouldContainSameOnRight(actual, expectedValue));
         return myself;
     }
 
