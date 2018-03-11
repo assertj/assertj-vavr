@@ -34,10 +34,6 @@ class EitherShouldContain extends BasicErrorMessageFactory {
         super(message, actual, expected);
     }
 
-    private EitherShouldContain(String message, Object expected) {
-        super(message, expected);
-    }
-
     /**
      * Indicates that the provided {@link Either} does not contain the provided argument as right value.
      *
