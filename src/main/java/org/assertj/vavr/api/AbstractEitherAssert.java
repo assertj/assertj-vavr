@@ -26,6 +26,7 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
+import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 
 /**
  * Assertions for {@link Either}.
@@ -52,8 +53,7 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF isLeft() {
-        isNotNull();
-        if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
+        assertIsLeft();
         return myself;
     }
 
@@ -63,8 +63,7 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF isRight() {
-        isNotNull();
-        if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
+        assertIsRight();
         return myself;
     }
 
@@ -76,9 +75,8 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF containsRight(RIGHT expectedValue) {
-        isNotNull();
+        assertIsRight();
         checkNotNull(expectedValue);
-        if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
         if (!eitherValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContainOnRight(actual, expectedValue));
         return myself;
@@ -92,9 +90,8 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF containsLeft(LEFT expectedValue) {
-        isNotNull();
+        assertIsLeft();
         checkNotNull(expectedValue);
-        if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
         if (!eitherValueComparisonStrategy.areEqual(actual.getLeft(), expectedValue))
             throwAssertionError(shouldContainOnLeft(actual, expectedValue));
         return myself;
@@ -108,9 +105,8 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF containsRightSame(RIGHT expectedValue) {
-        isNotNull();
+        assertIsRight();
         checkNotNull(expectedValue);
-        if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
         if (actual.get() != expectedValue)
             throwAssertionError(shouldContainSameOnRight(actual, expectedValue));
         return myself;
@@ -124,16 +120,39 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * @return this assertion object.
      */
     public SELF containsLeftSame(LEFT expectedValue) {
-        isNotNull();
+        assertIsLeft();
         checkNotNull(expectedValue);
-        if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
         if (actual.getLeft() != expectedValue)
             throwAssertionError(shouldContainSameOnLeft(actual, expectedValue));
         return myself;
     }
 
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} contains a right value that is an instance of the argument.
+     *
+     * @param clazz the expected class of the right value inside the {@link io.vavr.control.Either}.
+     *
+     * @return this assertion object.
+     */
+    public SELF containsRightInstanceOf(Class<?> clazz) {
+        assertIsRight();
+        if (!clazz.isInstance(actual.get()))
+            throwAssertionError(shouldContainOnRightInstanceOf(actual, clazz));
+        return myself;
+    }
+
     private void checkNotNull(Object expectedValue) {
         checkArgument(expectedValue != null, "The expected value should not be <null>.");
+    }
+
+    private void assertIsRight() {
+        isNotNull();
+        if (actual.isLeft()) throwAssertionError(shouldBeRight(actual));
+    }
+
+    private void assertIsLeft() {
+        isNotNull();
+        if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
     }
 }
 
