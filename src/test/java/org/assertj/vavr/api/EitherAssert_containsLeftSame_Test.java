@@ -25,27 +25,27 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class EitherAssert_containsLeftSame_Test extends BaseTest {
 
   @Test
-  public void should_fail_when_either_is_null() throws Exception {
+  public void should_fail_when_either_is_null()  {
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Either<String, String>) null).containsLeftSame("something");
   }
 
   @Test
-  public void should_fail_if_expected_value_is_null() throws Exception {
+  public void should_fail_if_expected_value_is_null()  {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
     assertThat(Either.left("something")).containsLeftSame(null);
   }
 
   @Test
-  public void should_pass_if_either_contains_same_instance_on_left_side() throws Exception {
+  public void should_pass_if_either_contains_same_instance_on_left_side()  {
     final String value = "something";
     assertThat(Either.left(value)).containsLeftSame(value);
   }
 
   @Test
-  public void should_fail_if_either_does_not_contain_same_instance_on_left_side() throws Exception {
+  public void should_fail_if_either_does_not_contain_same_instance_on_left_side()  {
     Either<String, String> actual = Either.left("something");
     final String expectedValue = new String("something");
 
@@ -55,7 +55,7 @@ public class EitherAssert_containsLeftSame_Test extends BaseTest {
   }
 
   @Test
-  public void should_fail_if_either_is_right() throws Exception {
+  public void should_fail_if_either_is_right()  {
     Either<String, String> actual = Either.right("nothing");
     String expectedValue = "something";
 

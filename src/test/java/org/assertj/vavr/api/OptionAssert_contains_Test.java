@@ -24,26 +24,26 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class OptionAssert_contains_Test extends BaseTest {
 
   @Test
-  public void should_fail_when_option_is_null() throws Exception {
+  public void should_fail_when_option_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Option<String>) null).contains("something");
   }
 
   @Test
-  public void should_fail_if_expected_value_is_null() throws Exception {
+  public void should_fail_if_expected_value_is_null() {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
     assertThat(Option.of("something")).contains(null);
   }
 
   @Test
-  public void should_pass_if_option_contains_expected_value() throws Exception {
+  public void should_pass_if_option_contains_expected_value() {
     assertThat(Option.of("something")).contains("something");
   }
 
   @Test
-  public void should_fail_if_option_does_not_contain_expected_value() throws Exception {
+  public void should_fail_if_option_does_not_contain_expected_value() {
     Option<String> actual = Option.of("not-expected");
     String expectedValue = "something";
 
@@ -53,7 +53,7 @@ public class OptionAssert_contains_Test extends BaseTest {
   }
 
   @Test
-  public void should_fail_if_option_is_empty() throws Exception {
+  public void should_fail_if_option_is_empty() {
     String expectedValue = "something";
 
     thrown.expectAssertionError(shouldContain(expectedValue).create());

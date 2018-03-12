@@ -11,13 +11,13 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class TryAssert_containsInstanceOf_Test extends BaseTest {
 
   @Test
-  public void should_fail_when_try_is_null() throws Exception {
+  public void should_fail_when_try_is_null() {
     thrown.expectAssertionError(actualIsNull());
     assertThat((Try<String>) null).containsInstanceOf(String.class);
   }
 
   @Test
-  public void should_fail_when_try_is_a_failure() throws Exception {
+  public void should_fail_when_try_is_a_failure() {
     thrown.expectAssertionError(
         "\nExpecting Try to be a Success, but wasn't");
     assertThat(Try.failure(new NullPointerException()))
@@ -25,14 +25,14 @@ public class TryAssert_containsInstanceOf_Test extends BaseTest {
   }
 
   @Test
-  public void should_fail_when_success_try_contains_value_of_different_class() throws Exception {
+  public void should_fail_when_success_try_contains_value_of_different_class() {
     thrown.expectAssertionError(
         "\nExpecting:\n <Success>\nto contain a value that is an instance of:\n <java.lang.Integer>\nbut did contain an instance of:\n <java.lang.String>");
     assertThat(Try.success("OK")).containsInstanceOf(Integer.class);
   }
 
   @Test
-  public void should_pass_when_success_try_contains_value_of_expected_class() throws Exception {
+  public void should_pass_when_success_try_contains_value_of_expected_class() {
     assertThat(Try.success("OK")).containsInstanceOf(String.class);
   }
 }

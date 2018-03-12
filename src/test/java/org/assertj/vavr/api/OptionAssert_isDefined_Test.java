@@ -24,19 +24,19 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 public class OptionAssert_isDefined_Test extends BaseTest {
 
   @Test
-  public void should_pass_when_Option_is_present() throws Exception {
+  public void should_pass_when_Option_is_present() {
     assertThat(Option.of("present")).isDefined();
   }
 
   @Test
-  public void should_fail_when_Option_is_empty() throws Exception {
+  public void should_fail_when_Option_is_empty() {
     thrown.expectAssertionError(shouldBePresent().create());
 
     assertThat(Option.none()).isDefined();
   }
 
   @Test
-  public void should_fail_when_Option_is_null() throws Exception {
+  public void should_fail_when_Option_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Option<String>) null).isDefined();

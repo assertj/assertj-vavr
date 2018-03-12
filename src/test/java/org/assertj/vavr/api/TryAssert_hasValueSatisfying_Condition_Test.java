@@ -15,25 +15,25 @@ public class TryAssert_hasValueSatisfying_Condition_Test extends BaseTest {
   private Condition<Object> notPassingCondition = new TestCondition<>();
 
   @Test
-  public void should_fail_when_try_is_null() throws Exception {
+  public void should_fail_when_try_is_null() {
     thrown.expectAssertionError(actualIsNull());
     assertThat((Try<String>) null).hasValueSatisfying(passingCondition);
   }
 
   @Test
-  public void should_fail_when_try_is_failure() throws Exception {
+  public void should_fail_when_try_is_failure() {
     thrown.expectAssertionError("\nExpecting Try to be a Success, but wasn't");
     assertThat(Try.failure(new NullPointerException())).hasValueSatisfying(passingCondition);
   }
 
   @Test
-  public void should_fail_when_value_does_not_satisfy_consumer() throws Exception {
+  public void should_fail_when_value_does_not_satisfy_consumer() {
     thrown.expectAssertionError("\nExpecting:\n <\"OK\">\nto be <TestCondition>");
     assertThat(Try.success("OK")).hasValueSatisfying(notPassingCondition);
   }
 
   @Test
-  public void should_pass_when_value_satisfies_consumer() throws Exception {
+  public void should_pass_when_value_satisfies_consumer() {
     assertThat(Try.success("OK")).hasValueSatisfying(passingCondition);
   }
 
