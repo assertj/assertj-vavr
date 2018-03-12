@@ -16,7 +16,7 @@ import io.vavr.control.Try;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build an error message when a value should be instance of a specific class.
+ * Build an error message when a {@link Try} does not contain a value being an instance of an expected class.
  *
  * @author Grzegorz Piwowarek
  */
@@ -27,7 +27,7 @@ class TryShouldContainInstanceOf extends BasicErrorMessageFactory {
     }
 
     /**
-     * Indicates that a value should be present in an empty {@link io.vavr.control.Try}.
+     * Indicates that a value should be present in {@link io.vavr.control.Try}.
      *
      * @param value Try to be checked.
      * @return an error message factory.
