@@ -26,6 +26,7 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
+import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
 import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 
 /**
@@ -128,9 +129,9 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Either} contains a right value that is an instance of the argument.
+     * Verifies that the actual right-sided {@link io.vavr.control.Either} contains a value that is an instance of the argument.
      *
-     * @param clazz the expected class of the right value inside the {@link io.vavr.control.Either}.
+     * @param clazz the expected class of the value inside the right-sided {@link io.vavr.control.Either}.
      *
      * @return this assertion object.
      */
@@ -138,6 +139,20 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         assertIsRight();
         if (!clazz.isInstance(actual.get()))
             throwAssertionError(shouldContainOnRightInstanceOf(actual, clazz));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual left-sided {@link io.vavr.control.Either} contains a value that is an instance of the argument.
+     *
+     * @param clazz the expected class of the value inside the left-sided {@link io.vavr.control.Either}.
+     *
+     * @return this assertion object.
+     */
+    public SELF containsLeftInstanceOf(Class<?> clazz) {
+        assertIsLeft();
+        if (!clazz.isInstance(actual.getLeft()))
+            throwAssertionError(shouldContainOnLeftInstanceOf(actual, clazz));
         return myself;
     }
 

@@ -18,13 +18,14 @@ import io.vavr.control.Either;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build error message when an {@link Either} should contain a specific right value.
+ * Build error message when an {@link Either} should contain a value being an instance of a specific class.
  *
  * @author Michał Chmielarz
  */
 class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
 
-    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was left sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was left-sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on left side:%n  <%s>%nbut was right-sided.";
     private static final String EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE = "%nExpecting:%n <%s>%nto contain a value that is an instance of:%n <%s>%nbut did contain an instance of:%n <%s>";
 
     private EitherShouldContainInstanceOf(String message) {
@@ -32,7 +33,7 @@ class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
     }
 
     /**
-     * Indicates that a right value should be present in an {@link io.vavr.control.Either}.
+     * Indicates that a value should be present in a right-sided {@link io.vavr.control.Either}.
      *
      * @param value Either to be checked.
      * @param expectedClazz expected class of a right value
@@ -55,5 +56,32 @@ class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
                                                          either.getClass().getSimpleName(),
                                                          expectedClazz.getName()));
     }
+
+    /**
+     * Indicates that a value should be present in a left-sided {@link io.vavr.control.Either}.
+     *
+     * @param value Either to be checked.
+     * @param expectedClazz expected class of a left value
+     * @return an error message factory.
+     * @throws java.lang.NullPointerException if either is null.
+     */
+    static EitherShouldContainInstanceOf shouldContainOnLeftInstanceOf(Object value,
+                                                                        Class<?> expectedClazz) {
+        Either<?, ?> either = (Either<?, ?>) value;
+        if (either.isLeft()) {
+            return new EitherShouldContainInstanceOf(String
+                                                         .format(
+                                                             EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE,
+                                                             either.getClass().getSimpleName(),
+                                                             expectedClazz.getName(),
+                                                             either.getLeft().getClass().getName()));
+        }
+        return new EitherShouldContainInstanceOf(String
+                                                     .format(
+                                                         EXPECTING_TO_CONTAIN_BUT_IS_RIGHT,
+                                                         either.getClass().getSimpleName(),
+                                                         expectedClazz.getName()));
+    }
+
 }
 
