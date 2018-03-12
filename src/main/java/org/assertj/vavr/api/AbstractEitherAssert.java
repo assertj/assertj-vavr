@@ -16,8 +16,12 @@ package org.assertj.vavr.api;
 import io.vavr.control.Either;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
 import org.assertj.core.internal.StandardComparisonStrategy;
+import org.assertj.core.util.CheckReturnValue;
+
+import java.util.Comparator;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
@@ -153,6 +157,35 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         assertIsLeft();
         if (!clazz.isInstance(actual.getLeft()))
             throwAssertionError(shouldContainOnLeftInstanceOf(actual, clazz));
+        return myself;
+    }
+
+    /**
+     * Use given custom comparator instead of relying on actual type A <code>equals</code> method to compare the
+     * {@link Either} value's object for incoming assertion checks.
+     *
+     * @param customComparator the comparator to use for incoming assertion checks.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException if the given comparator is {@code null}.
+     */
+    @CheckReturnValue
+    public SELF usingValueComparator(Comparator<?> customComparator) {
+        eitherValueComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
+        return myself;
+    }
+
+    /**
+     * Revert to standard comparison for incoming assertion {@link Either} value checks.
+     * <p>
+     * This method should be used to disable a custom comparison strategy set by calling
+     * {@link #usingValueComparator(Comparator)}.
+     *
+     * @return {@code this} assertion object.
+     */
+    @CheckReturnValue
+    public SELF usingDefaultRightValueComparator() {
+        // fall back to default strategy to compare actual with other objects.
+        eitherValueComparisonStrategy = StandardComparisonStrategy.instance();
         return myself;
     }
 
