@@ -16,8 +16,10 @@ package org.assertj.vavr.api;
 import io.vavr.control.Either;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.FieldByFieldComparator;
 import org.assertj.core.internal.StandardComparisonStrategy;
 import org.assertj.core.util.CheckReturnValue;
 
@@ -172,6 +174,19 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
     public SELF usingValueComparator(Comparator<?> customComparator) {
         eitherValueComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
         return myself;
+    }
+
+    /**
+     * Use field/property by field/property comparison (including inherited fields/properties) instead of relying on
+     * actual type A <code>equals</code> method to compare the {@link Either} value's object for incoming assertion
+     * checks. Private fields are included but this can be disabled using
+     * {@link Assertions#setAllowExtractingPrivateFields(boolean)}.
+     *
+     * @return {@code this} assertion object.
+     */
+    @CheckReturnValue
+    public SELF usingFieldByFieldValueComparator() {
+        return usingValueComparator(new FieldByFieldComparator());
     }
 
     /**
