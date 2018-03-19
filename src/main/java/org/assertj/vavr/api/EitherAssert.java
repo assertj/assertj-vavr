@@ -5,10 +5,9 @@ import io.vavr.control.Either;
 /**
  * Assertions for {@link io.vavr.control.Either}.
  *
- * @param <LEFT> type of the left value contained in the {@link Either}.
- * @param <RIGHT> type of the right value contained in the {@link Either}.
- *
- * @author Michał Chmielarz
+ * @param <LEFT> type of the value on the left contained in the {@link io.vavr.control.Either}.
+ * @param <RIGHT> type of the value on the right contained in the {@link io.vavr.control.Either}.
+ * @author Alex Dukhno
  */
 public class EitherAssert<LEFT, RIGHT> extends AbstractEitherAssert<EitherAssert<LEFT, RIGHT>, LEFT, RIGHT> {
   EitherAssert(Either<LEFT, RIGHT> actual) {
