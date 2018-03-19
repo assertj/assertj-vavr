@@ -24,7 +24,7 @@ import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class EitherAssert_containsLeft_usingValueComparator_Test extends BaseTest {
+public class EitherAssert_containsOnLeft_usingValueComparator_Test extends BaseTest {
 
   private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
@@ -34,7 +34,7 @@ public class EitherAssert_containsLeft_usingValueComparator_Test extends BaseTes
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Either<Foo, String>) null).usingValueComparator(FOO_COMPARATOR)
-                                          .containsLeft(new Foo("something"));
+                                          .containsOnLeft(new Foo("something"));
   }
 
   @Test
@@ -44,21 +44,21 @@ public class EitherAssert_containsLeft_usingValueComparator_Test extends BaseTes
     thrown.expectAssertionError(shouldBeLeft(actual).create());
 
     assertThat(actual).usingValueComparator(FOO_COMPARATOR)
-                      .containsLeft(new Object());
+                      .containsOnLeft(new Object());
   }
 
   @Test
   public void should_fail_if_expected_value_is_null() {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-    assertThat(Either.left(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsLeft(null);
+    assertThat(Either.left(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnLeft(null);
   }
 
   @Test
   public void should_pass_if_left_sided_either_contains_expected_value() {
     assertThat(Either.left(new Foo("something")))
         .usingValueComparator(FOO_COMPARATOR)
-        .containsLeft(new Foo("SoMething"));
+        .containsOnLeft(new Foo("SoMething"));
   }
 
   @Test
@@ -68,7 +68,7 @@ public class EitherAssert_containsLeft_usingValueComparator_Test extends BaseTes
 
     thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
 
-    assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsLeft(expectedValue);
+    assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnLeft(expectedValue);
   }
 
   private static class Foo {

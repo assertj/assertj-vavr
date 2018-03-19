@@ -24,7 +24,7 @@ import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class EitherAssert_containsRight_usingValueComparator_Test extends BaseTest {
+public class EitherAssert_containsOnRight_usingValueComparator_Test extends BaseTest {
 
   private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
@@ -34,14 +34,14 @@ public class EitherAssert_containsRight_usingValueComparator_Test extends BaseTe
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Either<String, Foo>) null).usingValueComparator(FOO_COMPARATOR)
-                                          .containsRight(new Foo("something"));
+                                          .containsOnRight(new Foo("something"));
   }
 
   @Test
   public void should_fail_if_expected_value_is_null() {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-    assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsRight(null);
+    assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnRight(null);
   }
 
   @Test
@@ -51,14 +51,14 @@ public class EitherAssert_containsRight_usingValueComparator_Test extends BaseTe
     thrown.expectAssertionError(shouldBeRight(actual).create());
 
     assertThat(actual).usingValueComparator(FOO_COMPARATOR)
-                      .containsRight(new Object());
+                      .containsOnRight(new Object());
   }
 
   @Test
   public void should_pass_if_right_sided_either_contains_expected_value() {
     assertThat(Either.right(new Foo("something")))
         .usingValueComparator(FOO_COMPARATOR)
-        .containsRight(new Foo("SoMething"));
+        .containsOnRight(new Foo("SoMething"));
   }
 
   @Test
@@ -68,7 +68,7 @@ public class EitherAssert_containsRight_usingValueComparator_Test extends BaseTe
 
     thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
 
-    assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsRight(expectedValue);
+    assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnRight(expectedValue);
   }
 
   private static class Foo {

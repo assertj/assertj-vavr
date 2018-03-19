@@ -42,6 +42,7 @@ import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOn
  * @param <LEFT> type of the left value contained in the {@link Either}.
  * @param <RIGHT> type of the right value contained in the {@link Either}.
  *
+ * @author Alex Dukhno
  * @author Michał Chmielarz
  */
 abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT, RIGHT>, LEFT, RIGHT> extends
@@ -75,52 +76,36 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
     }
 
   /**
-   * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Left}
-   * and contains the given value.
-   *
-   * @param left the expected value inside the {@link io.vavr.control.Either}.
-   * @return this assertion object.
-   */
-  public SELF containsOnLeft(LEFT left) {
-    isNotNull();
-    checkLeftNotNull(left);
-    if (!actual.isLeft())
-      throwAssertionError(EitherShouldContain.shouldContainOnOtherSide(actual, left));
-    if (!actual.getLeft().equals(left))
-      throwAssertionError(EitherShouldContain.shouldContain(actual, left));
-    return myself;
-  }
-
-  private void checkLeftNotNull(LEFT left) {
-    checkNotNull(left, "LEFT");
-  }
-
-  /**
    * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Right}
    * and contains the given value.
    *
-   * @param right the expected value inside the {@link io.vavr.control.Either}.
+   * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
    * @return this assertion object.
    */
-  public SELF containsOnRight(RIGHT right) {
-    isNotNull();
-    checkRightNotNull(right);
-    if (!actual.isRight())
-      throwAssertionError(EitherShouldContain.shouldContainOnOtherSide(actual, right));
-    if (!actual.get().equals(right))
-      throwAssertionError(EitherShouldContain.shouldContain(actual, right));
-    return myself;
-  }
+    public SELF containsOnRight(RIGHT expectedValue) {
+        assertIsRight();
+        checkNotNull(expectedValue);
+        if (!eitherValueComparisonStrategy.areEqual(actual.get(), expectedValue))
+            throwAssertionError(shouldContainOnRight(actual, expectedValue));
+        return myself;
+    }
 
-  private void checkRightNotNull(RIGHT right) {
-    checkNotNull(right, "RIGHT");
-  }
+  /**
+   * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Left}
+   * and contains the given value.
+   *
+   * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
+   * @return this assertion object.
+   */
+    public SELF containsOnLeft(LEFT expectedValue) {
+        assertIsLeft();
+        checkNotNull(expectedValue);
+        if (!eitherValueComparisonStrategy.areEqual(actual.getLeft(), expectedValue))
+            throwAssertionError(shouldContainOnLeft(actual, expectedValue));
+        return myself;
+    }
 
-  private void checkNotNull(Object value, String side) {
-    checkArgument(value != null, "The expected value on the [" + side + "] should not be <null>.");
-  }
-
-    /**
+  /**
      * Verifies that the actual {@link io.vavr.control.Either} contains the instance given as an argument as the right value.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
@@ -234,4 +219,3 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         if (actual.isRight()) throwAssertionError(shouldBeLeft(actual));
     }
 }
-

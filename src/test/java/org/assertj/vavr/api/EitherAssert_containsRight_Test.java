@@ -28,19 +28,19 @@ public class EitherAssert_containsRight_Test extends BaseTest {
   public void should_fail_when_either_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Either<String, String>) null).containsRight("something");
+    assertThat((Either<String, String>) null).containsOnRight("something");
   }
 
   @Test
   public void should_fail_if_expected_value_is_null() {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-    assertThat(Either.right("something")).containsRight(null);
+    assertThat(Either.right("something")).containsOnRight(null);
   }
 
   @Test
   public void should_pass_if_either_contains_expected_value_on_right_side() {
-    assertThat(Either.right("something")).containsRight("something");
+    assertThat(Either.right("something")).containsOnRight("something");
   }
 
   @Test
@@ -50,7 +50,7 @@ public class EitherAssert_containsRight_Test extends BaseTest {
 
     thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
 
-    assertThat(actual).containsRight(expectedValue);
+    assertThat(actual).containsOnRight(expectedValue);
   }
 
   @Test
@@ -60,6 +60,6 @@ public class EitherAssert_containsRight_Test extends BaseTest {
 
     thrown.expectAssertionError(shouldBeRight(actual).create());
 
-    assertThat(actual).containsRight(expectedValue);
+    assertThat(actual).containsOnRight(expectedValue);
   }
 }

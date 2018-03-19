@@ -22,14 +22,14 @@ import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class EitherAssert_containsLeft_usingFieldByFieldValueComparator_Test extends BaseTest {
+public class EitherAssert_containsOnLeft_usingFieldByFieldValueComparator_Test extends BaseTest {
 
   @Test
   public void should_fail_when_either_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Either<Foo, String>) null).usingFieldByFieldValueComparator()
-                                          .containsLeft(new Foo("something"));
+                                          .containsOnLeft(new Foo("something"));
   }
 
   @Test
@@ -38,14 +38,14 @@ public class EitherAssert_containsLeft_usingFieldByFieldValueComparator_Test ext
 
     assertThat(Either.left(new Foo("something")))
         .usingFieldByFieldValueComparator()
-        .containsLeft(null);
+        .containsOnLeft(null);
   }
 
   @Test
   public void should_pass_if_left_sided_either_contains_expected_value() {
     assertThat(Either.left(new Foo("something")))
         .usingFieldByFieldValueComparator()
-        .containsLeft(new Foo("something"));
+        .containsOnLeft(new Foo("something"));
   }
 
   @Test
@@ -55,7 +55,7 @@ public class EitherAssert_containsLeft_usingFieldByFieldValueComparator_Test ext
 
     thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
 
-    assertThat(actual).usingFieldByFieldValueComparator().containsLeft(expectedValue);
+    assertThat(actual).usingFieldByFieldValueComparator().containsOnLeft(expectedValue);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class EitherAssert_containsLeft_usingFieldByFieldValueComparator_Test ext
 
     thrown.expectAssertionError(shouldBeLeft(actual).create());
 
-    assertThat(actual).usingFieldByFieldValueComparator().containsLeft(expectedValue);
+    assertThat(actual).usingFieldByFieldValueComparator().containsOnLeft(expectedValue);
   }
 
   private static class Foo {

@@ -22,14 +22,14 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class EitherAssert_containsRight_usingFieldByFieldValueComparator_Test extends BaseTest {
+public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test extends BaseTest {
 
   @Test
   public void should_fail_when_either_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
     assertThat((Either<String, Foo>) null).usingFieldByFieldValueComparator()
-                                          .containsRight(new Foo("something"));
+                                          .containsOnRight(new Foo("something"));
   }
 
   @Test
@@ -38,14 +38,14 @@ public class EitherAssert_containsRight_usingFieldByFieldValueComparator_Test ex
 
     assertThat(Either.right(new Foo("something")))
         .usingFieldByFieldValueComparator()
-        .containsRight(null);
+        .containsOnRight(null);
   }
 
   @Test
   public void should_pass_if_right_sided_either_contains_expected_value() {
     assertThat(Either.right(new Foo("something")))
         .usingFieldByFieldValueComparator()
-        .containsRight(new Foo("something"));
+        .containsOnRight(new Foo("something"));
   }
 
   @Test
@@ -55,7 +55,7 @@ public class EitherAssert_containsRight_usingFieldByFieldValueComparator_Test ex
 
     thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
 
-    assertThat(actual).usingFieldByFieldValueComparator().containsRight(expectedValue);
+    assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class EitherAssert_containsRight_usingFieldByFieldValueComparator_Test ex
 
     thrown.expectAssertionError(shouldBeRight(actual).create());
 
-    assertThat(actual).usingFieldByFieldValueComparator().containsRight(expectedValue);
+    assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue);
   }
 
   private static class Foo {

@@ -59,8 +59,4 @@ public final class VavrAssertions {
     public static <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
         return new TryAssert<>(actual);
     }
-
-    public static <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assertThat(Either<LEFT, RIGHT> actual) {
-        return new EitherAssert<>(actual);
-    }
 }
