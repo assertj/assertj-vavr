@@ -12,33 +12,35 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.control.Option;
+import io.vavr.control.Either;
 
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class OptionAssert_isDefined_Test extends BaseTest {
+public class EitherAssert_isRight_Test extends BaseTest {
 
   @Test
-  public void should_pass_when_Option_is_present() {
-    assertThat(Option.of("present")).isDefined();
+  public void should_pass_if_Either_is_right() {
+    assertThat(Either.right("right")).isRight();
   }
 
   @Test
-  public void should_fail_when_Option_is_empty() {
-    thrown.expectAssertionError(shouldBePresent().create());
-
-    assertThat(Option.none()).isDefined();
-  }
-
-  @Test
-  public void should_fail_when_Option_is_null() {
+  public void should_fail_when_Either_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<String>) null).isDefined();
+    assertThat((Either<String, String>) null).isRight();
+  }
+
+  @Test
+  public void should_fail_if_Either_is_left() {
+    Either<String, String> actual = Either.left("left");
+
+    thrown.expectAssertionError(shouldBeRight(actual).create());
+
+    assertThat(actual).isRight();
   }
 }

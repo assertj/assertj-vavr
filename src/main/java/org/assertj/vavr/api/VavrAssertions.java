@@ -15,6 +15,7 @@ package org.assertj.vavr.api;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
+
 import org.assertj.core.util.CheckReturnValue;
 
 /**
@@ -27,6 +28,16 @@ import org.assertj.core.util.CheckReturnValue;
 public final class VavrAssertions {
 
     private VavrAssertions() {
+    }
+
+    /**
+     * Create assertion for {@link io.vavr.control.Either}.
+     *
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assertThat(Either<LEFT, RIGHT> actual) {
+        return new EitherAssert<>(actual);
     }
 
     /**
@@ -47,9 +58,5 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
         return new TryAssert<>(actual);
-    }
-
-    public static <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assertThat(Either<LEFT, RIGHT> actual) {
-        return new EitherAssert<>(actual);
     }
 }

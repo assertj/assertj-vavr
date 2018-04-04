@@ -27,9 +27,10 @@ class OptionShouldContainInstanceOf extends BasicErrorMessageFactory {
     }
 
     /**
-     * Indicates that a value should be present in an empty {@link io.vavr.control.Option}.
+     * Indicates that a value of a specific class should be present in an empty {@link io.vavr.control.Option}.
      *
      * @param value Option to be checked.
+     * @param clazz expected class of a value
      * @return an error message factory.
      * @throws java.lang.NullPointerException if option is null.
      */

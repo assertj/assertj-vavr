@@ -12,52 +12,54 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.control.Option;
+import io.vavr.control.Either;
 
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
+import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
+import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class OptionAssert_contains_Test extends BaseTest {
+public class EitherAssert_containsRight_Test extends BaseTest {
 
   @Test
-  public void should_fail_when_option_is_null() {
+  public void should_fail_when_either_is_null() {
     thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<String>) null).contains("something");
+    assertThat((Either<String, String>) null).containsOnRight("something");
   }
 
   @Test
   public void should_fail_if_expected_value_is_null() {
     thrown.expectIllegalArgumentException("The expected value should not be <null>.");
 
-    assertThat(Option.of("something")).contains(null);
+    assertThat(Either.right("something")).containsOnRight(null);
   }
 
   @Test
-  public void should_pass_if_option_contains_expected_value() {
-    assertThat(Option.of("something")).contains("something");
+  public void should_pass_if_either_contains_expected_value_on_right_side() {
+    assertThat(Either.right("something")).containsOnRight("something");
   }
 
   @Test
-  public void should_fail_if_option_does_not_contain_expected_value() {
-    Option<String> actual = Option.of("not-expected");
+  public void should_fail_if_either_does_not_contain_expected_value_on_right_side() {
+    Either<String, String> actual = Either.right("something");
+    String expectedValue = "nothing";
+
+    thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
+
+    assertThat(actual).containsOnRight(expectedValue);
+  }
+
+  @Test
+  public void should_fail_if_either_is_left() {
+    Either<String, String> actual = Either.left("nothing");
     String expectedValue = "something";
 
-    thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
+    thrown.expectAssertionError(shouldBeRight(actual).create());
 
-    assertThat(actual).contains(expectedValue);
-  }
-
-  @Test
-  public void should_fail_if_option_is_empty() {
-    String expectedValue = "something";
-
-    thrown.expectAssertionError(shouldContain(expectedValue).create());
-
-    assertThat(Option.none()).contains(expectedValue);
+    assertThat(actual).containsOnRight(expectedValue);
   }
 }
