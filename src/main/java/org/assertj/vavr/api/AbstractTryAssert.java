@@ -48,11 +48,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
 
     private Conditions conditions = Conditions.instance();
 
-    private ComparisonStrategy TryValueComparisonStrategy;
+    private ComparisonStrategy tryValueComparisonStrategy;
 
     AbstractTryAssert(Try<VALUE> actual, Class<?> selfType) {
         super(actual, selfType);
-        this.TryValueComparisonStrategy = StandardComparisonStrategy.instance();
+        this.tryValueComparisonStrategy = StandardComparisonStrategy.instance();
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
         isNotNull();
         checkNotNull(expectedValue);
         if (actual.isEmpty()) throwAssertionError(shouldContain(expectedValue));
-        if (!TryValueComparisonStrategy.areEqual(actual.get(), expectedValue))
+        if (!tryValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContain(actual, expectedValue));
         return myself;
     }
@@ -134,7 +134,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      */
     @CheckReturnValue
     public SELF usingValueComparator(Comparator<? super VALUE> customComparator) {
-        TryValueComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
+        tryValueComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
         return myself;
     }
 
@@ -149,7 +149,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     @CheckReturnValue
     public SELF usingDefaultValueComparator() {
         // fall back to default strategy to compare actual with other objects.
-        TryValueComparisonStrategy = StandardComparisonStrategy.instance();
+        tryValueComparisonStrategy = StandardComparisonStrategy.instance();
         return myself;
     }
 
