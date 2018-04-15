@@ -15,7 +15,6 @@ package org.assertj.vavr.api;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
-
 import org.assertj.core.util.CheckReturnValue;
 
 /**

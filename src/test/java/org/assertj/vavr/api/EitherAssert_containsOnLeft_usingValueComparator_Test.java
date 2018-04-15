@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -26,66 +25,66 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsOnLeft_usingValueComparator_Test extends BaseTest {
 
-  private static Comparator<Foo> FOO_COMPARATOR = Comparator
+    private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
 
-  @Test
-  public void should_fail_when_either_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_either_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Either<Foo, String>) null).usingValueComparator(FOO_COMPARATOR)
-                                          .containsOnLeft(new Foo("something"));
-  }
-
-  @Test
-  public void should_fail_if_either_is_right_sided() {
-    final Either<Object, Foo> actual = Either.right(new Foo("something"));
-
-    thrown.expectAssertionError(shouldBeLeft(actual).create());
-
-    assertThat(actual).usingValueComparator(FOO_COMPARATOR)
-                      .containsOnLeft(new Object());
-  }
-
-  @Test
-  public void should_fail_if_expected_value_is_null() {
-    thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-    assertThat(Either.left(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnLeft(null);
-  }
-
-  @Test
-  public void should_pass_if_left_sided_either_contains_expected_value() {
-    assertThat(Either.left(new Foo("something")))
-        .usingValueComparator(FOO_COMPARATOR)
-        .containsOnLeft(new Foo("SoMething"));
-  }
-
-  @Test
-  public void should_fail_if_left_sided_either_does_not_contain_expected_value() {
-    Either<Foo, String> actual = Either.left(new Foo("something"));
-    Foo expectedValue = new Foo("something else");
-
-    thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
-
-    assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnLeft(expectedValue);
-  }
-
-  private static class Foo {
-
-    private final String value;
-
-    Foo(String value) {
-      this.value = value;
+        assertThat((Either<Foo, String>) null).usingValueComparator(FOO_COMPARATOR)
+          .containsOnLeft(new Foo("something"));
     }
 
-    String getValue() {
-      return value;
+    @Test
+    public void should_fail_if_either_is_right_sided() {
+        final Either<Object, Foo> actual = Either.right(new Foo("something"));
+
+        thrown.expectAssertionError(shouldBeLeft(actual).create());
+
+        assertThat(actual).usingValueComparator(FOO_COMPARATOR)
+          .containsOnLeft(new Object());
     }
 
-    @Override
-    public String toString() {
-      return "Foo{value='" + value + "'}";
+    @Test
+    public void should_fail_if_expected_value_is_null() {
+        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
+
+        assertThat(Either.left(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnLeft(null);
     }
-  }
+
+    @Test
+    public void should_pass_if_left_sided_either_contains_expected_value() {
+        assertThat(Either.left(new Foo("something")))
+          .usingValueComparator(FOO_COMPARATOR)
+          .containsOnLeft(new Foo("SoMething"));
+    }
+
+    @Test
+    public void should_fail_if_left_sided_either_does_not_contain_expected_value() {
+        Either<Foo, String> actual = Either.left(new Foo("something"));
+        Foo expectedValue = new Foo("something else");
+
+        thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
+
+        assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnLeft(expectedValue);
+    }
+
+    private static class Foo {
+
+        private final String value;
+
+        Foo(String value) {
+            this.value = value;
+        }
+
+        String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return "Foo{value='" + value + "'}";
+        }
+    }
 }

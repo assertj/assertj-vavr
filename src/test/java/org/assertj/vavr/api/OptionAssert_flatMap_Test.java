@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -24,26 +23,26 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_flatMap_Test extends BaseTest {
 
-  private static final Function<String, Option<String>> UPPER_CASE_OPTIONAL_STRING = s -> (s
-                                                                                           == null)
+    private static final Function<String, Option<String>> UPPER_CASE_OPTIONAL_STRING = s -> (s
+      == null)
       ? Option.none() : Option.of(s.toUpperCase());
 
-  @Test
-  public void should_fail_when_option_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_option_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING);
-  }
+        assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING);
+    }
 
-  @Test
-  public void should_pass_when_option_is_empty() {
-    assertThat(Option.<String>none()).flatMap(UPPER_CASE_OPTIONAL_STRING).isEmpty();
-  }
+    @Test
+    public void should_pass_when_option_is_empty() {
+        assertThat(Option.<String>none()).flatMap(UPPER_CASE_OPTIONAL_STRING).isEmpty();
+    }
 
-  @Test
-  public void should_pass_when_option_contains_a_value() {
-    assertThat(Option.of("present")).contains("present")
-                                    .flatMap(UPPER_CASE_OPTIONAL_STRING)
-                                    .contains("PRESENT");
-  }
+    @Test
+    public void should_pass_when_option_contains_a_value() {
+        assertThat(Option.of("present")).contains("present")
+          .flatMap(UPPER_CASE_OPTIONAL_STRING)
+          .contains("PRESENT");
+    }
 }

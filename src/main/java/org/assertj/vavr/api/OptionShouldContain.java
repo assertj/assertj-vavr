@@ -38,7 +38,7 @@ class OptionShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that the provided {@link io.vavr.control.Option} does not contain the provided argument.
      *
-     * @param option      the {@link io.vavr.control.Option} which contains a value.
+     * @param option        the {@link io.vavr.control.Option} which contains a value.
      * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Option}.
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Option}.
      * @return a error message factory
@@ -53,7 +53,7 @@ class OptionShouldContain extends BasicErrorMessageFactory {
      * Indicates that the provided {@link io.vavr.control.Option} does not contain the provided argument (judging by reference
      * equality).
      *
-     * @param option      the {@link io.vavr.control.Option} which contains a value.
+     * @param option        the {@link io.vavr.control.Option} which contains a value.
      * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Option}.
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Option}.
      * @return a error message factory

@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Either;
-
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
@@ -38,10 +37,9 @@ import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOn
 /**
  * Assertions for {@link Either}.
  *
- * @param <SELF> the "self" type of this assertion class.
- * @param <LEFT> type of the left value contained in the {@link Either}.
+ * @param <SELF>  the "self" type of this assertion class.
+ * @param <LEFT>  type of the left value contained in the {@link Either}.
  * @param <RIGHT> type of the right value contained in the {@link Either}.
- *
  * @author Alex Dukhno
  * @author Michał Chmielarz
  */
@@ -75,13 +73,13 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         return myself;
     }
 
-  /**
-   * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Right}
-   * and contains the given value.
-   *
-   * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
-   * @return this assertion object.
-   */
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Right}
+     * and contains the given value.
+     *
+     * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
+     * @return this assertion object.
+     */
     public SELF containsOnRight(RIGHT expectedValue) {
         assertIsRight();
         checkNotNull(expectedValue);
@@ -90,13 +88,13 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         return myself;
     }
 
-  /**
-   * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Left}
-   * and contains the given value.
-   *
-   * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
-   * @return this assertion object.
-   */
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} is {@link io.vavr.control.Either.Left}
+     * and contains the given value.
+     *
+     * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
+     * @return this assertion object.
+     */
     public SELF containsOnLeft(LEFT expectedValue) {
         assertIsLeft();
         checkNotNull(expectedValue);
@@ -105,11 +103,10 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         return myself;
     }
 
-  /**
+    /**
      * Verifies that the actual {@link io.vavr.control.Either} contains the instance given as an argument as the right value.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
-     *
      * @return this assertion object.
      */
     public SELF containsRightSame(RIGHT expectedValue) {
@@ -124,7 +121,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * Verifies that the actual {@link io.vavr.control.Either} contains the instance given as an argument as the left value.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Either}.
-     *
      * @return this assertion object.
      */
     public SELF containsLeftSame(LEFT expectedValue) {
@@ -139,7 +135,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * Verifies that the actual right-sided {@link io.vavr.control.Either} contains a value that is an instance of the argument.
      *
      * @param clazz the expected class of the value inside the right-sided {@link io.vavr.control.Either}.
-     *
      * @return this assertion object.
      */
     public SELF containsRightInstanceOf(Class<?> clazz) {
@@ -153,7 +148,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * Verifies that the actual left-sided {@link io.vavr.control.Either} contains a value that is an instance of the argument.
      *
      * @param clazz the expected class of the value inside the left-sided {@link io.vavr.control.Either}.
-     *
      * @return this assertion object.
      */
     public SELF containsLeftInstanceOf(Class<?> clazz) {

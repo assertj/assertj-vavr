@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -23,62 +22,62 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_contains_usingFieldByFieldValueComparator_Test extends BaseTest {
 
-  @Test
-  public void should_fail_when_option_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_option_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
-                                  .contains(new Foo("something"));
-  }
-
-  @Test
-  public void should_fail_if_expected_value_is_null() {
-    thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-    assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator().contains(null);
-  }
-
-  @Test
-  public void should_pass_if_option_contains_expected_value() {
-    assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator()
-                                               .contains(new Foo("something"));
-  }
-
-  @Test
-  public void should_fail_if_option_does_not_contain_expected_value() {
-    Option<Foo> actual = Option.of(new Foo("something"));
-    Foo expectedValue = new Foo("something else");
-
-    thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
-
-    assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue);
-  }
-
-  @Test
-  public void should_fail_if_option_is_empty() {
-    Foo expectedValue = new Foo("test");
-
-    thrown.expectAssertionError(shouldContain(expectedValue).create());
-
-    assertThat(Option.none()).usingFieldByFieldValueComparator().contains(expectedValue);
-  }
-
-  private static class Foo {
-
-    private final String value;
-
-    Foo(String value) {
-      this.value = value;
+        assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
+          .contains(new Foo("something"));
     }
 
-    @SuppressWarnings("unused")
-    public String getValue() {
-      return value;
+    @Test
+    public void should_fail_if_expected_value_is_null() {
+        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
+
+        assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator().contains(null);
     }
 
-    @Override
-    public String toString() {
-      return "Foo{" + "value='" + value + '\'' + '}';
+    @Test
+    public void should_pass_if_option_contains_expected_value() {
+        assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator()
+          .contains(new Foo("something"));
     }
-  }
+
+    @Test
+    public void should_fail_if_option_does_not_contain_expected_value() {
+        Option<Foo> actual = Option.of(new Foo("something"));
+        Foo expectedValue = new Foo("something else");
+
+        thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
+
+        assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue);
+    }
+
+    @Test
+    public void should_fail_if_option_is_empty() {
+        Foo expectedValue = new Foo("test");
+
+        thrown.expectAssertionError(shouldContain(expectedValue).create());
+
+        assertThat(Option.none()).usingFieldByFieldValueComparator().contains(expectedValue);
+    }
+
+    private static class Foo {
+
+        private final String value;
+
+        Foo(String value) {
+            this.value = value;
+        }
+
+        @SuppressWarnings("unused")
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return "Foo{" + "value='" + value + '\'' + '}';
+        }
+    }
 }

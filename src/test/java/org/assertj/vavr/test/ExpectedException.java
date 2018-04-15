@@ -12,11 +12,6 @@
  */
 package org.assertj.vavr.test;
 
-import static java.lang.String.format;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.assertj.core.error.AssertionErrorFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 import org.assertj.core.presentation.StandardRepresentation;
@@ -33,6 +28,11 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.String.format;
+
 /**
  * Allows in-test specification of expected exception types and messages.
  *
@@ -41,11 +41,12 @@ import org.junit.runners.model.Statement;
 public class ExpectedException implements TestRule {
     private final org.junit.rules.ExpectedException delegate = org.junit.rules.ExpectedException.none();
 
+    private ExpectedException() {
+    }
+
     public static ExpectedException none() {
         return new ExpectedException();
     }
-
-    private ExpectedException() {}
 
     @Override
     public Statement apply(Statement base, Description description) {
@@ -65,7 +66,8 @@ public class ExpectedException implements TestRule {
     }
 
     public void expectAssertionError(AssertionErrorFactory assertionErrorFactory) {
-        AssertionError assertionError = assertionErrorFactory.newAssertionError(null, StandardRepresentation.STANDARD_REPRESENTATION);
+        AssertionError assertionError = assertionErrorFactory
+          .newAssertionError(null, StandardRepresentation.STANDARD_REPRESENTATION);
         delegate.expect(new ThrowableMatcher<>(AssertionError.class, assertionError.getMessage()));
     }
 
@@ -188,5 +190,4 @@ public class ExpectedException implements TestRule {
             return format("<%s: %s>", clazz.getName(), message);
         }
     }
-
 }
