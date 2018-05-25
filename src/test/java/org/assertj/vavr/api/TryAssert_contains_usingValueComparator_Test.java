@@ -26,56 +26,56 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class TryAssert_contains_usingValueComparator_Test extends BaseTest {
 
-  private static Comparator<Foo> FOO_COMPARATOR = Comparator
+    private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
 
-  @Test
-  public void should_fail_when_try_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_try_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<Foo>) null).usingValueComparator(FOO_COMPARATOR)
-                                  .contains(new Foo("something"));
-  }
-
-  @Test
-  public void should_fail_if_expected_value_is_null() {
-    thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-    assertThat(Try.success(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(null);
-  }
-
-  @Test
-  public void should_pass_if_successful_try_contains_expected_value() {
-    assertThat(Try.success(new Foo("something")))
-        .usingValueComparator(FOO_COMPARATOR)
-        .contains(new Foo("SoMething"));
-  }
-
-  @Test
-  public void should_fail_if_successful_try_does_not_contain_expected_value() {
-    Try<Foo> actual = Try.success(new Foo("something"));
-    Foo expectedValue = new Foo("something else");
-
-    thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
-
-    assertThat(actual).usingValueComparator(FOO_COMPARATOR).contains(expectedValue);
-  }
-
-  private static class Foo {
-
-    private final String value;
-
-    Foo(String value) {
-      this.value = value;
+        assertThat((Option<Foo>) null).usingValueComparator(FOO_COMPARATOR)
+                                      .contains(new Foo("something"));
     }
 
-    String getValue() {
-      return value;
+    @Test
+    public void should_fail_if_expected_value_is_null() {
+        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
+
+        assertThat(Try.success(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(null);
     }
 
-    @Override
-    public String toString() {
-      return "Foo{value='" + value + "'}";
+    @Test
+    public void should_pass_if_successful_try_contains_expected_value() {
+        assertThat(Try.success(new Foo("something")))
+          .usingValueComparator(FOO_COMPARATOR)
+          .contains(new Foo("SoMething"));
     }
-  }
+
+    @Test
+    public void should_fail_if_successful_try_does_not_contain_expected_value() {
+        Try<Foo> actual = Try.success(new Foo("something"));
+        Foo expectedValue = new Foo("something else");
+
+        thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
+
+        assertThat(actual).usingValueComparator(FOO_COMPARATOR).contains(expectedValue);
+    }
+
+    private static class Foo {
+
+        private final String value;
+
+        Foo(String value) {
+            this.value = value;
+        }
+
+        String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return "Foo{value='" + value + "'}";
+        }
+    }
 }
