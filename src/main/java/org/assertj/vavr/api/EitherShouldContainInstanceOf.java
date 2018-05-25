@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Either;
-
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
@@ -35,7 +34,7 @@ class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
     /**
      * Indicates that a value should be present in a right-sided {@link io.vavr.control.Either}.
      *
-     * @param value Either to be checked.
+     * @param value         Either to be checked.
      * @param expectedClazz expected class of a right value
      * @return an error message factory.
      * @throws java.lang.NullPointerException if either is null.
@@ -44,44 +43,43 @@ class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
         Either<?, ?> either = (Either<?, ?>) value;
         if (either.isRight()) {
             return new EitherShouldContainInstanceOf(String
-                                                         .format(
-                                                             EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE,
-                                                             either.getClass().getSimpleName(),
-                                                             expectedClazz.getName(),
-                                                             either.get().getClass().getName()));
+              .format(
+                EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE,
+                either.getClass().getSimpleName(),
+                expectedClazz.getName(),
+                either.get().getClass().getName()));
         }
         return new EitherShouldContainInstanceOf(String
-                                                     .format(
-                                                         EXPECTING_TO_CONTAIN_BUT_IS_LEFT,
-                                                         either.getClass().getSimpleName(),
-                                                         expectedClazz.getName()));
+          .format(
+            EXPECTING_TO_CONTAIN_BUT_IS_LEFT,
+            either.getClass().getSimpleName(),
+            expectedClazz.getName()));
     }
 
     /**
      * Indicates that a value should be present in a left-sided {@link io.vavr.control.Either}.
      *
-     * @param value Either to be checked.
+     * @param value         Either to be checked.
      * @param expectedClazz expected class of a left value
      * @return an error message factory.
      * @throws java.lang.NullPointerException if either is null.
      */
     static EitherShouldContainInstanceOf shouldContainOnLeftInstanceOf(Object value,
-                                                                        Class<?> expectedClazz) {
+                                                                       Class<?> expectedClazz) {
         Either<?, ?> either = (Either<?, ?>) value;
         if (either.isLeft()) {
             return new EitherShouldContainInstanceOf(String
-                                                         .format(
-                                                             EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE,
-                                                             either.getClass().getSimpleName(),
-                                                             expectedClazz.getName(),
-                                                             either.getLeft().getClass().getName()));
+              .format(
+                EXPECTING_TO_CONTAIN_DIFFERENT_INSTANCE,
+                either.getClass().getSimpleName(),
+                expectedClazz.getName(),
+                either.getLeft().getClass().getName()));
         }
         return new EitherShouldContainInstanceOf(String
-                                                     .format(
-                                                         EXPECTING_TO_CONTAIN_BUT_IS_RIGHT,
-                                                         either.getClass().getSimpleName(),
-                                                         expectedClazz.getName()));
+          .format(
+            EXPECTING_TO_CONTAIN_BUT_IS_RIGHT,
+            either.getClass().getSimpleName(),
+            expectedClazz.getName()));
     }
-
 }
 

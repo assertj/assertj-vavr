@@ -1,7 +1,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**

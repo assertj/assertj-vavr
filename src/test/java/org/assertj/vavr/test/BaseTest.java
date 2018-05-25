@@ -38,5 +38,4 @@ public class BaseTest {
     public void failBecauseExpectedAssertionErrorWasNotThrown() {
         Assert.fail("Assertion error expected");
     }
-
 }

@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -23,24 +22,24 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_isRight_Test extends BaseTest {
 
-  @Test
-  public void should_pass_if_Either_is_right() {
-    assertThat(Either.right("right")).isRight();
-  }
+    @Test
+    public void should_pass_if_Either_is_right() {
+        assertThat(Either.right("right")).isRight();
+    }
 
-  @Test
-  public void should_fail_when_Either_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_Either_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Either<String, String>) null).isRight();
-  }
+        assertThat((Either<String, String>) null).isRight();
+    }
 
-  @Test
-  public void should_fail_if_Either_is_left() {
-    Either<String, String> actual = Either.left("left");
+    @Test
+    public void should_fail_if_Either_is_left() {
+        Either<String, String> actual = Either.left("left");
 
-    thrown.expectAssertionError(shouldBeRight(actual).create());
+        thrown.expectAssertionError(shouldBeRight(actual).create());
 
-    assertThat(actual).isRight();
-  }
+        assertThat(actual).isRight();
+    }
 }

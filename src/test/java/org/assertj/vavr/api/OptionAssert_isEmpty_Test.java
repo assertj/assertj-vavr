@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -23,24 +22,24 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_isEmpty_Test extends BaseTest {
 
-  @Test
-  public void should_pass_if_Option_is_empty() {
-    assertThat(Option.none()).isEmpty();
-  }
+    @Test
+    public void should_pass_if_Option_is_empty() {
+        assertThat(Option.none()).isEmpty();
+    }
 
-  @Test
-  public void should_fail_when_Option_is_null() {
-    thrown.expectAssertionError(actualIsNull());
+    @Test
+    public void should_fail_when_Option_is_null() {
+        thrown.expectAssertionError(actualIsNull());
 
-    assertThat((Option<String>) null).isEmpty();
-  }
+        assertThat((Option<String>) null).isEmpty();
+    }
 
-  @Test
-  public void should_fail_if_Option_is_present() {
-    Option<String> actual = Option.of("not-empty");
+    @Test
+    public void should_fail_if_Option_is_present() {
+        Option<String> actual = Option.of("not-empty");
 
-    thrown.expectAssertionError(shouldBeEmpty(actual).create());
+        thrown.expectAssertionError(shouldBeEmpty(actual).create());
 
-    assertThat(actual).isEmpty();
-  }
+        assertThat(actual).isEmpty();
+    }
 }

@@ -199,7 +199,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @param reason the expected exception class.
      * @return this assertion object.
      */
-    public <U extends Throwable> SELF failBecauseOf(Class<U> reason){
+    public <U extends Throwable> SELF failBecauseOf(Class<U> reason) {
         isNotNull();
         checkNotNull(reason);
         assertIsFailure();
@@ -213,7 +213,7 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @param exceptionMessage the expected exception message.
      * @return this assertion object.
      */
-    public SELF failReasonHasMessage(String exceptionMessage){
+    public SELF failReasonHasMessage(String exceptionMessage) {
         isNotNull();
         checkNotNull(exceptionMessage);
         assertIsFailure();

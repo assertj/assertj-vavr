@@ -38,14 +38,14 @@ class TryShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument.
      *
-     * @param Try           the {@link io.vavr.control.Try} which contains a value.
+     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
      * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
      * @return a error message factory
      */
-    static <VALUE> TryShouldContain shouldContain(Try<VALUE> Try, VALUE expectedValue) {
-        return Try.isSuccess() ?
-          new TryShouldContain(EXPECTING_TO_CONTAIN, Try, expectedValue) :
+    static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
+        return vTry.isSuccess() ?
+          new TryShouldContain(EXPECTING_TO_CONTAIN, vTry, expectedValue) :
           shouldContain(expectedValue);
     }
 
@@ -53,14 +53,14 @@ class TryShouldContain extends BasicErrorMessageFactory {
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument (judging by reference
      * equality).
      *
-     * @param Try           the {@link io.vavr.control.Try} which contains a value.
+     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
      * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
      * @return a error message factory
      */
-    static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> Try, VALUE expectedValue) {
-        return Try.isSuccess() ?
-          new TryShouldContain(EXPECTING_TO_CONTAIN_SAME, Try, expectedValue) :
+    static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
+        return vTry.isSuccess() ?
+          new TryShouldContain(EXPECTING_TO_CONTAIN_SAME, vTry, expectedValue) :
           shouldContain(expectedValue);
     }
 

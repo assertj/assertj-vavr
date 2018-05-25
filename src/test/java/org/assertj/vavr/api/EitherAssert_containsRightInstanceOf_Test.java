@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -25,55 +24,55 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsRightInstanceOf_Test extends BaseTest {
 
-  @Test
-  public void should_fail_if_either_is_null() {
-    Either<Object, Object> actual = null;
+    @Test
+    public void should_fail_if_either_is_null() {
+        Either<Object, Object> actual = null;
 
-    Throwable thrown = catchThrowable(
-        () -> assertThat(actual).containsRightInstanceOf(Object.class));
+        Throwable thrown = catchThrowable(
+          () -> assertThat(actual).containsRightInstanceOf(Object.class));
 
-    assertThat(thrown).isInstanceOf(AssertionError.class)
-                      .hasMessage(actualIsNull());
-  }
+        assertThat(thrown).isInstanceOf(AssertionError.class)
+          .hasMessage(actualIsNull());
+    }
 
-  @Test
-  public void should_fail_if_either_is_left() {
-    Either<String, Object> actual = Either.left("some");
+    @Test
+    public void should_fail_if_either_is_left() {
+        Either<String, Object> actual = Either.left("some");
 
-    Throwable thrown = catchThrowable(() -> assertThat(actual).containsRightInstanceOf(Object.class));
+        Throwable thrown = catchThrowable(() -> assertThat(actual).containsRightInstanceOf(Object.class));
 
-    assertThat(thrown).isInstanceOf(AssertionError.class)
-                      .hasMessage(EitherShouldBeRight.shouldBeRight(actual).create());
-  }
+        assertThat(thrown).isInstanceOf(AssertionError.class)
+          .hasMessage(EitherShouldBeRight.shouldBeRight(actual).create());
+    }
 
-  @Test
-  public void should_pass_if_either_contains_required_type_on_right() {
-    assertThat(Either.right("something")).containsRightInstanceOf(String.class)
-                                         .containsRightInstanceOf(Object.class);
-  }
+    @Test
+    public void should_pass_if_either_contains_required_type_on_right() {
+        assertThat(Either.right("something")).containsRightInstanceOf(String.class)
+          .containsRightInstanceOf(Object.class);
+    }
 
-  @Test
-  public void should_pass_if_either_contains_required_type_subclass_on_right() {
-    assertThat(Either.right(new SubClass())).containsRightInstanceOf(ParentClass.class);
-  }
+    @Test
+    public void should_pass_if_either_contains_required_type_subclass_on_right() {
+        assertThat(Either.right(new SubClass())).containsRightInstanceOf(ParentClass.class);
+    }
 
-  @Test
-  public void should_fail_if_either_contains_other_type_on_right_than_required() {
-    Either<Object, ParentClass> actual = Either.right(new ParentClass());
+    @Test
+    public void should_fail_if_either_contains_other_type_on_right_than_required() {
+        Either<Object, ParentClass> actual = Either.right(new ParentClass());
 
-    Throwable thrown = catchThrowable(
-        () -> assertThat(actual).containsRightInstanceOf(OtherClass.class));
+        Throwable thrown = catchThrowable(
+          () -> assertThat(actual).containsRightInstanceOf(OtherClass.class));
 
-    assertThat(thrown).isInstanceOf(AssertionError.class)
-                      .hasMessage(shouldContainOnRightInstanceOf(actual, OtherClass.class).create());
-  }
+        assertThat(thrown).isInstanceOf(AssertionError.class)
+          .hasMessage(shouldContainOnRightInstanceOf(actual, OtherClass.class).create());
+    }
 
-  private static class ParentClass {
-  }
+    private static class ParentClass {
+    }
 
-  private static class SubClass extends ParentClass {
-  }
+    private static class SubClass extends ParentClass {
+    }
 
-  private static class OtherClass {
-  }
+    private static class OtherClass {
+    }
 }
