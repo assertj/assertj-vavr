@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
 import io.vavr.control.Try;
-
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
