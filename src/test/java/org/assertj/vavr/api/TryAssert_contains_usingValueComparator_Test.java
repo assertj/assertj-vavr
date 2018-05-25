@@ -34,7 +34,7 @@ public class TryAssert_contains_usingValueComparator_Test extends BaseTest {
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<Foo>) null).usingValueComparator(FOO_COMPARATOR)
-                                      .contains(new Foo("something"));
+          .contains(new Foo("something"));
     }
 
     @Test

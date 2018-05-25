@@ -29,7 +29,7 @@ public class TryAssert_contains_usingFieldByFieldValueComparator_Test extends Ba
         thrown.expectAssertionError(actualIsNull());
 
         assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
-                                      .contains(new Foo("something"));
+          .contains(new Foo("something"));
     }
 
     @Test
