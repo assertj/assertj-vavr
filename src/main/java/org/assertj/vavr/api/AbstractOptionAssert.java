@@ -76,7 +76,7 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Option} contains the given value (alias of {@link #hasValue(Object)}).
+     * Verifies that the actual {@link io.vavr.control.Option} contains the given value.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Option}.
      * @return this assertion object.
@@ -190,6 +190,7 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
     /**
      * Call {@link Option#flatMap(Function) flatMap} on the {@code Option} under test, assertions chained afterwards are performed on the {@code Option} resulting from the flatMap call.
      *
+     * @param <U> the type of a value contained in {@link Option}.
      * @param mapper the {@link Function} to use in the {@link Option#flatMap(Function) flatMap} operation.
      * @return a new {@link org.assertj.vavr.api.AbstractOptionAssert} for assertions chaining on the flatMap of the Option.
      * @throws AssertionError if the actual {@link Option} is null.
@@ -203,6 +204,7 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
     /**
      * Call {@link Option#map(Function) map} on the {@code Option} under test, assertions chained afterwards are performed on the {@code Option} resulting from the map call.
      *
+     * @param <U> the type of a value contained in {@link Option}.
      * @param mapper the {@link Function} to use in the {@link Option#map(Function) map} operation.
      * @return a new {@link org.assertj.vavr.api.AbstractOptionAssert} for assertions chaining on the map of the Option.
      * @throws AssertionError if the actual {@link Option} is null.

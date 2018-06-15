@@ -170,7 +170,9 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     /**
      * Call {@link Try#flatMap(Function) flatMap} on the {@code Try} under test, assertions chained afterwards are performed on the {@code Try} resulting from the flatMap call.
      *
+     * @param <U> type of a value contained by successful {@link Try} created by {@code mapper} function
      * @param mapper the {@link Function} to use in the {@link Try#flatMap(Function) flatMap} operation.
+     *
      * @return a new {@link org.assertj.vavr.api.AbstractTryAssert} for assertions chaining on the flatMap of the Try.
      * @throws AssertionError if the actual {@link Try} is null.
      */
@@ -183,7 +185,9 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     /**
      * Call {@link Try#map(Function) map} on the {@code Try} under test, assertions chained afterwards are performed on the {@code Try} resulting from the map call.
      *
+     * @param <U> type of a value created by {@code mapper} function
      * @param mapper the {@link Function} to use in the {@link Try#map(Function) map} operation.
+     *
      * @return a new {@link org.assertj.vavr.api.AbstractTryAssert} for assertions chaining on the map of the Try.
      * @throws AssertionError if the actual {@link Try} is null.
      */
@@ -194,9 +198,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     }
 
     /**
-     * Verifies that the actual @{@link io.vavr.control.Try} fails because of specific {@link Throwable}.
+     * Verifies that the actual {@link Try} fails because of specific {@link Throwable}.
      *
+     * @param <U> specific type of {@link Throwable}
      * @param reason the expected exception class.
+     *
      * @return this assertion object.
      */
     public <U extends Throwable> SELF failBecauseOf(Class<U> reason) {
