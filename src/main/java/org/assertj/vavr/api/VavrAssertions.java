@@ -32,6 +32,10 @@ public final class VavrAssertions {
     /**
      * Create assertion for {@link io.vavr.control.Either}.
      *
+     * @param <LEFT> the type of a value contained on left by <code>actual {@link Either}</code>.
+     * @param <RIGHT> the type of a value contained on right by <code>actual {@link Either}</code>.
+     * @param actual the actual value.
+     *
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -42,6 +46,9 @@ public final class VavrAssertions {
     /**
      * Create assertion for {@link io.vavr.control.Option}.
      *
+     * @param <VALUE> the type of a value contained by <code>actual {@link Option}</code>.
+     * @param actual the actual value.
+     *
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -51,6 +58,9 @@ public final class VavrAssertions {
 
     /**
      * Create assertion for {@link io.vavr.control.Try}.
+     *
+     * @param <VALUE> the type of a value contained by <code>actual {@link Try}</code>.
+     * @param actual the actual value.
      *
      * @return the created assertion object.
      */
