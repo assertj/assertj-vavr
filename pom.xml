@@ -11,7 +11,7 @@
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
     <inceptionYear>2017</inceptionYear>
-
+  
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -85,7 +85,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+          
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
