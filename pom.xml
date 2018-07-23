@@ -6,7 +6,7 @@
 
     <groupId>org.assertj</groupId>
     <artifactId>assertj-vavr</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
