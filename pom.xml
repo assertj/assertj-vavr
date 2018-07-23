@@ -26,6 +26,34 @@
         <tag>HEAD</tag>
     </scm>
 
+    <url>https://github.com/assertj/assertj-vavr</url>
+
+    <developers>
+        <developer>
+            <name>Grzegorz Piwowarek</name>
+            <email>gpiwowarek@gmail.com</email>
+            <url>http://pivovarit.github.io/</url>
+            <id>gpiwowarek</id>
+        </developer>
+        <developer>
+            <name>Michał Chmielarz</name>
+            <email>michal.chmielarz@gmail.com</email>
+            <url>http://www.devthoughts.pl</url>
+            <id>mchmielarz</id>
+        </developer>
+        <developer>
+            <name>Bartek Kuczyński</name>
+            <url>http://koziolekweb.pl</url>
+            <id>Koziolek</id>
+        </developer>
+        <developer>
+            <name>Alex Dukhno</name>
+            <email>alex.dukhno@icloud.com</email>
+            <url>https://alex-diez.github.io/</url>
+            <id>Alex-Diez</id>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>github</system>
         <url>https://github.com/assertj/assertj-vavr/issues</url>
