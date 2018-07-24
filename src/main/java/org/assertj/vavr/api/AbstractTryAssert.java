@@ -56,6 +56,26 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     }
 
     /**
+     * Verifies that the actual {@link io.vavr.control.Try} is a succeeded {code Try}.
+     *
+     * @return this assertion object.
+     */
+    public SELF isSuccess() {
+        assertIsSuccess();
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Try} is a failed {code Try}.
+     *
+     * @return this assertion object.
+     */
+    public SELF isFailure() {
+        assertIsFailure();
+        return myself;
+    }
+
+    /**
      * Verifies that the actual {@link io.vavr.control.Try} contains the given value.
      *
      * @param expectedValue the expected value inside the {@link io.vavr.control.Try}.
