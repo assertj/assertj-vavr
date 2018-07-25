@@ -21,10 +21,10 @@ import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOn
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsRightInstanceOf_Test {
+class EitherAssert_containsRightInstanceOf_Test {
 
     @Test
-    public void should_fail_if_either_is_null() {
+    void should_fail_if_either_is_null() {
         Either<Object, Object> actual = null;
 
         assertThrows(AssertionError.class,
@@ -33,7 +33,7 @@ public class EitherAssert_containsRightInstanceOf_Test {
     }
 
     @Test
-    public void should_fail_if_either_is_left() {
+    void should_fail_if_either_is_left() {
         Either<String, Object> actual = Either.left("some");
 
         assertThrows(AssertionError.class,
@@ -42,18 +42,18 @@ public class EitherAssert_containsRightInstanceOf_Test {
     }
 
     @Test
-    public void should_pass_if_either_contains_required_type_on_right() {
+    void should_pass_if_either_contains_required_type_on_right() {
         assertThat(Either.right("something")).containsRightInstanceOf(String.class)
           .containsRightInstanceOf(Object.class);
     }
 
     @Test
-    public void should_pass_if_either_contains_required_type_subclass_on_right() {
+    void should_pass_if_either_contains_required_type_subclass_on_right() {
         assertThat(Either.right(new SubClass())).containsRightInstanceOf(ParentClass.class);
     }
 
     @Test
-    public void should_fail_if_either_contains_other_type_on_right_than_required() {
+    void should_fail_if_either_contains_other_type_on_right_than_required() {
         Either<Object, ParentClass> actual = Either.right(new ParentClass());
 
         assertThrows(AssertionError.class,

@@ -23,13 +23,13 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnLeft_usingValueComparator_Test {
+class EitherAssert_containsOnLeft_usingValueComparator_Test {
 
     private static Comparator<Foo> FOO_COMPARATOR = Comparator
         .comparing(o -> o.getValue().toLowerCase());
 
     @Test
-    public void should_fail_when_either_is_null() {
+    void should_fail_when_either_is_null() {
         assertThrows(
             AssertionError.class,
             () -> assertThat((Either<Foo, String>) null)
@@ -40,7 +40,7 @@ public class EitherAssert_containsOnLeft_usingValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_either_is_right_sided() {
+    void should_fail_if_either_is_right_sided() {
         final Either<Object, Foo> actual = Either.right(new Foo("something"));
 
         assertThrows(
@@ -53,7 +53,7 @@ public class EitherAssert_containsOnLeft_usingValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(
             IllegalArgumentException.class,
             () -> assertThat(Either.left(new Foo("something")))
@@ -64,14 +64,14 @@ public class EitherAssert_containsOnLeft_usingValueComparator_Test {
     }
 
     @Test
-    public void should_pass_if_left_sided_either_contains_expected_value() {
+    void should_pass_if_left_sided_either_contains_expected_value() {
         assertThat(Either.left(new Foo("something")))
             .usingValueComparator(FOO_COMPARATOR)
             .containsOnLeft(new Foo("SoMething"));
     }
 
     @Test
-    public void should_fail_if_left_sided_either_does_not_contain_expected_value() {
+    void should_fail_if_left_sided_either_does_not_contain_expected_value() {
         Either<Foo, String> actual = Either.left(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 

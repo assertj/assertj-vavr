@@ -20,22 +20,22 @@ import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_isEmpty_Test {
+class OptionAssert_isEmpty_Test {
 
     @Test
-    public void should_pass_if_Option_is_empty() {
+    void should_pass_if_Option_is_empty() {
         assertThat(Option.none()).isEmpty();
     }
 
     @Test
-    public void should_fail_when_Option_is_null() {
+    void should_fail_when_Option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).isEmpty(),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_if_Option_is_present() {
+    void should_fail_if_Option_is_present() {
         Option<String> actual = Option.of("not-empty");
 
         assertThrows(AssertionError.class,

@@ -21,16 +21,16 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test {
+class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test {
 
 	@Test
-	public void should_fail_when_either_is_null() {
+	void should_fail_when_either_is_null() {
 		assertThrows(AssertionError.class, () -> assertThat((Either<String, Foo>) null)
 				.usingFieldByFieldValueComparator().containsOnRight(new Foo("something")), actualIsNull());
 	}
 
 	@Test
-	public void should_fail_if_expected_value_is_null() {
+	void should_fail_if_expected_value_is_null() {
 		assertThrows(
 				IllegalArgumentException.class, () -> assertThat(Either.right(new Foo("something")))
 						.usingFieldByFieldValueComparator().containsOnRight(null),
@@ -38,13 +38,13 @@ public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test 
 	}
 
 	@Test
-	public void should_pass_if_right_sided_either_contains_expected_value() {
+	void should_pass_if_right_sided_either_contains_expected_value() {
 		assertThat(Either.right(new Foo("something"))).usingFieldByFieldValueComparator()
 				.containsOnRight(new Foo("something"));
 	}
 
 	@Test
-	public void should_fail_if_right_sided_either_does_not_contain_expected_value() {
+	void should_fail_if_right_sided_either_does_not_contain_expected_value() {
 		Either<String, Foo> actual = Either.right(new Foo("something"));
 		Foo expectedValue = new Foo("something else");
 
@@ -54,7 +54,7 @@ public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test 
 	}
 
 	@Test
-	public void should_fail_if_either_is_left_sided() {
+	void should_fail_if_either_is_left_sided() {
 		Foo expectedValue = new Foo("test");
 		final Either<Foo, Object> actual = Either.left(new Foo("something else"));
 
@@ -72,7 +72,7 @@ public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test 
 		}
 
 		@SuppressWarnings("unused")
-		public String getValue() {
+		String getValue() {
 			return value;
 		}
 

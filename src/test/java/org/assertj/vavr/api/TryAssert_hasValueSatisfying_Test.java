@@ -8,10 +8,10 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_hasValueSatisfying_Test {
+class TryAssert_hasValueSatisfying_Test {
 
     @Test
-    public void should_fail_when_try_is_null() {
+    void should_fail_when_try_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Try<String>) null).hasValueSatisfying(val -> {
                 }),
@@ -19,7 +19,7 @@ public class TryAssert_hasValueSatisfying_Test {
     }
 
     @Test
-    public void should_fail_when_try_is_failure() {
+    void should_fail_when_try_is_failure() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.failure(new NullPointerException())).hasValueSatisfying(val -> {
                 }),
@@ -27,7 +27,7 @@ public class TryAssert_hasValueSatisfying_Test {
     }
 
     @Test
-    public void should_fail_when_value_does_not_satisfy_consumer() {
+    void should_fail_when_value_does_not_satisfy_consumer() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.success("OK"))
                         .hasValueSatisfying(val -> assertThat(val).isBlank()),
@@ -35,7 +35,7 @@ public class TryAssert_hasValueSatisfying_Test {
     }
 
     @Test
-    public void should_pass_when_value_satisfies_consumer() {
+    void should_pass_when_value_satisfies_consumer() {
         assertThat(Try.success("OK"))
           .hasValueSatisfying(val -> assertThat(val).isNotBlank().isEqualTo("OK"));
     }

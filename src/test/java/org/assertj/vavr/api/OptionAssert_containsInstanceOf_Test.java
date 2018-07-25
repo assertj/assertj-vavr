@@ -20,10 +20,10 @@ import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainIn
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_containsInstanceOf_Test {
+class OptionAssert_containsInstanceOf_Test {
 
     @Test
-    public void should_fail_if_option_is_empty() {
+    void should_fail_if_option_is_empty() {
         Option<Object> actual = Option.none();
 
         assertThrows(AssertionError.class,
@@ -32,18 +32,18 @@ public class OptionAssert_containsInstanceOf_Test {
     }
 
     @Test
-    public void should_pass_if_option_contains_required_type() {
+    void should_pass_if_option_contains_required_type() {
         assertThat(Option.of("something")).containsInstanceOf(String.class)
           .containsInstanceOf(Object.class);
     }
 
     @Test
-    public void should_pass_if_option_contains_required_type_subclass() {
+    void should_pass_if_option_contains_required_type_subclass() {
         assertThat(Option.of(new SubClass())).containsInstanceOf(ParentClass.class);
     }
 
     @Test
-    public void should_fail_if_option_contains_other_type_than_required() {
+    void should_fail_if_option_contains_other_type_than_required() {
         Option<ParentClass> actual = Option.of(new ParentClass());
 
         assertThrows(AssertionError.class,

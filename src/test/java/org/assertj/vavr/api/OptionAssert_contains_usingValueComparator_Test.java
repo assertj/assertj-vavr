@@ -22,13 +22,13 @@ import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_contains_usingValueComparator_Test {
+class OptionAssert_contains_usingValueComparator_Test {
 
     private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<Foo>) null).usingValueComparator(FOO_COMPARATOR)
                         .contains(new Foo("something")),
@@ -36,20 +36,20 @@ public class OptionAssert_contains_usingValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Option.of(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_pass_if_option_contains_expected_value() {
+    void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of(new Foo("something"))).usingValueComparator(FOO_COMPARATOR)
           .contains(new Foo("SoMething"));
     }
 
     @Test
-    public void should_fail_if_option_does_not_contain_expected_value() {
+    void should_fail_if_option_does_not_contain_expected_value() {
         Option<Foo> actual = Option.of(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
@@ -59,7 +59,7 @@ public class OptionAssert_contains_usingValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_option_is_empty() {
+    void should_fail_if_option_is_empty() {
         Foo expectedValue = new Foo("test");
 
         assertThrows(AssertionError.class,

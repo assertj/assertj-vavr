@@ -21,29 +21,29 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsRight_Test {
+class EitherAssert_containsRight_Test {
 
     @Test
-    public void should_fail_when_either_is_null() {
+    void should_fail_when_either_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Either<String, String>) null).containsOnRight("something"),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Either.right("something")).containsOnRight(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_pass_if_either_contains_expected_value_on_right_side() {
+    void should_pass_if_either_contains_expected_value_on_right_side() {
         assertThat(Either.right("something")).containsOnRight("something");
     }
 
     @Test
-    public void should_fail_if_either_does_not_contain_expected_value_on_right_side() {
+    void should_fail_if_either_does_not_contain_expected_value_on_right_side() {
         Either<String, String> actual = Either.right("something");
         String expectedValue = "nothing";
 
@@ -53,7 +53,7 @@ public class EitherAssert_containsRight_Test {
     }
 
     @Test
-    public void should_fail_if_either_is_left() {
+    void should_fail_if_either_is_left() {
         Either<String, String> actual = Either.left("nothing");
         String expectedValue = "something";
 

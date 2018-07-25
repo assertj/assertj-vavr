@@ -23,13 +23,13 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnRight_usingValueComparator_Test {
+class EitherAssert_containsOnRight_usingValueComparator_Test {
 
     private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
 
     @Test
-    public void should_fail_when_either_is_null() {
+    void should_fail_when_either_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Either<String, Foo>) null).usingValueComparator(FOO_COMPARATOR)
                         .containsOnRight(new Foo("something")),
@@ -37,14 +37,14 @@ public class EitherAssert_containsOnRight_usingValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnRight(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_fail_if_either_is_left_sided() {
+    void should_fail_if_either_is_left_sided() {
         final Either<Foo, Object> actual = Either.left(new Foo("something"));
 
         assertThrows(AssertionError.class,
@@ -54,14 +54,14 @@ public class EitherAssert_containsOnRight_usingValueComparator_Test {
     }
 
     @Test
-    public void should_pass_if_right_sided_either_contains_expected_value() {
+    void should_pass_if_right_sided_either_contains_expected_value() {
         assertThat(Either.right(new Foo("something")))
           .usingValueComparator(FOO_COMPARATOR)
           .containsOnRight(new Foo("SoMething"));
     }
 
     @Test
-    public void should_fail_if_right_sided_either_does_not_contain_expected_value() {
+    void should_fail_if_right_sided_either_does_not_contain_expected_value() {
         Either<String, Foo> actual = Either.right(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 

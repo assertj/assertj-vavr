@@ -22,10 +22,10 @@ import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsLeftSame_Test {
+class EitherAssert_containsLeftSame_Test {
 
     @Test
-    public void should_fail_when_either_is_null() {
+    void should_fail_when_either_is_null() {
         assertThrows(
             AssertionError.class,
             () -> assertThat((Either<String, String>) null).containsLeftSame("something"),
@@ -34,7 +34,7 @@ public class EitherAssert_containsLeftSame_Test {
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(
             IllegalArgumentException.class,
             () -> assertThat(Either.left("something")).containsLeftSame(null),
@@ -43,13 +43,13 @@ public class EitherAssert_containsLeftSame_Test {
     }
 
     @Test
-    public void should_pass_if_either_contains_same_instance_on_left_side() {
+    void should_pass_if_either_contains_same_instance_on_left_side() {
         final String value = "something";
         assertThat(Either.left(value)).containsLeftSame(value);
     }
 
     @Test
-    public void should_fail_if_either_does_not_contain_same_instance_on_left_side() {
+    void should_fail_if_either_does_not_contain_same_instance_on_left_side() {
         Either<String, String> actual = Either.left("something");
         final String expectedValue = new String("something");
 
@@ -61,7 +61,7 @@ public class EitherAssert_containsLeftSame_Test {
     }
 
     @Test
-    public void should_fail_if_either_is_right() {
+    void should_fail_if_either_is_right() {
         Either<String, String> actual = Either.right("nothing");
         String expectedValue = "something";
 

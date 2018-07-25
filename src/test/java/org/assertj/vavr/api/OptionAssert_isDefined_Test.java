@@ -20,22 +20,22 @@ import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_isDefined_Test {
+class OptionAssert_isDefined_Test {
 
     @Test
-    public void should_pass_when_Option_is_present() {
+    void should_pass_when_Option_is_present() {
         assertThat(Option.of("present")).isDefined();
     }
 
     @Test
-    public void should_fail_when_Option_is_empty() {
+    void should_fail_when_Option_is_empty() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Option.none()).isDefined(),
                 shouldBePresent().create());
     }
 
     @Test
-    public void should_fail_when_Option_is_null() {
+    void should_fail_when_Option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).isDefined(),
                 actualIsNull());

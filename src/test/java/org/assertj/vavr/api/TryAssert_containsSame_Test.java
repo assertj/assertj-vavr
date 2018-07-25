@@ -7,24 +7,24 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_containsSame_Test {
+class TryAssert_containsSame_Test {
 
     @Test
-    public void should_fail_when_try_is_null() {
+    void should_fail_when_try_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Try<String>) null).containsSame(""),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_when_expected_value_is_null() {
+    void should_fail_when_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Try.success("some value")).containsSame(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_fail_when_success_try_contains_not_the_same_value() {
+    void should_fail_when_success_try_contains_not_the_same_value() {
         final String actual = "OK";
         final String expected = new String(actual);
         assertThrows(AssertionError.class,
@@ -33,7 +33,7 @@ public class TryAssert_containsSame_Test {
     }
 
     @Test
-    public void should_fail_when_success_try_contains_different_value() {
+    void should_fail_when_success_try_contains_different_value() {
         final String actual = "OK";
         final String expected = "different";
         assertThrows(AssertionError.class,
@@ -42,13 +42,13 @@ public class TryAssert_containsSame_Test {
     }
 
     @Test
-    public void should_pass_when_success_try_contains_the_same_value() {
+    void should_pass_when_success_try_contains_the_same_value() {
         final String value = "OK";
         assertThat(Try.success(value)).containsSame(value);
     }
 
     @Test
-    public void should_fail_when_try_is_a_failure() {
+    void should_fail_when_try_is_a_failure() {
         final NullPointerException exception = new NullPointerException();
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.failure(exception)).containsSame(exception),

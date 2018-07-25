@@ -7,17 +7,17 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_containsInstanceOf_Test {
+class TryAssert_containsInstanceOf_Test {
 
     @Test
-    public void should_fail_when_try_is_null() {
+    void should_fail_when_try_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Try<String>) null).containsInstanceOf(String.class),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_when_try_is_a_failure() {
+    void should_fail_when_try_is_a_failure() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.failure(new NullPointerException()))
                         .containsInstanceOf(NullPointerException.class),
@@ -25,14 +25,14 @@ public class TryAssert_containsInstanceOf_Test {
     }
 
     @Test
-    public void should_fail_when_success_try_contains_value_of_different_class() {
+    void should_fail_when_success_try_contains_value_of_different_class() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.success("OK")).containsInstanceOf(Integer.class),
                 "\nExpecting:\n <Success>\nto contain a value that is an instance of:\n <java.lang.Integer>\nbut did contain an instance of:\n <java.lang.String>");
     }
 
     @Test
-    public void should_pass_when_success_try_contains_value_of_expected_class() {
+    void should_pass_when_success_try_contains_value_of_expected_class() {
         assertThat(Try.success("OK")).containsInstanceOf(String.class);
     }
 }

@@ -21,10 +21,10 @@ import static org.assertj.vavr.api.TryShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_contains_usingFieldByFieldValueComparator_Test {
+class TryAssert_contains_usingFieldByFieldValueComparator_Test {
 
     @Test
-    public void should_fail_when_try_is_null() {
+    void should_fail_when_try_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
                         .contains(new Foo("something")),
@@ -32,21 +32,21 @@ public class TryAssert_contains_usingFieldByFieldValueComparator_Test {
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_pass_if_successful_try_contains_expected_value() {
+    void should_pass_if_successful_try_contains_expected_value() {
         assertThat(Try.success(new Foo("something")))
           .usingFieldByFieldValueComparator()
           .contains(new Foo("something"));
     }
 
     @Test
-    public void should_fail_if_successful_try_does_not_contain_expected_value() {
+    void should_fail_if_successful_try_does_not_contain_expected_value() {
         Try<Foo> actual = Try.success(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 

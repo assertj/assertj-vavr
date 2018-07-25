@@ -20,22 +20,22 @@ import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_isRight_Test {
+class EitherAssert_isRight_Test {
 
     @Test
-    public void should_pass_if_Either_is_right() {
+    void should_pass_if_Either_is_right() {
         assertThat(Either.right("right")).isRight();
     }
 
     @Test
-    public void should_fail_when_Either_is_null() {
+    void should_fail_when_Either_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Either<Object, Object>) null).isRight(),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_if_Either_is_left() {
+    void should_fail_if_Either_is_left() {
         Either<String, String> actual = Either.left("left");
 
         assertThrows(AssertionError.class,

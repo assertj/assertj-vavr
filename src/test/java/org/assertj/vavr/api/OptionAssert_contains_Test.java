@@ -20,29 +20,29 @@ import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_contains_Test {
+class OptionAssert_contains_Test {
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).contains("something"),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Option.of("something")).contains(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_pass_if_option_contains_expected_value() {
+    void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of("something")).contains("something");
     }
 
     @Test
-    public void should_fail_if_option_does_not_contain_expected_value() {
+    void should_fail_if_option_does_not_contain_expected_value() {
         Option<String> actual = Option.of("not-expected");
         String expectedValue = "something";
 
@@ -52,7 +52,7 @@ public class OptionAssert_contains_Test {
     }
 
     @Test
-    public void should_fail_if_option_is_empty() {
+    void should_fail_if_option_is_empty() {
         String expectedValue = "something";
 
         assertThrows(AssertionError.class,

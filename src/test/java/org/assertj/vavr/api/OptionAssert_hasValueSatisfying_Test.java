@@ -21,17 +21,17 @@ import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_hasValueSatisfying_Test {
+class OptionAssert_hasValueSatisfying_Test {
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
 				() -> assertThat((Option<String>) null).hasValueSatisfying(s -> {}),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_when_option_is_empty() {
+    void should_fail_when_option_is_empty() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Option.none()).hasValueSatisfying(o -> {
                 }),
@@ -39,7 +39,7 @@ public class OptionAssert_hasValueSatisfying_Test {
     }
 
     @Test
-    public void should_pass_when_consumer_passes() {
+    void should_pass_when_consumer_passes() {
         assertThat(Option.of("something")).hasValueSatisfying(s -> assertThat(s).isEqualTo("something")
           .startsWith("some")
           .endsWith("thing"));
@@ -47,7 +47,7 @@ public class OptionAssert_hasValueSatisfying_Test {
     }
 
     @Test
-    public void should_fail_from_consumer() {
+    void should_fail_from_consumer() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Option.of("something else"))
                         .hasValueSatisfying(s -> assertThat(s).isEqualTo("something")),

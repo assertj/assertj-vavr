@@ -21,31 +21,31 @@ import static org.assertj.vavr.api.OptionShouldContain.shouldContainSame;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_containsSame_Test {
+class OptionAssert_containsSame_Test {
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).containsSame("something"),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
+    void should_fail_if_expected_value_is_null() {
         assertThrows(IllegalArgumentException.class,
                 () -> assertThat(Option.of("something")).containsSame(null),
                 "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_pass_if_option_contains_the_expected_object_reference() {
+    void should_pass_if_option_contains_the_expected_object_reference() {
         String containedAndExpected = "something";
 
         assertThat(Option.of(containedAndExpected)).containsSame(containedAndExpected);
     }
 
     @Test
-    public void should_fail_if_option_does_not_contain_the_expected_object_reference() {
+    void should_fail_if_option_does_not_contain_the_expected_object_reference() {
         Option<String> actual = Option.of("not-expected");
         String expectedValue = "something";
 
@@ -56,7 +56,7 @@ public class OptionAssert_containsSame_Test {
 
     @SuppressWarnings("RedundantStringConstructorCall")
     @Test
-    public void should_fail_if_option_contains_equal_but_not_same_value() {
+    void should_fail_if_option_contains_equal_but_not_same_value() {
         Option<String> actual = Option.of(new String("something"));
         String expectedValue = new String("something");
 
@@ -66,7 +66,7 @@ public class OptionAssert_containsSame_Test {
     }
 
     @Test
-    public void should_fail_if_option_is_empty() {
+    void should_fail_if_option_is_empty() {
         String expectedValue = "something";
 
         assertThrows(AssertionError.class,

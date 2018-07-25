@@ -21,26 +21,26 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_flatMap_Test {
+class OptionAssert_flatMap_Test {
 
 	private static final Function<String, Option<String>> UPPER_CASE_OPTIONAL_STRING = s -> (s == null)
 			? Option.none()
 			: Option.of(s.toUpperCase());
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING),
                 actualIsNull());
     }
 
     @Test
-    public void should_pass_when_option_is_empty() {
+    void should_pass_when_option_is_empty() {
         assertThat(Option.<String>none()).flatMap(UPPER_CASE_OPTIONAL_STRING).isEmpty();
     }
 
     @Test
-    public void should_pass_when_option_contains_a_value() {
+    void should_pass_when_option_contains_a_value() {
         assertThat(Option.of("present")).contains("present")
           .flatMap(UPPER_CASE_OPTIONAL_STRING)
           .contains("PRESENT");

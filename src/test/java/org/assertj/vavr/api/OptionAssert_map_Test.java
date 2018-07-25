@@ -20,22 +20,22 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_map_Test {
+class OptionAssert_map_Test {
 
     @Test
-    public void should_fail_when_Option_is_null() {
+    void should_fail_when_Option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).map(String::length),
                 actualIsNull());
     }
 
     @Test
-    public void should_pass_when_Option_is_empty() {
+    void should_pass_when_Option_is_empty() {
         assertThat(Option.<String>none()).map(String::length).isEmpty();
     }
 
     @Test
-    public void should_pass_when_Option_contains_a_value() {
+    void should_pass_when_Option_contains_a_value() {
         assertThat(Option.of("42"))
           .map(String::length)
           .contains(2);

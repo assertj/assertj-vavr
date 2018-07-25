@@ -22,39 +22,39 @@ import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_hasValueSatisfying_Condition_Test {
+class OptionAssert_hasValueSatisfying_Condition_Test {
 
     private Condition<String> passingCondition = new TestCondition<>(true);
     private Condition<String> notPassingCondition = new TestCondition<>();
 
     @Test
-    public void should_fail_when_option_is_null() {
+    void should_fail_when_option_is_null() {
         assertThrows(AssertionError.class,
                 () -> assertThat((Option<String>) null).hasValueSatisfying(passingCondition),
                 actualIsNull());
     }
 
     @Test
-    public void should_fail_when_option_is_empty() {
+    void should_fail_when_option_is_empty() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Option.<String>none()).hasValueSatisfying(passingCondition),
                 shouldBePresent().create());
     }
 
     @Test
-    public void should_fail_when_condition_is_null() {
+    void should_fail_when_condition_is_null() {
         assertThrows(NullPointerException.class,
                 () -> assertThat(Option.of("something")).hasValueSatisfying((Condition<String>) null),
                 "The condition to evaluate should not be null");
     }
 
     @Test
-    public void should_pass_when_condition_is_met() {
+    void should_pass_when_condition_is_met() {
         assertThat(Option.of("something")).hasValueSatisfying(passingCondition);
     }
 
     @Test
-    public void should_fail_when_condition_is_not_met() {
+    void should_fail_when_condition_is_not_met() {
         assertThrows(AssertionError.class,
                 () -> assertThat(Option.of("something")).hasValueSatisfying(notPassingCondition),
                 shouldBe("something", notPassingCondition).create());
