@@ -1,30 +1,33 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_failReasonHasMessage_Test extends BaseTest {
+public class TryAssert_failReasonHasMessage_Test {
 
     @Test
     public void should_fail_when_try_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Try<String>) null).failReasonHasMessage("");
+        assertThrows(AssertionError.class,
+                () -> assertThat((Try<String>) null).failReasonHasMessage(""),
+                actualIsNull());
     }
 
     @Test
     public void should_fail_when_reason_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-        assertThat(Try.failure(new NullPointerException())).failReasonHasMessage(null);
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThat(Try.failure(new NullPointerException())).failReasonHasMessage(null),
+                "The expected value should not be <null>.");
     }
 
     @Test
     public void should_fail_when_try_is_success() {
-        thrown.expectAssertionError("\nExpecting Try to be a Failure, but wasn't");
-        assertThat(Try.success("OK")).failReasonHasMessage("Some reason");
+        assertThrows(AssertionError.class,
+                () -> assertThat(Try.success("OK")).failReasonHasMessage("Some reason"),
+                "\nExpecting Try to be a Failure, but wasn't");
     }
 
     @Test

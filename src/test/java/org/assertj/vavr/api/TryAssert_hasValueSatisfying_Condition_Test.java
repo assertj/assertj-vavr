@@ -2,33 +2,36 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
 import org.assertj.core.api.Condition;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_hasValueSatisfying_Condition_Test extends BaseTest {
+public class TryAssert_hasValueSatisfying_Condition_Test {
 
     private Condition<Object> passingCondition = new TestCondition<>(true);
     private Condition<Object> notPassingCondition = new TestCondition<>();
 
     @Test
     public void should_fail_when_try_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Try<String>) null).hasValueSatisfying(passingCondition);
+        assertThrows(AssertionError.class,
+                () -> assertThat((Try<String>) null).hasValueSatisfying(passingCondition),
+                actualIsNull());
     }
 
     @Test
     public void should_fail_when_try_is_failure() {
-        thrown.expectAssertionError("\nExpecting Try to be a Success, but wasn't");
-        assertThat(Try.failure(new NullPointerException())).hasValueSatisfying(passingCondition);
+        assertThrows(AssertionError.class,
+                () -> assertThat(Try.failure(new NullPointerException())).hasValueSatisfying(passingCondition),
+                "\nExpecting Try to be a Success, but wasn't");
     }
 
     @Test
     public void should_fail_when_value_does_not_satisfy_consumer() {
-        thrown.expectAssertionError("\nExpecting:\n <\"OK\">\nto be <TestCondition>");
-        assertThat(Try.success("OK")).hasValueSatisfying(notPassingCondition);
+        assertThrows(AssertionError.class,
+                () -> assertThat(Try.success("OK")).hasValueSatisfying(notPassingCondition),
+                "\nExpecting:\n <\"OK\">\nto be <TestCondition>");
     }
 
     @Test

@@ -14,28 +14,28 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
 import io.vavr.control.Try;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.TryShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_contains_usingFieldByFieldValueComparator_Test extends BaseTest {
+public class TryAssert_contains_usingFieldByFieldValueComparator_Test {
 
     @Test
     public void should_fail_when_try_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
-          .contains(new Foo("something"));
+        assertThrows(AssertionError.class,
+                () -> assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
+                        .contains(new Foo("something")),
+                actualIsNull());
     }
 
     @Test
     public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-        assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null);
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null),
+                "The expected value should not be <null>.");
     }
 
     @Test
@@ -50,9 +50,9 @@ public class TryAssert_contains_usingFieldByFieldValueComparator_Test extends Ba
         Try<Foo> actual = Try.success(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        thrown.expectAssertionError(shouldContain(actual, expectedValue).create());
-
-        assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue);
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue),
+                shouldContain(actual, expectedValue).create());
     }
 
     private static class Foo {
