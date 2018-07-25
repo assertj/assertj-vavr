@@ -13,20 +13,20 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.vavr.API.Some;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_map_Test extends BaseTest {
+public class OptionAssert_map_Test {
 
     @Test
     public void should_fail_when_Option_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Option<String>) null).map(String::length);
+        assertThrows(AssertionError.class,
+                () -> assertThat((Option<String>) null).map(String::length),
+                actualIsNull());
     }
 
     @Test

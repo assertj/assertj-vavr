@@ -13,25 +13,25 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_flatMap_Test extends BaseTest {
+public class OptionAssert_flatMap_Test {
 
-    private static final Function<String, Option<String>> UPPER_CASE_OPTIONAL_STRING = s -> (s
-      == null)
-      ? Option.none() : Option.of(s.toUpperCase());
+	private static final Function<String, Option<String>> UPPER_CASE_OPTIONAL_STRING = s -> (s == null)
+			? Option.none()
+			: Option.of(s.toUpperCase());
 
     @Test
     public void should_fail_when_option_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING);
+        assertThrows(AssertionError.class,
+                () -> assertThat((Option<String>) null).flatMap(UPPER_CASE_OPTIONAL_STRING),
+                actualIsNull());
     }
 
     @Test
