@@ -13,28 +13,33 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsLeftSame_Test extends BaseTest {
+public class EitherAssert_containsLeftSame_Test {
 
     @Test
     public void should_fail_when_either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<String, String>) null).containsLeftSame("something");
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat((Either<String, String>) null).containsLeftSame("something"),
+            actualIsNull()
+        );
     }
 
     @Test
     public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-        assertThat(Either.left("something")).containsLeftSame(null);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> assertThat(Either.left("something")).containsLeftSame(null),
+            "The expected value should not be <null>."
+        );
     }
 
     @Test
@@ -48,9 +53,11 @@ public class EitherAssert_containsLeftSame_Test extends BaseTest {
         Either<String, String> actual = Either.left("something");
         final String expectedValue = new String("something");
 
-        thrown.expectAssertionError(shouldContainSameOnLeft(actual, expectedValue).create());
-
-        assertThat(actual).containsLeftSame(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsLeftSame(expectedValue),
+            shouldContainSameOnLeft(actual, expectedValue).create()
+        );
     }
 
     @Test
@@ -58,8 +65,10 @@ public class EitherAssert_containsLeftSame_Test extends BaseTest {
         Either<String, String> actual = Either.right("nothing");
         String expectedValue = "something";
 
-        thrown.expectAssertionError(shouldBeLeft(actual).create());
-
-        assertThat(actual).containsLeftSame(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsLeftSame(expectedValue),
+            shouldBeLeft(actual).create()
+        );
     }
 }

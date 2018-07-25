@@ -13,42 +13,44 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.util.FailureMessages.actualIsNull;
+import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsLeftInstanceOf_Test extends BaseTest {
+public class EitherAssert_containsLeftInstanceOf_Test {
 
     @Test
     public void should_fail_if_either_is_null() {
         Either<Object, Object> actual = null;
 
-        Throwable thrown = catchThrowable(
-          () -> assertThat(actual).containsLeftInstanceOf(Object.class));
-
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(actualIsNull());
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsLeftInstanceOf(Object.class),
+            actualIsNull()
+        );
     }
 
     @Test
     public void should_fail_if_either_is_right() {
         Either<String, Object> actual = Either.right("some");
 
-        Throwable thrown = catchThrowable(() -> assertThat(actual).containsLeftInstanceOf(Object.class));
-
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(EitherShouldBeLeft.shouldBeLeft(actual).create());
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsLeftInstanceOf(Object.class),
+            shouldBeLeft(actual).create()
+        );
     }
 
     @Test
     public void should_pass_if_either_contains_required_type_on_left() {
-        assertThat(Either.left("something")).containsLeftInstanceOf(String.class)
-          .containsLeftInstanceOf(Object.class);
+        assertThat(Either.left("something"))
+            .containsLeftInstanceOf(String.class)
+            .containsLeftInstanceOf(Object.class);
     }
 
     @Test
@@ -60,11 +62,11 @@ public class EitherAssert_containsLeftInstanceOf_Test extends BaseTest {
     public void should_fail_if_either_contains_other_type_on_left_than_required() {
         Either<Object, ParentClass> actual = Either.left(new ParentClass());
 
-        Throwable thrown = catchThrowable(
-          () -> assertThat(actual).containsLeftInstanceOf(OtherClass.class));
-
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(shouldContainOnLeftInstanceOf(actual, OtherClass.class).create());
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsLeftInstanceOf(OtherClass.class),
+            shouldContainOnLeftInstanceOf(actual, OtherClass.class).create()
+        );
     }
 
     private static class ParentClass {

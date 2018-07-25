@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_isLeft_Test extends BaseTest {
+public class EitherAssert_isLeft_Test {
 
     @Test
     public void should_pass_if_Either_is_left() {
@@ -29,17 +29,17 @@ public class EitherAssert_isLeft_Test extends BaseTest {
 
     @Test
     public void should_fail_when_Either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<String, String>) null).isLeft();
+        assertThrows(AssertionError.class,
+                () -> assertThat((Either<String, String>) null).isLeft(),
+                actualIsNull());
     }
 
     @Test
     public void should_fail_if_Either_is_right() {
         Either<String, String> actual = Either.right("right");
 
-        thrown.expectAssertionError(shouldBeLeft(actual).create());
-
-        assertThat(actual).isLeft();
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).isLeft(),
+                shouldBeLeft(actual).create());
     }
 }

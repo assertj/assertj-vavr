@@ -13,38 +13,43 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnLeft_usingFieldByFieldValueComparator_Test extends BaseTest {
+public class EitherAssert_containsOnLeft_usingFieldByFieldValueComparator_Test {
 
     @Test
     public void should_fail_when_either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<Foo, String>) null).usingFieldByFieldValueComparator()
-          .containsOnLeft(new Foo("something"));
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat((Either<Foo, String>) null)
+                .usingFieldByFieldValueComparator()
+                .containsOnLeft(new Foo("something")),
+            actualIsNull()
+        );
     }
 
     @Test
     public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-        assertThat(Either.left(new Foo("something")))
-          .usingFieldByFieldValueComparator()
-          .containsOnLeft(null);
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> assertThat(Either.left(new Foo("something")))
+              .usingFieldByFieldValueComparator()
+              .containsOnLeft(null),
+          "The expected value should not be <null>."
+        );
     }
 
     @Test
     public void should_pass_if_left_sided_either_contains_expected_value() {
         assertThat(Either.left(new Foo("something")))
-          .usingFieldByFieldValueComparator()
-          .containsOnLeft(new Foo("something"));
+            .usingFieldByFieldValueComparator()
+            .containsOnLeft(new Foo("something"));
     }
 
     @Test
@@ -52,9 +57,13 @@ public class EitherAssert_containsOnLeft_usingFieldByFieldValueComparator_Test e
         Either<Foo, String> actual = Either.left(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
-
-        assertThat(actual).usingFieldByFieldValueComparator().containsOnLeft(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual)
+                .usingFieldByFieldValueComparator()
+                .containsOnLeft(expectedValue),
+            shouldContainOnLeft(actual, expectedValue).create()
+        );
     }
 
     @Test
@@ -62,9 +71,13 @@ public class EitherAssert_containsOnLeft_usingFieldByFieldValueComparator_Test e
         Foo expectedValue = new Foo("test");
         final Either<Object, Foo> actual = Either.right(new Foo("something else"));
 
-        thrown.expectAssertionError(shouldBeLeft(actual).create());
-
-        assertThat(actual).usingFieldByFieldValueComparator().containsOnLeft(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual)
+                .usingFieldByFieldValueComparator()
+                .containsOnLeft(expectedValue),
+            shouldBeLeft(actual).create()
+        );
     }
 
     private static class Foo {
