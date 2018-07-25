@@ -13,7 +13,6 @@ package org.assertj.vavr.test;
  * Copyright 2012-2017 the original author or authors.
  */
 
-import org.junit.Assert;
 import org.junit.Rule;
 
 import static org.assertj.vavr.test.ExpectedException.none;
@@ -36,6 +35,6 @@ public class BaseTest {
     }
 
     public void failBecauseExpectedAssertionErrorWasNotThrown() {
-        Assert.fail("Assertion error expected");
+        throw new AssertionError("Assertion error expected");
     }
 }
