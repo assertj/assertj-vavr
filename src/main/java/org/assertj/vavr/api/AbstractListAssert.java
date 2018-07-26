@@ -17,7 +17,8 @@ import org.assertj.core.api.AbstractAssert;
 
 import io.vavr.collection.List;
 
-import static org.assertj.vavr.api.ListShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 
 /**
  * Assertions for {@link io.vavr.collection.List}.
@@ -42,5 +43,18 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
         if (!actual.isEmpty()) throwAssertionError(shouldBeEmpty(actual));
         return myself;
     }
+
+    /**
+     * Verifies that the actual {@link io.vavr.collection.List} has {@code expectedSize}.
+     *
+     * @return this assertion object.
+     */
+    public SELF hasSize(int expectedSize) {
+        isNotNull();
+        if (actual.size() != expectedSize) throwAssertionError(shouldHaveSize(actual, actual.size(), expectedSize));
+        return myself;
+    }
+
+    // contains
 
 }

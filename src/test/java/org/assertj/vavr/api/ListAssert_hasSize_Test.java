@@ -17,14 +17,14 @@ import io.vavr.control.Option;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
-import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class ListAssert_isEmpty_Test extends BaseTest {
+public class ListAssert_hasSize_Test extends BaseTest {
 
     @Test
-    public void should_pass_if_List_is_empty() {
+    public void should_pass_if_size_of_List_is_same_as_expected() {
         assertThat(List.empty()).isEmpty();
     }
 
@@ -36,11 +36,11 @@ public class ListAssert_isEmpty_Test extends BaseTest {
     }
 
     @Test
-    public void should_fail_if_List_is_present() {
+    public void should_fail_if_List_has_different_size_than_expected() {
         List<String> actual = List.of("not-empty");
 
-        thrown.expectAssertionError(shouldBeEmpty(actual).create());
+        thrown.expectAssertionError(shouldHaveSize(actual, actual.size(), 5).create());
 
-        assertThat(actual).isEmpty();
+        assertThat(actual).hasSize(5);
     }
 }
