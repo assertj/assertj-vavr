@@ -17,8 +17,8 @@ import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
+import static org.assertj.vavr.error.EitherShouldBeLeft.shouldBeLeft;
+import static org.assertj.vavr.error.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsLeft_Test extends BaseTest {

@@ -10,40 +10,41 @@
  *
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
-import io.vavr.control.Try;
+import io.vavr.control.Option;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build an error message when a {@link Try} does not contain a value being an instance of an expected class.
+ * Build an error message when a value should be instance of a specific class.
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldContainInstanceOf extends BasicErrorMessageFactory {
+public class OptionShouldContainInstanceOf extends BasicErrorMessageFactory {
 
-    private TryShouldContainInstanceOf(String message) {
+    private OptionShouldContainInstanceOf(String message) {
         super(message);
     }
 
     /**
-     * Indicates that a value should be present in {@link io.vavr.control.Try}.
+     * Indicates that a value of a specific class should be present in an empty {@link io.vavr.control.Option}.
      *
-     * @param value Try to be checked.
+     * @param value Option to be checked.
+     * @param clazz expected class of a value
      * @return an error message factory.
-     * @throws java.lang.NullPointerException if Try is null.
+     * @throws java.lang.NullPointerException if option is null.
      */
-    static TryShouldContainInstanceOf shouldContainInstanceOf(Object value, Class<?> clazz) {
-        Try<?> Try = (Try<?>) value;
-        if (Try.isSuccess()) {
-            return new TryShouldContainInstanceOf(String
+    public static OptionShouldContainInstanceOf shouldContainInstanceOf(Object value, Class<?> clazz) {
+        Option<?> option = (Option<?>) value;
+        if (option.isDefined()) {
+            return new OptionShouldContainInstanceOf(String
               .format("%nExpecting:%n <%s>%nto contain a value that is an instance of:%n <%s>%nbut did contain an instance of:%n <%s>",
-                Try.getClass().getSimpleName(), clazz.getName(),
-                Try.get().getClass().getName()));
+                option.getClass().getSimpleName(), clazz.getName(),
+                option.get().getClass().getName()));
         }
-        return new TryShouldContainInstanceOf(String
+        return new OptionShouldContainInstanceOf(String
           .format("%nExpecting:%n <%s>%nto contain a value that is an instance of:%n <%s>%nbut was empty",
-            Try.getClass().getSimpleName(), clazz.getName()));
+            option.getClass().getSimpleName(), clazz.getName()));
     }
 }
 

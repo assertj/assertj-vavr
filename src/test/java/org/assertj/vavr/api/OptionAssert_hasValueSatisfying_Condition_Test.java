@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import static org.assertj.core.error.ShouldBe.shouldBe;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_hasValueSatisfying_Condition_Test extends BaseTest {

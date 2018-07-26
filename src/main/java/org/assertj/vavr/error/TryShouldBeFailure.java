@@ -10,30 +10,30 @@
  * <p>
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 import static java.lang.String.format;
 
 /**
- * Build error message when a value should be present in an {@link io.vavr.control.Option}.
+ * Build error message when a value should not be present in an {@link io.vavr.control.Try}.
  *
- * @author Grzegorz Piwowarek
+ * @author Bartlomiej Kuczynski
  */
-class OptionShouldBePresent extends BasicErrorMessageFactory {
+public class TryShouldBeFailure extends BasicErrorMessageFactory {
 
-    private OptionShouldBePresent() {
-        super(format("%nExpecting Option to contain a value but it didn't."));
+    private TryShouldBeFailure() {
+        super(format("%nExpecting Try to be a Failure, but wasn't"));
     }
 
     /**
-     * Indicates that a value should be present in an empty {@link io.vavr.control.Option}.
+     * Indicates that a value should not be present in an non-empty {@link io.vavr.control.Try}.
      *
      * @return a error message factory.
-     * @throws java.lang.NullPointerException if option is null.
+     * @throws NullPointerException if Try is null.
      */
-    static OptionShouldBePresent shouldBePresent() {
-        return new OptionShouldBePresent();
+    public static TryShouldBeFailure shouldBeFailure() {
+        return new TryShouldBeFailure();
     }
 }

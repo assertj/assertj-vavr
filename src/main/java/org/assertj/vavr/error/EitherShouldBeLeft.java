@@ -1,4 +1,4 @@
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
 import io.vavr.control.Either;
 import org.assertj.core.error.BasicErrorMessageFactory;
@@ -8,13 +8,13 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Michał Chmielarz
  */
-class EitherShouldBeLeft extends BasicErrorMessageFactory {
+public class EitherShouldBeLeft extends BasicErrorMessageFactory {
 
     private EitherShouldBeLeft(Either actual) {
         super("%nExpecting an Either to be left but was right <%s>.", actual.right().get());
     }
 
-    static EitherShouldBeLeft shouldBeLeft(Either actual) {
+    public static EitherShouldBeLeft shouldBeLeft(Either actual) {
         return new EitherShouldBeLeft(actual);
     }
 }
