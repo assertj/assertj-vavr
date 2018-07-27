@@ -17,18 +17,12 @@ import io.vavr.collection.List;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.data.Index;
 import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.Iterables;
 import org.assertj.core.internal.StandardComparisonStrategy;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import static java.lang.String.format;
-import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
-import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
-import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
-import static org.assertj.core.internal.CommonValidations.checkIsNotNull;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
 /**
@@ -41,6 +35,7 @@ import static org.assertj.core.util.Preconditions.checkNotNull;
 class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT> extends AbstractAssert<SELF, List<ELEMENT>> {
 
     private ComparisonStrategy comparisonStrategy;
+    private Iterables iterables = Iterables.instance();
 
     AbstractListAssert(List<ELEMENT> elements, Class<?> selfType) {
         super(elements, selfType);
@@ -53,8 +48,7 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
      * @return this assertion object.
      */
     public SELF isEmpty() {
-        isNotNull();
-        if (!actual.isEmpty()) throwAssertionError(shouldBeEmpty(actual));
+        iterables.assertEmpty(info, actual);
         return myself;
     }
 
@@ -64,9 +58,15 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
      * @return this assertion object.
      */
     public SELF hasSize(int expectedSize) {
-        isNotNull();
-        if (actual.size() != expectedSize) throwAssertionError(shouldHaveSize(actual, actual.size(), expectedSize));
+        iterables.assertHasSize(info, actual, expectedSize);
         return myself;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public SELF isEqualTo(Object expected) {
+        return super.isEqualTo(expected);
     }
 
     /**
@@ -87,22 +87,7 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
      * @return {@code this} assertion object.
      */
     public SELF contains(@SuppressWarnings("unchecked") ELEMENT... values) {
-        isNotNull();
-        checkIsNotNull(values);
-
-        if (!actual.isEmpty() && values.length == 0) {
-            failWithMessage("actual is not empty");
-        }
-
-        Set<Object> notFound = new LinkedHashSet<>();
-        for (Object value : values) {
-            if (!iterableContains(actual, value)) {
-                notFound.add(value);
-            }
-        }
-        if (!notFound.isEmpty())
-            throwAssertionError(shouldContain(actual, values, notFound, comparisonStrategy));
-
+        iterables.assertContains(info, actual, values);
         return myself;
     }
 
@@ -146,17 +131,6 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
         }
 
         return myself;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SELF isEqualTo(Object expected) {
-        return super.isEqualTo(expected);
-    }
-
-    private boolean iterableContains(Iterable<?> actual, Object value) {
-        return comparisonStrategy.iterableContains(actual, value);
     }
 
 }
