@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
-import io.vavr.control.Option;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
@@ -32,7 +31,7 @@ public class ListAssert_isEmpty_Test extends BaseTest {
     public void should_fail_when_List_is_null() {
         thrown.expectAssertionError(actualIsNull());
 
-        assertThat((Option<String>) null).isEmpty();
+        assertThat((List<String>) null).isEmpty();
     }
 
     @Test
