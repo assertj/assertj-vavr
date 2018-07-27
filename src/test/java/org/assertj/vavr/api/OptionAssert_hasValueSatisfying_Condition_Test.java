@@ -14,45 +14,49 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
 import org.assertj.core.api.Condition;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.error.ShouldBe.shouldBe;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_hasValueSatisfying_Condition_Test extends BaseTest {
+class OptionAssert_hasValueSatisfying_Condition_Test {
 
     private Condition<String> passingCondition = new TestCondition<>(true);
     private Condition<String> notPassingCondition = new TestCondition<>();
 
     @Test
-    public void should_fail_when_option_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Option<String>) null).hasValueSatisfying(passingCondition);
+    void should_fail_when_option_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((Option<String>) null).hasValueSatisfying(passingCondition),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_when_option_is_empty() {
-        thrown.expectAssertionError(shouldBePresent().create());
-        assertThat(Option.<String>none()).hasValueSatisfying(passingCondition);
+    void should_fail_when_option_is_empty() {
+        assertThrows(AssertionError.class,
+                () -> assertThat(Option.<String>none()).hasValueSatisfying(passingCondition),
+                shouldBePresent().create());
     }
 
     @Test
-    public void should_fail_when_condition_is_null() {
-        thrown.expectNullPointerException("The condition to evaluate should not be null");
-        assertThat(Option.of("something")).hasValueSatisfying((Condition<String>) null);
+    void should_fail_when_condition_is_null() {
+        assertThrows(NullPointerException.class,
+                () -> assertThat(Option.of("something")).hasValueSatisfying((Condition<String>) null),
+                "The condition to evaluate should not be null");
     }
 
     @Test
-    public void should_pass_when_condition_is_met() {
+    void should_pass_when_condition_is_met() {
         assertThat(Option.of("something")).hasValueSatisfying(passingCondition);
     }
 
     @Test
-    public void should_fail_when_condition_is_not_met() {
-        thrown.expectAssertionError(shouldBe("something", notPassingCondition).create());
-        assertThat(Option.of("something")).hasValueSatisfying(notPassingCondition);
+    void should_fail_when_condition_is_not_met() {
+        assertThrows(AssertionError.class,
+                () -> assertThat(Option.of("something")).hasValueSatisfying(notPassingCondition),
+                shouldBe("something", notPassingCondition).create());
     }
 }

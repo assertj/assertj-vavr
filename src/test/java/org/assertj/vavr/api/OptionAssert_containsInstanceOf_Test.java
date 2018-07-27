@@ -13,46 +13,42 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_containsInstanceOf_Test extends BaseTest {
+class OptionAssert_containsInstanceOf_Test {
 
     @Test
-    public void should_fail_if_option_is_empty() {
+    void should_fail_if_option_is_empty() {
         Option<Object> actual = Option.none();
 
-        Throwable thrown = catchThrowable(() -> assertThat(actual).containsInstanceOf(Object.class));
-
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(OptionShouldBePresent.shouldBePresent().create());
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).containsInstanceOf(Object.class),
+                shouldBePresent().create());
     }
 
     @Test
-    public void should_pass_if_option_contains_required_type() {
+    void should_pass_if_option_contains_required_type() {
         assertThat(Option.of("something")).containsInstanceOf(String.class)
           .containsInstanceOf(Object.class);
     }
 
     @Test
-    public void should_pass_if_option_contains_required_type_subclass() {
+    void should_pass_if_option_contains_required_type_subclass() {
         assertThat(Option.of(new SubClass())).containsInstanceOf(ParentClass.class);
     }
 
     @Test
-    public void should_fail_if_option_contains_other_type_than_required() {
+    void should_fail_if_option_contains_other_type_than_required() {
         Option<ParentClass> actual = Option.of(new ParentClass());
 
-        Throwable thrown = catchThrowable(
-          () -> assertThat(actual).containsInstanceOf(OtherClass.class));
-
-        assertThat(thrown).isInstanceOf(AssertionError.class)
-          .hasMessage(shouldContainInstanceOf(actual, OtherClass.class).create());
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).containsInstanceOf(OtherClass.class),
+                shouldContainInstanceOf(actual, OtherClass.class).create());
     }
 
     private static class ParentClass {

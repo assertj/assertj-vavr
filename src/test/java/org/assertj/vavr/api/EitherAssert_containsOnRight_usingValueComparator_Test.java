@@ -13,8 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
@@ -22,52 +21,53 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnRight_usingValueComparator_Test extends BaseTest {
+class EitherAssert_containsOnRight_usingValueComparator_Test {
 
     private static Comparator<Foo> FOO_COMPARATOR = Comparator
       .comparing(o -> o.getValue().toLowerCase());
 
     @Test
-    public void should_fail_when_either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<String, Foo>) null).usingValueComparator(FOO_COMPARATOR)
-          .containsOnRight(new Foo("something"));
+    void should_fail_when_either_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((Either<String, Foo>) null).usingValueComparator(FOO_COMPARATOR)
+                        .containsOnRight(new Foo("something")),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-        assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnRight(null);
+    void should_fail_if_expected_value_is_null() {
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnRight(null),
+                "The expected value should not be <null>.");
     }
 
     @Test
-    public void should_fail_if_either_is_left_sided() {
+    void should_fail_if_either_is_left_sided() {
         final Either<Foo, Object> actual = Either.left(new Foo("something"));
 
-        thrown.expectAssertionError(shouldBeRight(actual).create());
-
-        assertThat(actual).usingValueComparator(FOO_COMPARATOR)
-          .containsOnRight(new Object());
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).usingValueComparator(FOO_COMPARATOR)
+                        .containsOnRight(new Object()),
+                shouldBeRight(actual).create());
     }
 
     @Test
-    public void should_pass_if_right_sided_either_contains_expected_value() {
+    void should_pass_if_right_sided_either_contains_expected_value() {
         assertThat(Either.right(new Foo("something")))
           .usingValueComparator(FOO_COMPARATOR)
           .containsOnRight(new Foo("SoMething"));
     }
 
     @Test
-    public void should_fail_if_right_sided_either_does_not_contain_expected_value() {
+    void should_fail_if_right_sided_either_does_not_contain_expected_value() {
         Either<String, Foo> actual = Either.right(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
-
-        assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnRight(expectedValue);
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsOnRight(expectedValue),
+                shouldContainOnRight(actual, expectedValue).create());
     }
 
     private static class Foo {

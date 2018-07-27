@@ -13,33 +13,33 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_isRight_Test extends BaseTest {
+class EitherAssert_isRight_Test {
 
     @Test
-    public void should_pass_if_Either_is_right() {
+    void should_pass_if_Either_is_right() {
         assertThat(Either.right("right")).isRight();
     }
 
     @Test
-    public void should_fail_when_Either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<String, String>) null).isRight();
+    void should_fail_when_Either_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((Either<Object, Object>) null).isRight(),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_if_Either_is_left() {
+    void should_fail_if_Either_is_left() {
         Either<String, String> actual = Either.left("left");
 
-        thrown.expectAssertionError(shouldBeRight(actual).create());
-
-        assertThat(actual).isRight();
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).isRight(),
+                shouldBeRight(actual).create());
     }
 }
