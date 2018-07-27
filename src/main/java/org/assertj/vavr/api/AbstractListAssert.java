@@ -15,9 +15,9 @@ package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.AbstractIterableAssert;
 import org.assertj.core.data.Index;
 import org.assertj.core.internal.ComparisonStrategy;
-import org.assertj.core.internal.Iterables;
 import org.assertj.core.internal.StandardComparisonStrategy;
 
 import static java.lang.String.format;
@@ -32,63 +32,16 @@ import static org.assertj.core.util.Preconditions.checkNotNull;
  * @param <ELEMENT> type of elements contained in the {@link io.vavr.collection.List}.
  * @author Michał Chmielarz
  */
-class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT> extends AbstractAssert<SELF, List<ELEMENT>> {
+abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>,
+        ACTUAL extends List<?extends ELEMENT>,
+        ELEMENT,
+        ELEMENT_ASSERT extends AbstractAssert<ELEMENT_ASSERT, ELEMENT>> extends AbstractIterableAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT> {
 
     private ComparisonStrategy comparisonStrategy;
-    private Iterables iterables = Iterables.instance();
 
-    AbstractListAssert(List<ELEMENT> elements, Class<?> selfType) {
+    AbstractListAssert(ACTUAL elements, Class<?> selfType) {
         super(elements, selfType);
         this.comparisonStrategy = StandardComparisonStrategy.instance();
-    }
-
-    /**
-     * Verifies that the actual {@link io.vavr.collection.List} is empty.
-     *
-     * @return this assertion object.
-     */
-    public SELF isEmpty() {
-        iterables.assertEmpty(info, actual);
-        return myself;
-    }
-
-    /**
-     * Verifies that the actual {@link io.vavr.collection.List} has {@code expectedSize}.
-     *
-     * @return this assertion object.
-     */
-    public SELF hasSize(int expectedSize) {
-        iterables.assertHasSize(info, actual, expectedSize);
-        return myself;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SELF isEqualTo(Object expected) {
-        return super.isEqualTo(expected);
-    }
-
-    /**
-     * Verifies that the actual {@link io.vavr.collection.List} contains the given values, in any order.
-     * <p>
-     * Example:
-     * <pre><code class='java'> List&lt;String&gt; abc = List.of("a", "b", "c");
-     *
-     * // assertions will pass
-     * assertThat(abc).contains("b", "a");
-     * assertThat(abc).contains("b", "a", "b");
-     *
-     * // assertion will fail
-     * assertThat(abc).contains("d");</code></pre>
-     * <p>
-     *
-     * @param values the given values.
-     * @return {@code this} assertion object.
-     */
-    public SELF contains(@SuppressWarnings("unchecked") ELEMENT... values) {
-        iterables.assertContains(info, actual, values);
-        return myself;
     }
 
     /**
@@ -130,16 +83,6 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
             throwAssertionError(shouldContainAtIndex(actual, value, index, actual.get(index.value), comparisonStrategy));
         }
 
-        return myself;
-    }
-
-    /**
-     * Asserts that the given {@link io.vavr.collection.List} contains exactly the given values and nothing else, <b>in order</b>.
-     *
-     * @param values the values that are expected to be in the given {@code List} in order.
-     */
-    public SELF containsExactly(@SuppressWarnings("unchecked") ELEMENT... values) {
-        iterables.assertContainsExactly(info, actual, values);
         return myself;
     }
 
