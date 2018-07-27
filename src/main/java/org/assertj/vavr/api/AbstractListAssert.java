@@ -133,4 +133,14 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
         return myself;
     }
 
+    /**
+     * Asserts that the given {@link io.vavr.collection.List} contains exactly the given values and nothing else, <b>in order</b>.
+     *
+     * @param values the values that are expected to be in the given {@code List} in order.
+     */
+    public SELF containsExactly(@SuppressWarnings("unchecked") ELEMENT... values) {
+        iterables.assertContainsExactly(info, actual, values);
+        return myself;
+    }
+
 }
