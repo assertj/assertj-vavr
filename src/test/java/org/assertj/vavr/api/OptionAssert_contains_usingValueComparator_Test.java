@@ -19,7 +19,7 @@ import org.junit.Test;
 import java.util.Comparator;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
+import static org.assertj.vavr.error.OptionShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_contains_usingValueComparator_Test extends BaseTest {

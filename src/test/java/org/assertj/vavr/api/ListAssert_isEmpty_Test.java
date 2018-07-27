@@ -12,32 +12,34 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.control.Option;
+import io.vavr.collection.List;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
+import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-public class OptionAssert_isDefined_Test extends BaseTest {
+public class ListAssert_isEmpty_Test extends BaseTest {
 
     @Test
-    public void should_pass_when_Option_is_present() {
-        assertThat(Option.of("present")).isDefined();
+    public void should_pass_if_List_is_empty() {
+        assertThat(List.empty()).isEmpty();
     }
 
     @Test
-    public void should_fail_when_Option_is_empty() {
-        thrown.expectAssertionError(shouldBePresent().create());
-
-        assertThat(Option.none()).isDefined();
-    }
-
-    @Test
-    public void should_fail_when_Option_is_null() {
+    public void should_fail_when_List_is_null() {
         thrown.expectAssertionError(actualIsNull());
 
-        assertThat((Option<String>) null).isDefined();
+        assertThat((List<String>) null).isEmpty();
+    }
+
+    @Test
+    public void should_fail_if_List_is_present() {
+        List<String> actual = List.of("not-empty");
+
+        thrown.expectAssertionError(shouldBeEmpty(actual).create());
+
+        assertThat(actual).isEmpty();
     }
 }

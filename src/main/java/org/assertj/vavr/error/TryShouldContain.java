@@ -1,4 +1,4 @@
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
@@ -22,7 +22,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldContain extends BasicErrorMessageFactory {
+public class TryShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
@@ -43,7 +43,7 @@ class TryShouldContain extends BasicErrorMessageFactory {
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
      * @return a error message factory
      */
-    static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
+    public static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
         return vTry.isSuccess() ?
           new TryShouldContain(EXPECTING_TO_CONTAIN, vTry, expectedValue) :
           shouldContain(expectedValue);
@@ -58,7 +58,7 @@ class TryShouldContain extends BasicErrorMessageFactory {
      * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
      * @return a error message factory
      */
-    static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
+    public static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
         return vTry.isSuccess() ?
           new TryShouldContain(EXPECTING_TO_CONTAIN_SAME, vTry, expectedValue) :
           shouldContain(expectedValue);
@@ -70,7 +70,7 @@ class TryShouldContain extends BasicErrorMessageFactory {
      * @param expectedValue the value we expect to be in an {@link io.vavr.control.Try}.
      * @return a error message factory.
      */
-    static TryShouldContain shouldContain(Object expectedValue) {
+    public static TryShouldContain shouldContain(Object expectedValue) {
         return new TryShouldContain(expectedValue);
     }
 }

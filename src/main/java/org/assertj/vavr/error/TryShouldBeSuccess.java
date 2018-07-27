@@ -10,7 +10,7 @@
  * <p>
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
 import org.assertj.core.error.BasicErrorMessageFactory;
 
@@ -21,7 +21,7 @@ import static java.lang.String.format;
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldBeSuccess extends BasicErrorMessageFactory {
+public class TryShouldBeSuccess extends BasicErrorMessageFactory {
 
     private TryShouldBeSuccess() {
         super(format("%nExpecting Try to be a Success, but wasn't"));
@@ -33,7 +33,7 @@ class TryShouldBeSuccess extends BasicErrorMessageFactory {
      * @return a error message factory.
      * @throws java.lang.NullPointerException if Try is null.
      */
-    static TryShouldBeSuccess shouldBeSuccess() {
+    public static TryShouldBeSuccess shouldBeSuccess() {
         return new TryShouldBeSuccess();
     }
 }

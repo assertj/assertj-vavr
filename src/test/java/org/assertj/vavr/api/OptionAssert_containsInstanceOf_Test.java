@@ -13,12 +13,13 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
+import org.assertj.vavr.error.OptionShouldBePresent;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainInstanceOf;
+import static org.assertj.vavr.error.OptionShouldContainInstanceOf.shouldContainInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_containsInstanceOf_Test extends BaseTest {

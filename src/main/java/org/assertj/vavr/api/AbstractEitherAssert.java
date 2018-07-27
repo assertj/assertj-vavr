@@ -25,14 +25,14 @@ import org.assertj.core.util.CheckReturnValue;
 import java.util.Comparator;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
-import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
-import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
-import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
+import static org.assertj.vavr.error.EitherShouldBeLeft.shouldBeLeft;
+import static org.assertj.vavr.error.EitherShouldBeRight.shouldBeRight;
+import static org.assertj.vavr.error.EitherShouldContain.shouldContainOnLeft;
+import static org.assertj.vavr.error.EitherShouldContain.shouldContainOnRight;
+import static org.assertj.vavr.error.EitherShouldContain.shouldContainSameOnLeft;
+import static org.assertj.vavr.error.EitherShouldContain.shouldContainSameOnRight;
+import static org.assertj.vavr.error.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
+import static org.assertj.vavr.error.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 
 /**
  * Assertions for {@link Either}.

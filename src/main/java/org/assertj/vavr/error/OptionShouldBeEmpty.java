@@ -1,4 +1,4 @@
-package org.assertj.vavr.api;
+package org.assertj.vavr.error;
 
 import io.vavr.control.Option;
 import org.assertj.core.error.BasicErrorMessageFactory;
@@ -8,13 +8,13 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Grzegorz Piwowarek
  */
-class OptionShouldBeEmpty extends BasicErrorMessageFactory {
+public class OptionShouldBeEmpty extends BasicErrorMessageFactory {
 
     private OptionShouldBeEmpty(Option expected) {
         super("%nExpecting an Option to be empty but was <%s>.", expected.get());
     }
 
-    static OptionShouldBeEmpty shouldBeEmpty(Option actual) {
+    public static OptionShouldBeEmpty shouldBeEmpty(Option actual) {
         return new OptionShouldBeEmpty(actual);
     }
 }

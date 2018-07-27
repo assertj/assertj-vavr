@@ -17,11 +17,7 @@ import io.vavr.control.Option;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
-import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
-import org.assertj.core.internal.ComparisonStrategy;
-import org.assertj.core.internal.Conditions;
-import org.assertj.core.internal.FieldByFieldComparator;
-import org.assertj.core.internal.StandardComparisonStrategy;
+import org.assertj.core.internal.*;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.util.Comparator;
@@ -29,11 +25,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
-import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
-import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
-import static org.assertj.vavr.api.OptionShouldContain.shouldContainSame;
-import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainInstanceOf;
+import static org.assertj.vavr.error.OptionShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.error.OptionShouldContain.shouldContain;
+import static org.assertj.vavr.error.OptionShouldContain.shouldContainSame;
+import static org.assertj.vavr.error.OptionShouldContainInstanceOf.shouldContainInstanceOf;
 
 /**
  * Assertions for {@link io.vavr.control.Option}.
