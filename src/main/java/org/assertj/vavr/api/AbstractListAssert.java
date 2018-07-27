@@ -148,6 +148,13 @@ class AbstractListAssert<SELF extends AbstractListAssert<SELF, ELEMENT>, ELEMENT
         return myself;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public SELF isEqualTo(Object expected) {
+        return super.isEqualTo(expected);
+    }
+
     private boolean iterableContains(Iterable<?> actual, Object value) {
         return comparisonStrategy.iterableContains(actual, value);
     }
