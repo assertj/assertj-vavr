@@ -16,6 +16,7 @@ package org.assertj.vavr.api;
 import io.vavr.collection.List;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.AbstractIterableAssert;
+import org.assertj.core.api.Condition;
 import org.assertj.core.api.IndexedObjectEnumerableAssert;
 import org.assertj.core.data.Index;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -26,6 +27,7 @@ import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
 import static org.assertj.core.util.Preconditions.checkNotNull;
+import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
 
 /**
  * Assertions for {@link io.vavr.collection.List}.
@@ -71,16 +73,8 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
     public SELF contains(ELEMENT value, Index index) {
         isNotNull();
 
-        if (actual.isEmpty()) {
-            throwAssertionError(shouldNotBeEmpty());
-        }
-
-        checkNotNull(index, "Index should not be null");
-        final int maximum = actual.size() - 1;
-        if (index.value > maximum) {
-            String errorMessage = "Index should be between <0> and <%d> (inclusive) but was:%n <%d>";
-            throw new IndexOutOfBoundsException(format(errorMessage, maximum, index.value));
-        }
+        assertNotEmpty();
+        assertIndexIsValid(index);
 
         Object actualElement = actual.get(index.value);
         if (!comparisonStrategy.areEqual(actualElement, value)) {
@@ -113,16 +107,8 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
     public SELF doesNotContain(ELEMENT value, Index index) {
         isNotNull();
 
-        if (actual.isEmpty()) {
-            throwAssertionError(shouldNotBeEmpty());
-        }
-
-        checkNotNull(index, "Index should not be null");
-        final int maximum = actual.size() - 1;
-        if (index.value > maximum) {
-            String errorMessage = "Index should be between <0> and <%d> (inclusive) but was:%n <%d>";
-            throw new IndexOutOfBoundsException(format(errorMessage, maximum, index.value));
-        }
+        assertNotEmpty();
+        assertIndexIsValid(index);
 
         Object actualElement = actual.get(index.value);
         if (comparisonStrategy.areEqual(actualElement, value)) {
@@ -130,6 +116,42 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
         }
 
         return myself;
+    }
+
+    /**
+     * Verifies that the actual object at the given index in the actual group satisfies the given condition.
+     *
+     * @param condition the given condition.
+     * @param index     the index where the object should be stored in the actual group.
+     * @return this assertion object.
+     */
+    public SELF has(Condition<? super ELEMENT> condition, Index index) {
+        isNotNull();
+        checkNotNull(condition, "The condition to evaluate should not be null");
+
+        assertNotEmpty();
+        assertIndexIsValid(index);
+
+        if (!condition.matches(actual.get(index.value))) {
+            throwAssertionError(shouldHaveAtIndex(actual, condition, index, actual.get(index.value)));
+        }
+
+        return myself;
+    }
+
+    private void assertIndexIsValid(Index index) {
+        checkNotNull(index, "Index should not be null");
+        final int maximum = actual.size() - 1;
+        if (index.value > maximum) {
+            String errorMessage = "Index should be between <0> and <%d> (inclusive) but was:%n <%d>";
+            throw new IndexOutOfBoundsException(format(errorMessage, maximum, index.value));
+        }
+    }
+
+    private void assertNotEmpty() {
+        if (actual.isEmpty()) {
+            throwAssertionError(shouldNotBeEmpty());
+        }
     }
 
 }
