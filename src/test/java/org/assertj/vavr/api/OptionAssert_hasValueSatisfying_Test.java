@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.vavr.error.OptionShouldBePresent;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 

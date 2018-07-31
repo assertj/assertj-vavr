@@ -13,14 +13,13 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.error.EitherShouldBeRight;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
+import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsRightInstanceOf_Test extends BaseTest {

@@ -1,4 +1,4 @@
-package org.assertj.vavr.error;
+package org.assertj.vavr.api;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
@@ -22,7 +22,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Grzegorz Piwowarek
  */
-public class TryShouldContain extends BasicErrorMessageFactory {
+class TryShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
@@ -38,12 +38,12 @@ public class TryShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument.
      *
-     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
+     * @param <VALUE>       the type of the value contained in the {@link Try}.
+     * @param vTry          the {@link Try} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Try}.
      * @return a error message factory
      */
-    public static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
+    static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
         return vTry.isSuccess() ?
           new TryShouldContain(EXPECTING_TO_CONTAIN, vTry, expectedValue) :
           shouldContain(expectedValue);
@@ -53,12 +53,12 @@ public class TryShouldContain extends BasicErrorMessageFactory {
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument (judging by reference
      * equality).
      *
-     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
+     * @param <VALUE>       the type of the value contained in the {@link Try}.
+     * @param vTry          the {@link Try} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Try}.
      * @return a error message factory
      */
-    public static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
+    static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
         return vTry.isSuccess() ?
           new TryShouldContain(EXPECTING_TO_CONTAIN_SAME, vTry, expectedValue) :
           shouldContain(expectedValue);
@@ -67,10 +67,10 @@ public class TryShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that an {@link io.vavr.control.Try} is empty so it doesn't contain the expected value.
      *
-     * @param expectedValue the value we expect to be in an {@link io.vavr.control.Try}.
+     * @param expectedValue the value we expect to be in an {@link Try}.
      * @return a error message factory.
      */
-    public static TryShouldContain shouldContain(Object expectedValue) {
+    static TryShouldContain shouldContain(Object expectedValue) {
         return new TryShouldContain(expectedValue);
     }
 }

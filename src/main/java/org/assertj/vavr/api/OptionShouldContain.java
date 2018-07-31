@@ -1,4 +1,4 @@
-package org.assertj.vavr.error;
+package org.assertj.vavr.api;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
@@ -22,7 +22,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Grzegorz Piwowarek
  */
-public class OptionShouldContain extends BasicErrorMessageFactory {
+class OptionShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
@@ -38,12 +38,12 @@ public class OptionShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that the provided {@link io.vavr.control.Option} does not contain the provided argument.
      *
-     * @param option        the {@link io.vavr.control.Option} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Option}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Option}.
+     * @param <VALUE>       the type of the value contained in the {@link Option}.
+     * @param option        the {@link Option} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Option}.
      * @return a error message factory
      */
-    public static <VALUE> OptionShouldContain shouldContain(Option<VALUE> option, VALUE expectedValue) {
+    static <VALUE> OptionShouldContain shouldContain(Option<VALUE> option, VALUE expectedValue) {
         return option.isDefined() ?
           new OptionShouldContain(EXPECTING_TO_CONTAIN, option, expectedValue) :
           shouldContain(expectedValue);
@@ -53,12 +53,12 @@ public class OptionShouldContain extends BasicErrorMessageFactory {
      * Indicates that the provided {@link io.vavr.control.Option} does not contain the provided argument (judging by reference
      * equality).
      *
-     * @param option        the {@link io.vavr.control.Option} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Option}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Option}.
+     * @param <VALUE>       the type of the value contained in the {@link Option}.
+     * @param option        the {@link Option} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Option}.
      * @return a error message factory
      */
-    public static <VALUE> OptionShouldContain shouldContainSame(Option<VALUE> option, VALUE expectedValue) {
+    static <VALUE> OptionShouldContain shouldContainSame(Option<VALUE> option, VALUE expectedValue) {
         return option.isDefined() ?
           new OptionShouldContain(EXPECTING_TO_CONTAIN_SAME, option, expectedValue) :
           shouldContain(expectedValue);
@@ -67,10 +67,10 @@ public class OptionShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that an {@link io.vavr.control.Option} is empty so it doesn't contain the expected value.
      *
-     * @param expectedValue the value we expect to be in an {@link io.vavr.control.Option}.
+     * @param expectedValue the value we expect to be in an {@link Option}.
      * @return a error message factory.
      */
-    public static OptionShouldContain shouldContain(Object expectedValue) {
+    static OptionShouldContain shouldContain(Object expectedValue) {
         return new OptionShouldContain(expectedValue);
     }
 }

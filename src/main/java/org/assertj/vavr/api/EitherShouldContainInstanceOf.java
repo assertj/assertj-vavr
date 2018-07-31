@@ -1,4 +1,4 @@
-package org.assertj.vavr.error;
+package org.assertj.vavr.api;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
@@ -21,7 +21,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  *
  * @author Michał Chmielarz
  */
-public class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
+class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was left-sided.";
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on left side:%n  <%s>%nbut was right-sided.";
@@ -39,7 +39,7 @@ public class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
      * @return an error message factory.
      * @throws java.lang.NullPointerException if either is null.
      */
-    public static EitherShouldContainInstanceOf shouldContainOnRightInstanceOf(Object value, Class<?> expectedClazz) {
+    static EitherShouldContainInstanceOf shouldContainOnRightInstanceOf(Object value, Class<?> expectedClazz) {
         Either<?, ?> either = (Either<?, ?>) value;
         if (either.isRight()) {
             return new EitherShouldContainInstanceOf(String
@@ -64,8 +64,8 @@ public class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
      * @return an error message factory.
      * @throws java.lang.NullPointerException if either is null.
      */
-    public static EitherShouldContainInstanceOf shouldContainOnLeftInstanceOf(Object value,
-                                                                              Class<?> expectedClazz) {
+    static EitherShouldContainInstanceOf shouldContainOnLeftInstanceOf(Object value,
+                                                                       Class<?> expectedClazz) {
         Either<?, ?> either = (Either<?, ?>) value;
         if (either.isLeft()) {
             return new EitherShouldContainInstanceOf(String

@@ -1,4 +1,4 @@
-package org.assertj.vavr.error;
+package org.assertj.vavr.api;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
@@ -23,7 +23,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  * @author Alex Dukhno
  * @author Michał Chmielarz
  */
-public class EitherShouldContain extends BasicErrorMessageFactory {
+class EitherShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
@@ -82,7 +82,7 @@ public class EitherShouldContain extends BasicErrorMessageFactory {
      * @param <RIGHT>       the type of the value contained in the {@link Either} on the right side.
      * @return an error message factory
      */
-    public static <LEFT, RIGHT> EitherShouldContain shouldContainOnRight(Either<LEFT, RIGHT> either, RIGHT expectedValue) {
+    static <LEFT, RIGHT> EitherShouldContain shouldContainOnRight(Either<LEFT, RIGHT> either, RIGHT expectedValue) {
         return either.isRight() ?
           new EitherShouldContain(EXPECTING_TO_CONTAIN, either, expectedValue) :
           shouldContainButIsLeft(either, expectedValue);
@@ -98,7 +98,7 @@ public class EitherShouldContain extends BasicErrorMessageFactory {
      * @param <RIGHT>       the type of the value contained in the {@link Either} on the right side.
      * @return an error message factory
      */
-    public static <LEFT, RIGHT> EitherShouldContain shouldContainSameOnRight(Either<LEFT, RIGHT> either, RIGHT expectedValue) {
+    static <LEFT, RIGHT> EitherShouldContain shouldContainSameOnRight(Either<LEFT, RIGHT> either, RIGHT expectedValue) {
         return either.isRight() ?
           new EitherShouldContain(EXPECTING_TO_CONTAIN_SAME, either, expectedValue) :
           shouldContainButIsLeft(either, expectedValue);
@@ -113,8 +113,8 @@ public class EitherShouldContain extends BasicErrorMessageFactory {
      * @param <RIGHT>       the type of the value contained in the {@link Either} on the right side.
      * @return an error message factory
      */
-    public static <LEFT, RIGHT> EitherShouldContain shouldContainOnLeft(Either<LEFT, RIGHT> either,
-                                                                        LEFT expectedValue) {
+    static <LEFT, RIGHT> EitherShouldContain shouldContainOnLeft(Either<LEFT, RIGHT> either,
+                                                                 LEFT expectedValue) {
         return either.isLeft() ?
           new EitherShouldContain(EXPECTING_TO_CONTAIN, either, expectedValue) :
           shouldContainButIsRight(either, expectedValue);
@@ -130,8 +130,8 @@ public class EitherShouldContain extends BasicErrorMessageFactory {
      * @param <RIGHT>       the type of the value contained in the {@link Either} on the right side.
      * @return an error message factory
      */
-    public static <LEFT, RIGHT> EitherShouldContain shouldContainSameOnLeft(Either<LEFT, RIGHT> either,
-                                                                            LEFT expectedValue) {
+    static <LEFT, RIGHT> EitherShouldContain shouldContainSameOnLeft(Either<LEFT, RIGHT> either,
+                                                                     LEFT expectedValue) {
         return either.isLeft() ?
           new EitherShouldContain(EXPECTING_TO_CONTAIN_SAME, either, expectedValue) :
           shouldContainButIsRight(either, expectedValue);

@@ -17,8 +17,8 @@ import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.EitherShouldBeRight.shouldBeRight;
-import static org.assertj.vavr.error.EitherShouldContain.shouldContainSameOnRight;
+import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
+import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsRightSame_Test extends BaseTest {

@@ -30,11 +30,11 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.error.TryShouldBeFailure.shouldBeFailure;
-import static org.assertj.vavr.error.TryShouldBeSuccess.shouldBeSuccess;
-import static org.assertj.vavr.error.TryShouldContain.shouldContain;
-import static org.assertj.vavr.error.TryShouldContain.shouldContainSame;
-import static org.assertj.vavr.error.TryShouldContainInstanceOf.shouldContainInstanceOf;
+import static org.assertj.vavr.api.TryShouldBeFailure.shouldBeFailure;
+import static org.assertj.vavr.api.TryShouldBeSuccess.shouldBeSuccess;
+import static org.assertj.vavr.api.TryShouldContain.shouldContain;
+import static org.assertj.vavr.api.TryShouldContain.shouldContainSame;
+import static org.assertj.vavr.api.TryShouldContainInstanceOf.shouldContainInstanceOf;
 
 /**
  * Assertions for {@link io.vavr.control.Try}.

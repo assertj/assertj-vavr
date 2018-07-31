@@ -17,7 +17,7 @@ import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_isDefined_Test extends BaseTest {

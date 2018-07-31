@@ -25,11 +25,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.error.OptionShouldBeEmpty.shouldBeEmpty;
-import static org.assertj.vavr.error.OptionShouldBePresent.shouldBePresent;
-import static org.assertj.vavr.error.OptionShouldContain.shouldContain;
-import static org.assertj.vavr.error.OptionShouldContain.shouldContainSame;
-import static org.assertj.vavr.error.OptionShouldContainInstanceOf.shouldContainInstanceOf;
+import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
+import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
+import static org.assertj.vavr.api.OptionShouldContain.shouldContainSame;
+import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainInstanceOf;
 
 /**
  * Assertions for {@link io.vavr.control.Option}.

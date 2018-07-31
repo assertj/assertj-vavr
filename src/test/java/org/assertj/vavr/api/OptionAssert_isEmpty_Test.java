@@ -17,7 +17,7 @@ import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.OptionShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class OptionAssert_isEmpty_Test extends BaseTest {

@@ -13,14 +13,13 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.error.EitherShouldBeLeft;
 import org.assertj.vavr.test.BaseTest;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.error.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
+import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 public class EitherAssert_containsLeftInstanceOf_Test extends BaseTest {
