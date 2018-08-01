@@ -27,6 +27,7 @@ import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
 import static org.assertj.core.util.Preconditions.checkNotNull;
+import static org.assertj.vavr.api.SeqShouldBeAtIndex.shouldBeAtIndex;
 import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
 
 /**
@@ -69,6 +70,11 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
      * @param value the object to look for.
      * @param index the index where the object should be stored in the actual group.
      * @return this assertion object.
+     * @throws AssertionError if the actual group is {@code null} or empty.
+     * @throws NullPointerException if the given {@code Index} is {@code null}.
+     * @throws IndexOutOfBoundsException if the value of the given {@code Index} is equal to or greater than the size of the actual
+     *           group.
+     * @throws AssertionError if the actual group does not contain the given object at the given index.
      */
     public SELF contains(ELEMENT value, Index index) {
         isNotNull();
@@ -103,6 +109,9 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
      * @param value the object to look for.
      * @param index the index where the object should not be stored in the actual group.
      * @return this assertion object.
+     * @throws AssertionError if the actual group is {@code null}.
+     * @throws NullPointerException if the given {@code Index} is {@code null}.
+     * @throws AssertionError if the actual group contains the given object at the given index.
      */
     public SELF doesNotContain(ELEMENT value, Index index) {
         isNotNull();
@@ -124,8 +133,49 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
      * @param condition the given condition.
      * @param index     the index where the object should be stored in the actual group.
      * @return this assertion object.
+     * @throws AssertionError if the given {@link io.vavr.collection.List} is {@code null} or empty.
+     * @throws NullPointerException if the given {@code Index} is {@code null}.
+     * @throws IndexOutOfBoundsException if the value of the given {@code Index} is equal to or greater than the size of
+     *           the given {@link io.vavr.collection.List}.
+     * @throws NullPointerException if the given {@code Condition} is {@code null}.
+     * @throws AssertionError if the value in the given {@link io.vavr.collection.List} at the given index does not satisfy the given
+     *           {@code Condition} .
      */
     public SELF has(Condition<? super ELEMENT> condition, Index index) {
+        assertConditionIsMetAtIndex(
+                condition,
+                index,
+                () -> throwAssertionError(shouldHaveAtIndex(actual, condition, index, actual.get(index.value)))
+        );
+
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual object at the given index in the actual group satisfies the given condition (alias of {@link #has(Condition, Index)}).
+     *
+     * @param condition the given condition.
+     * @param index     the index where the object should be stored in the actual group.
+     * @return this assertion object.
+     * @throws AssertionError            if the given {@link io.vavr.collection.List} is {@code null} or empty.
+     * @throws NullPointerException      if the given {@code Index} is {@code null}.
+     * @throws IndexOutOfBoundsException if the value of the given {@code Index} is equal to or greater than the size of
+     *                                   the given {@link io.vavr.collection.List}.
+     * @throws NullPointerException      if the given {@code Condition} is {@code null}.
+     * @throws AssertionError            if the value in the given {@link io.vavr.collection.List} at the given index does not satisfy the given
+     *                                   {@code Condition} .
+     */
+    public SELF is(Condition<? super ELEMENT> condition, Index index) {
+        assertConditionIsMetAtIndex(
+                condition,
+                index,
+                () -> throwAssertionError(shouldBeAtIndex(actual, condition, index, actual.get(index.value)))
+        );
+
+        return myself;
+    }
+
+    private void assertConditionIsMetAtIndex(Condition<? super ELEMENT> condition, Index index, Runnable errorProvider) {
         isNotNull();
         checkNotNull(condition, "The condition to evaluate should not be null");
 
@@ -133,10 +183,8 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
         assertIndexIsValid(index);
 
         if (!condition.matches(actual.get(index.value))) {
-            throwAssertionError(shouldHaveAtIndex(actual, condition, index, actual.get(index.value)));
+            errorProvider.run();
         }
-
-        return myself;
     }
 
     private void assertIndexIsValid(Index index) {
