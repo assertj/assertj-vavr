@@ -13,17 +13,17 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
 import static org.assertj.core.error.ShouldBeSorted.shouldHaveComparableElementsAccordingToGivenComparator;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.ListShouldBeSorted.*;
+import static org.assertj.vavr.api.ListShouldBeSorted.shouldBeSortedAccordingToGivenComparator;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ListAssert_isSortedAccordingTo_Test extends BaseTest {
+class ListAssert_isSortedAccordingTo_Test {
 
     private static final Comparator<Object> LIST_ELEMENT_COMPARATOR = (s1, s2) -> {
         if (s1 == null) return s2 == null ? 0 : 1;
@@ -34,47 +34,44 @@ public class ListAssert_isSortedAccordingTo_Test extends BaseTest {
     };
 
     @Test
-    public void should_pass_if_List_contains_element_sorted_in_comparator_order() {
+    void should_pass_if_List_contains_element_sorted_in_comparator_order() {
         assertThat(List.of("some", "something", "thing")).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR);
     }
 
     @Test
-    public void should_pass_if_List_is_empty() {
+    void should_pass_if_List_is_empty() {
         assertThat(List.of()).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR);
     }
 
     @Test
-    public void should_fail_if_List_is_sorted_not_in_comparator_order() {
+    void should_fail_if_List_is_sorted_not_in_comparator_order() {
         final List<String> values = List.of("some", "thing", "something");
-
-        thrown.expectAssertionError(shouldBeSortedAccordingToGivenComparator(1, values, LIST_ELEMENT_COMPARATOR));
-
-        assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR);
+        assertThrows(AssertionError.class,
+                () -> assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR),
+                shouldBeSortedAccordingToGivenComparator(1, values, LIST_ELEMENT_COMPARATOR).create());
     }
 
     @Test
-    public void should_fail_if_List_contains_no_comparable_elements() {
+    void should_fail_if_List_contains_no_comparable_elements() {
         List<Foo> values = List.of(new Foo("some"), new Foo("thing"), new Foo("something"));
-
-        thrown.expectAssertionError(shouldHaveComparableElementsAccordingToGivenComparator(values, LIST_ELEMENT_COMPARATOR));
-
-        assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR);
+        assertThrows(AssertionError.class,
+                () -> assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR),
+                shouldHaveComparableElementsAccordingToGivenComparator(values, LIST_ELEMENT_COMPARATOR).create());
     }
 
     @Test
-    public void should_fail_when_comparator_is_null() {
+    void should_fail_when_comparator_is_null() {
         final List<Integer> values = List.of(0, 1, 3, 2, 9);
-
-        thrown.expectNullPointerException("The given comparator should not be null");
-
-        assertThat(values).isSortedAccordingTo(null);
+        assertThrows(NullPointerException.class,
+                () -> assertThat(values).isSortedAccordingTo(null),
+                "The given comparator should not be null");
     }
 
     @Test
-    public void should_fail_when_List_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((List<String>) null).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR);
+    void should_fail_when_List_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((List<String>) null).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR),
+                actualIsNull());
     }
 
     private static class Foo {

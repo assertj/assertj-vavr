@@ -13,59 +13,54 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ListAssert_satisfies_atIndex_Test extends BaseTest {
+class ListAssert_satisfies_atIndex_Test {
 
-    public static final Consumer<String> CONDITION_TO_SATISFY = str -> assertThat(str).startsWith("something");
+    static final Consumer<String> CONDITION_TO_SATISFY = str -> assertThat(str).startsWith("something");
 
     @Test
-    public void should_pass_if_List_satisfy_condition_at_given_index() {
+    void should_pass_if_List_satisfy_condition_at_given_index() {
         final String value = "something";
         assertThat(List.of(value)).satisfies(CONDITION_TO_SATISFY, atIndex(0));
     }
 
     @Test
-    public void should_fail_when_List_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((List<String>) null).satisfies(CONDITION_TO_SATISFY, atIndex(0));
+    void should_fail_when_List_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((List<String>) null).satisfies(CONDITION_TO_SATISFY, atIndex(0)),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_if_given_index_is_greater_than_list_size() {
+    void should_fail_if_given_index_is_greater_than_list_size() {
         final List<String> actual = List.of("something");
-
-        Throwable thrown = catchThrowable(() -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(2)));
-
-        assertThat(thrown).isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessage("Index should be between <0> and <0> (inclusive) but was:\n <2>");
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(2)),
+                "Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
-    public void should_fail_when_condition_to_satisfy_is_null() {
+    void should_fail_when_condition_to_satisfy_is_null() {
         final List<String> actual = List.of("something");
-
-        thrown.expectNullPointerException("The Consumer expressing the assertions requirements must not be null");
-
-        assertThat(actual).satisfies(null, atIndex(0));
+        assertThrows(NullPointerException.class,
+                () -> assertThat(actual).satisfies(null, atIndex(0)),
+                "The Consumer expressing the assertions requirements must not be null");
     }
 
     @Test
-    public void should_fail_if_List_does_not_satisfies_condition_at_given_index() {
+    void should_fail_if_List_does_not_satisfies_condition_at_given_index() {
         List<String> actual = List.of("a", "b", "c");
-
-        thrown.expectAssertionError();
-
-        assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(0));
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(0)),
+                "The Consumer expressing the assertions requirements must not be null");
     }
 }

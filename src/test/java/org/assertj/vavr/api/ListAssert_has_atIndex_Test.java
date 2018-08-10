@@ -14,58 +14,52 @@ package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
 import org.assertj.core.api.Condition;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ListAssert_has_atIndex_Test extends BaseTest {
+class ListAssert_has_atIndex_Test {
 
     private final Condition<String> condition = new Condition<>(str -> str.startsWith("some"), "starts with some");
 
     @Test
-    public void should_pass_if_List_has_at_given_index_value_fulfilling_provided_condition() {
+    void should_pass_if_List_has_at_given_index_value_fulfilling_provided_condition() {
         final String value = "something";
         assertThat(List.of(value)).has(condition, atIndex(0));
     }
 
     @Test
-    public void should_fail_when_List_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((List<String>) null).has(condition, atIndex(0));
+    void should_fail_when_List_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((List<String>) null).has(condition, atIndex(0)),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_if_given_index_is_greater_than_list_size() {
+    void should_fail_if_given_index_is_greater_than_list_size() {
         final List<String> actual = List.of("something");
-
-        Throwable thrown = catchThrowable(() -> assertThat(actual).has(condition, atIndex(2)));
-
-        assertThat(thrown).isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessage("Index should be between <0> and <0> (inclusive) but was:\n <2>");
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> assertThat(actual).has(condition, atIndex(2)),
+                "Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
-    public void should_fail_when_condition_is_null() {
+    void should_fail_when_condition_is_null() {
         final List<String> actual = List.of("something");
-
-        thrown.expectNullPointerException("The condition to evaluate should not be null");
-
-        assertThat(actual).has(null, atIndex(0));
+        assertThrows(NullPointerException.class,
+                () -> assertThat(actual).has(null, atIndex(0)),
+                "The condition to evaluate should not be null");
     }
 
     @Test
-    public void should_fail_if_List_has_at_given_index_element_not_matching_given_condition() {
+    void should_fail_if_List_has_at_given_index_element_not_matching_given_condition() {
         List<String> actual = List.of("a", "b");
-
-        thrown.expectAssertionError(shouldHaveAtIndex(actual, condition, atIndex(1), "b"));
-
-        assertThat(actual).has(condition, atIndex(1));
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).has(condition, atIndex(1)),
+                shouldHaveAtIndex(actual, condition, atIndex(1), "b").create());
     }
 }

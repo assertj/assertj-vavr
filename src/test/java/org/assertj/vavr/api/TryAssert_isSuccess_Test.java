@@ -1,29 +1,30 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
-
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TryAssert_isSuccess_Test extends BaseTest {
+class TryAssert_isSuccess_Test {
 
     @Test
-    public void should_fail_when_try_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Try<String>) null).isSuccess();
+    void should_fail_when_try_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((Try<String>) null).isSuccess(),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_when_try_is_failure() {
-        thrown.expectAssertionError("\nExpecting Try to be a Success, but wasn't");
-        assertThat(Try.failure(new NullPointerException())).isSuccess();
+    void should_fail_when_try_is_failure() {
+        assertThrows(AssertionError.class,
+                () -> assertThat(Try.failure(new NullPointerException())).isSuccess(),
+                "\nExpecting Try to be a Success, but wasn't");
     }
 
     @Test
-    public void should_pass_when_try_is_success() {
+    void should_pass_when_try_is_success() {
         assertThat(Try.success("OK")).isSuccess();
     }
 }

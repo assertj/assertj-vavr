@@ -13,56 +13,50 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ListAssert_contains_atIndex_Test extends BaseTest {
+class ListAssert_contains_atIndex_Test {
 
     @Test
-    public void should_pass_if_List_contains_expected_value_at_given_index() {
+    void should_pass_if_List_contains_expected_value_at_given_index() {
         final String value = "something";
         assertThat(List.of(value)).contains("something", atIndex(0));
     }
 
     @Test
-    public void should_fail_when_List_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((List<String>) null).contains("something", atIndex(0));
+    void should_fail_when_List_is_null() {
+        assertThrows(AssertionError.class,
+                () -> assertThat((List<String>) null).contains("something", atIndex(0)),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_if_given_index_is_greater_than_list_size() {
+    void should_fail_if_given_index_is_greater_than_list_size() {
         final List<String> actual = List.of("something");
-
-        Throwable thrown = catchThrowable(() -> assertThat(actual).contains(null, atIndex(2)));
-
-        assertThat(thrown).isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessage("Index should be between <0> and <0> (inclusive) but was:\n <2>");
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> assertThat(actual).contains(null, atIndex(2)),
+                "Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
-    public void should_fail_when_expected_values_are_null() {
+    void should_fail_when_expected_values_are_null() {
         final List<String> actual = List.of("something");
-
-        thrown.expectAssertionError(shouldContainAtIndex(actual, null, atIndex(0), "something"));
-
-        assertThat(actual).contains(null, atIndex(0));
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).contains(null, atIndex(0)),
+                shouldContainAtIndex(actual, null, atIndex(0), "something").create());
     }
 
     @Test
-    public void should_fail_if_List_contains_no_expected_element_at_given_index() {
+    void should_fail_if_List_contains_no_expected_element_at_given_index() {
         List<String> actual = List.of("a", "b", "c");
-
-        thrown.expectAssertionError(shouldContainAtIndex(actual, "a", atIndex(2), "c"));
-
-        assertThat(actual).contains("a", atIndex(2));
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).contains("a", atIndex(2)),
+                shouldContainAtIndex(actual, "a", atIndex(2), "c").create());
     }
 }
