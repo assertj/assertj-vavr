@@ -241,6 +241,23 @@ abstract class AbstractListAssert<SELF extends AbstractListAssert<SELF, ACTUAL, 
         return myself;
     }
 
+    /**
+     * Verifies that the actual list is sorted according to the given comparator.<br> Empty lists are considered sorted whatever
+     * the comparator is.<br> One element lists are considered sorted if the element is compatible with comparator.
+     *
+     * @param comparator the {@link Comparator} used to compare list elements
+     * @return {@code this} assertion object.
+     * @throws AssertionError       if the actual list is not sorted according to the given comparator.
+     * @throws AssertionError       if the actual list is <code>null</code>.
+     * @throws NullPointerException if the given comparator is <code>null</code>.
+     * @throws AssertionError       if the actual list elements are not mutually comparable according to given Comparator.
+     */
+    public SELF isSortedAccordingTo(Comparator<? super ELEMENT> comparator) {
+        isNotNull();
+        assertIsSortedAccordingToComparator(comparator);
+        return myself;
+    }
+
     private void assertIsSortedAccordingToComparator(Comparator<?> comparator) {
         checkNotNull(comparator, "The given comparator should not be null");
         try {
