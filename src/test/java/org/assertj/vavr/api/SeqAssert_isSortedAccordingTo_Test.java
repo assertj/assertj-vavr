@@ -13,17 +13,18 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
 import static org.assertj.core.error.ShouldBeSorted.shouldHaveComparableElementsAccordingToGivenComparator;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.ListShouldBeSorted.shouldBeSortedAccordingToGivenComparator;
+import static org.assertj.vavr.api.SeqShouldBeSorted.shouldBeSortedAccordingToGivenComparator;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ListAssert_isSortedAccordingTo_Test {
+class SeqAssert_isSortedAccordingTo_Test {
 
     private static final Comparator<Object> LIST_ELEMENT_COMPARATOR = (s1, s2) -> {
         if (s1 == null) return s2 == null ? 0 : 1;
@@ -45,7 +46,7 @@ class ListAssert_isSortedAccordingTo_Test {
 
     @Test
     void should_fail_if_List_is_sorted_not_in_comparator_order() {
-        final List<String> values = List.of("some", "thing", "something");
+        final Seq<String> values = List.of("some", "thing", "something");
         assertThrows(AssertionError.class,
                 () -> assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR),
                 shouldBeSortedAccordingToGivenComparator(1, values, LIST_ELEMENT_COMPARATOR).create());
@@ -53,7 +54,7 @@ class ListAssert_isSortedAccordingTo_Test {
 
     @Test
     void should_fail_if_List_contains_no_comparable_elements() {
-        List<Foo> values = List.of(new Foo("some"), new Foo("thing"), new Foo("something"));
+        final Seq<Foo> values = List.of(new Foo("some"), new Foo("thing"), new Foo("something"));
         assertThrows(AssertionError.class,
                 () -> assertThat(values).isSortedAccordingTo(LIST_ELEMENT_COMPARATOR),
                 shouldHaveComparableElementsAccordingToGivenComparator(values, LIST_ELEMENT_COMPARATOR).create());
@@ -61,7 +62,7 @@ class ListAssert_isSortedAccordingTo_Test {
 
     @Test
     void should_fail_when_comparator_is_null() {
-        final List<Integer> values = List.of(0, 1, 3, 2, 9);
+        final Seq<Integer> values = List.of(0, 1, 3, 2, 9);
         assertThrows(NullPointerException.class,
                 () -> assertThat(values).isSortedAccordingTo(null),
                 "The given comparator should not be null");

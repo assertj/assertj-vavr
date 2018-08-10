@@ -15,6 +15,7 @@ package org.assertj.vavr.api;
 import org.assertj.core.util.CheckReturnValue;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
@@ -79,7 +80,7 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> ListAssert<VALUE> assertThat(List<VALUE> actual) {
-        return new ListAssert<>(actual);
+    public static <VALUE> SeqAssert<VALUE> assertThat(Seq<VALUE> actual) {
+        return new SeqAssert<>(actual);
     }
 }

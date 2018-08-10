@@ -13,54 +13,43 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Consumer;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Index.atIndex;
+import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ListAssert_satisfies_atIndex_Test {
-
-    static final Consumer<String> CONDITION_TO_SATISFY = str -> assertThat(str).startsWith("something");
+class SeqAssert_doesNotContain_atIndex_Test {
 
     @Test
-    void should_pass_if_List_satisfy_condition_at_given_index() {
+    void should_pass_if_List_does_not_contain_provided_value_at_given_index() {
         final String value = "something";
-        assertThat(List.of(value)).satisfies(CONDITION_TO_SATISFY, atIndex(0));
+        assertThat(List.of(value)).doesNotContain("nothing", atIndex(0));
     }
 
     @Test
     void should_fail_when_List_is_null() {
         assertThrows(AssertionError.class,
-                () -> assertThat((List<String>) null).satisfies(CONDITION_TO_SATISFY, atIndex(0)),
+                () -> assertThat((List<String>) null).doesNotContain("something", atIndex(0)),
                 actualIsNull());
     }
 
     @Test
     void should_fail_if_given_index_is_greater_than_list_size() {
-        final List<String> actual = List.of("something");
+        final Seq<String> actual = List.of("something");
         assertThrows(IndexOutOfBoundsException.class,
-                () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(2)),
+                () -> assertThat(actual).doesNotContain(null, atIndex(2)),
                 "Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
-    void should_fail_when_condition_to_satisfy_is_null() {
-        final List<String> actual = List.of("something");
-        assertThrows(NullPointerException.class,
-                () -> assertThat(actual).satisfies(null, atIndex(0)),
-                "The Consumer expressing the assertions requirements must not be null");
-    }
-
-    @Test
-    void should_fail_if_List_does_not_satisfies_condition_at_given_index() {
-        List<String> actual = List.of("a", "b", "c");
+    void should_fail_if_List_contains_provided_element_at_given_index() {
+        Seq<String> actual = List.of("a", "b", "c");
         assertThrows(AssertionError.class,
-                () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(0)),
-                "The Consumer expressing the assertions requirements must not be null");
+                () -> assertThat(actual).doesNotContain("a", atIndex(0)),
+                shouldNotContainAtIndex(actual, "a", atIndex(0)).create());
     }
 }

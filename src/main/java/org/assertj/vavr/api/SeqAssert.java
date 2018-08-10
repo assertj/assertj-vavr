@@ -5,15 +5,16 @@ import org.assertj.core.api.ObjectAssert;
 import org.assertj.core.api.ObjectAssertFactory;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 
-public class ListAssert<ELEMENT>
+public class SeqAssert<ELEMENT>
 		extends
-			AbstractListAssert<ListAssert<ELEMENT>, List<ELEMENT>, ELEMENT, ObjectAssert<ELEMENT>> {
+        AbstractSeqAssert<SeqAssert<ELEMENT>, Seq<ELEMENT>, ELEMENT, ObjectAssert<ELEMENT>> {
 
 	private final AssertFactory<ELEMENT, ObjectAssert<ELEMENT>> assertFactory;
 
-	ListAssert(List<ELEMENT> actual) {
-		super(actual, ListAssert.class);
+	SeqAssert(Seq<ELEMENT> actual) {
+		super(actual, SeqAssert.class);
 		this.assertFactory = new ObjectAssertFactory<>();
 	}
 
@@ -23,7 +24,7 @@ public class ListAssert<ELEMENT>
 	}
 
 	@Override
-	protected ListAssert<ELEMENT> newAbstractIterableAssert(Iterable<? extends ELEMENT> iterable) {
-		return new ListAssert<>(List.ofAll(iterable));
+	protected SeqAssert<ELEMENT> newAbstractIterableAssert(Iterable<? extends ELEMENT> iterable) {
+		return new SeqAssert<>(List.ofAll(iterable));
 	}
 }

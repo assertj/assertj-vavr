@@ -12,37 +12,37 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 
 import java.util.Comparator;
 
 /**
- * Creates an error message indicating that an assertion that verifies a group of elements is sorted failed.
+ * Creates an error message indicating that an assertion that verifies a sequence of elements is sorted failed.
  *
  * @author Michał Chmielarz
  */
-class ListShouldBeSorted extends BasicErrorMessageFactory {
+class SeqShouldBeSorted extends BasicErrorMessageFactory {
 
-  static ErrorMessageFactory shouldBeSorted(int i, List<? extends Object> group) {
-    return new ListShouldBeSorted(
-            "%ngroup is not sorted because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%ngroup was:%n <%s>",
+  static ErrorMessageFactory shouldBeSorted(int i, Seq<? extends Object> group) {
+    return new SeqShouldBeSorted(
+            "%nsequence is not sorted because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%nsequence was:%n <%s>",
             i, group.get(i), i + 1, group.get(i + 1), group);
   }
 
   static ErrorMessageFactory shouldHaveMutuallyComparableElements(Object actual) {
-    return new ListShouldBeSorted("%nsome elements are not mutually comparable in group:%n<%s>", actual);
+    return new SeqShouldBeSorted("%nsome elements are not mutually comparable in sequence:%n<%s>", actual);
   }
 
-  static ErrorMessageFactory shouldBeSortedAccordingToGivenComparator(int i, List<? extends Object> actual,
+  static ErrorMessageFactory shouldBeSortedAccordingToGivenComparator(int i, Seq<? extends Object> actual,
                                                                              Comparator<?> comparator) {
-    return new ListShouldBeSorted(
-            "%ngroup is not sorted according to %s comparator because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%ngroup was:%n <%s>",
+    return new SeqShouldBeSorted(
+            "%nsequence is not sorted according to %s comparator because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%nsequence was:%n <%s>",
             comparator, i, actual.get(i), i + 1, actual.get(i + 1), actual);
   }
 
-  private ListShouldBeSorted(String format, Object... arguments) {
+  private SeqShouldBeSorted(String format, Object... arguments) {
     super(format, arguments);
   }
 
