@@ -13,52 +13,61 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsLeft_Test extends BaseTest {
+class EitherAssert_containsLeft_Test {
 
     @Test
-    public void should_fail_when_either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-
-        assertThat((Either<String, String>) null).containsOnLeft("something");
+    void should_fail_when_either_is_null() {
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat((Either<String, String>) null).containsOnLeft("something"),
+            actualIsNull()
+        );
     }
 
     @Test
-    public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
-
-        assertThat(Either.left("something")).containsOnLeft(null);
+    void should_fail_if_expected_value_is_null() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> assertThat(Either.left("something")).containsOnLeft(null),
+            "The expected value should not be <null>."
+        );
     }
 
     @Test
-    public void should_pass_if_either_contains_expected_value_on_left_side() {
+    void should_pass_if_either_contains_expected_value_on_left_side() {
         assertThat(Either.left("something")).containsOnLeft("something");
     }
 
     @Test
-    public void should_fail_if_either_does_not_contain_expected_value_on_left_side() {
+    void should_fail_if_either_does_not_contain_expected_value_on_left_side() {
         Either<String, String> actual = Either.left("something");
         String expectedValue = "nothing";
 
-        thrown.expectAssertionError(shouldContainOnLeft(actual, expectedValue).create());
-
-        assertThat(actual).containsOnLeft(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsOnLeft(expectedValue),
+            shouldContainOnLeft(actual, expectedValue).create()
+        );
     }
 
     @Test
-    public void should_fail_if_either_is_right() {
+    void should_fail_if_either_is_right() {
         Either<String, String> actual = Either.right("nothing");
         String expectedValue = "something";
 
-        thrown.expectAssertionError(shouldBeLeft(actual).create());
-
-        assertThat(actual).containsOnLeft(expectedValue);
+        assertThrows(
+            AssertionError.class,
+            () -> assertThat(actual).containsOnLeft(expectedValue),
+            shouldBeLeft(actual).create()
+        );
     }
 }

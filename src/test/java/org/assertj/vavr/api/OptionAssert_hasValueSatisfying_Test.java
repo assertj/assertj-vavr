@@ -13,31 +13,33 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
+import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OptionAssert_hasValueSatisfying_Test extends BaseTest {
+class OptionAssert_hasValueSatisfying_Test {
 
     @Test
-    public void should_fail_when_option_is_null() {
-        thrown.expectAssertionError(actualIsNull());
-        assertThat((Option<String>) null).hasValueSatisfying(s -> {
-        });
+    void should_fail_when_option_is_null() {
+        assertThrows(AssertionError.class,
+				() -> assertThat((Option<String>) null).hasValueSatisfying(s -> {}),
+                actualIsNull());
     }
 
     @Test
-    public void should_fail_when_option_is_empty() {
-        thrown.expectAssertionError(OptionShouldBePresent.shouldBePresent().create());
-        assertThat(Option.none()).hasValueSatisfying(o -> {
-        });
+    void should_fail_when_option_is_empty() {
+        assertThrows(AssertionError.class,
+                () -> assertThat(Option.none()).hasValueSatisfying(o -> {
+                }),
+                shouldBePresent().create());
     }
 
     @Test
-    public void should_pass_when_consumer_passes() {
+    void should_pass_when_consumer_passes() {
         assertThat(Option.of("something")).hasValueSatisfying(s -> assertThat(s).isEqualTo("something")
           .startsWith("some")
           .endsWith("thing"));
@@ -45,9 +47,10 @@ public class OptionAssert_hasValueSatisfying_Test extends BaseTest {
     }
 
     @Test
-    public void should_fail_from_consumer() {
-        thrown.expectAssertionError("expected:<\"something[]\"> but was:<\"something[ else]\">");
-        assertThat(Option.of("something else"))
-          .hasValueSatisfying(s -> assertThat(s).isEqualTo("something"));
+    void should_fail_from_consumer() {
+        assertThrows(AssertionError.class,
+                () -> assertThat(Option.of("something else"))
+                        .hasValueSatisfying(s -> assertThat(s).isEqualTo("something")),
+                "expected:<\"something[]\"> but was:<\"something[ else]\">");
     }
 }

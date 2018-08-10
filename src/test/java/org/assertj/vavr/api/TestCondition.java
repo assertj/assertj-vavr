@@ -22,7 +22,7 @@ import org.assertj.core.api.Condition;
  * @author Alex Ruiz
  * @author Mikhail Mazursky
  */
-public class TestCondition<T> extends Condition<T> {
+class TestCondition<T> extends Condition<T> {
 
     private boolean matches;
 
@@ -34,11 +34,11 @@ public class TestCondition<T> extends Condition<T> {
         this.matches = matches;
     }
 
-    public TestCondition(String description) {
+    TestCondition(String description) {
         super(description);
     }
 
-    public void shouldMatch(boolean val) {
+    void shouldMatch(boolean val) {
         matches = val;
     }
 

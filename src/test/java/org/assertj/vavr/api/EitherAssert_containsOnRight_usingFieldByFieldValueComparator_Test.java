@@ -13,76 +13,72 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.vavr.test.BaseTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test extends BaseTest {
+class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test {
 
-    @Test
-    public void should_fail_when_either_is_null() {
-        thrown.expectAssertionError(actualIsNull());
+	@Test
+	void should_fail_when_either_is_null() {
+		assertThrows(AssertionError.class, () -> assertThat((Either<String, Foo>) null)
+				.usingFieldByFieldValueComparator().containsOnRight(new Foo("something")), actualIsNull());
+	}
 
-        assertThat((Either<String, Foo>) null).usingFieldByFieldValueComparator()
-          .containsOnRight(new Foo("something"));
-    }
+	@Test
+	void should_fail_if_expected_value_is_null() {
+		assertThrows(
+				IllegalArgumentException.class, () -> assertThat(Either.right(new Foo("something")))
+						.usingFieldByFieldValueComparator().containsOnRight(null),
+				"The expected value should not be <null>.");
+	}
 
-    @Test
-    public void should_fail_if_expected_value_is_null() {
-        thrown.expectIllegalArgumentException("The expected value should not be <null>.");
+	@Test
+	void should_pass_if_right_sided_either_contains_expected_value() {
+		assertThat(Either.right(new Foo("something"))).usingFieldByFieldValueComparator()
+				.containsOnRight(new Foo("something"));
+	}
 
-        assertThat(Either.right(new Foo("something")))
-          .usingFieldByFieldValueComparator()
-          .containsOnRight(null);
-    }
+	@Test
+	void should_fail_if_right_sided_either_does_not_contain_expected_value() {
+		Either<String, Foo> actual = Either.right(new Foo("something"));
+		Foo expectedValue = new Foo("something else");
 
-    @Test
-    public void should_pass_if_right_sided_either_contains_expected_value() {
-        assertThat(Either.right(new Foo("something")))
-          .usingFieldByFieldValueComparator()
-          .containsOnRight(new Foo("something"));
-    }
+		assertThrows(AssertionError.class,
+				() -> assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue),
+				shouldContainOnRight(actual, expectedValue).create());
+	}
 
-    @Test
-    public void should_fail_if_right_sided_either_does_not_contain_expected_value() {
-        Either<String, Foo> actual = Either.right(new Foo("something"));
-        Foo expectedValue = new Foo("something else");
+	@Test
+	void should_fail_if_either_is_left_sided() {
+		Foo expectedValue = new Foo("test");
+		final Either<Foo, Object> actual = Either.left(new Foo("something else"));
 
-        thrown.expectAssertionError(shouldContainOnRight(actual, expectedValue).create());
+        assertThrows(AssertionError.class,
+                () -> assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue),
+                shouldBeRight(actual).create());
+	}
 
-        assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue);
-    }
+	private static class Foo {
 
-    @Test
-    public void should_fail_if_either_is_left_sided() {
-        Foo expectedValue = new Foo("test");
-        final Either<Foo, Object> actual = Either.left(new Foo("something else"));
+		private final String value;
 
-        thrown.expectAssertionError(shouldBeRight(actual).create());
+		Foo(String value) {
+			this.value = value;
+		}
 
-        assertThat(actual).usingFieldByFieldValueComparator().containsOnRight(expectedValue);
-    }
+		@SuppressWarnings("unused")
+		String getValue() {
+			return value;
+		}
 
-    private static class Foo {
-
-        private final String value;
-
-        Foo(String value) {
-            this.value = value;
-        }
-
-        @SuppressWarnings("unused")
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            return "Foo{" + "value='" + value + '\'' + '}';
-        }
-    }
+		@Override
+		public String toString() {
+			return "Foo{" + "value='" + value + '\'' + '}';
+		}
+	}
 }
