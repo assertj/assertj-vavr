@@ -12,11 +12,14 @@
  */
 package org.assertj.vavr.api;
 
+import org.assertj.core.util.CheckReturnValue;
+
+import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import io.vavr.Lazy;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
-import org.assertj.core.util.CheckReturnValue;
 
 /**
  * Entry point for assertion methods for different Vavr types. Each method in this class is a static factory for a
@@ -81,5 +84,17 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
         return new TryAssert<>(actual);
+    }
+
+    /**
+     * Create assertion for {@link io.vavr.collection.List}.
+     *
+     * @param <VALUE> the type of elements contained by <code>actual {@link List}</code>.
+     * @param actual  the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <VALUE> SeqAssert<VALUE> assertThat(Seq<VALUE> actual) {
+        return new SeqAssert<>(actual);
     }
 }

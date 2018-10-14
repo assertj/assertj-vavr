@@ -38,9 +38,9 @@ class TryShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument.
      *
-     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
+     * @param <VALUE>       the type of the value contained in the {@link Try}.
+     * @param vTry          the {@link Try} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Try}.
      * @return a error message factory
      */
     static <VALUE> TryShouldContain shouldContain(Try<VALUE> vTry, VALUE expectedValue) {
@@ -53,9 +53,9 @@ class TryShouldContain extends BasicErrorMessageFactory {
      * Indicates that the provided {@link io.vavr.control.Try} does not contain the provided argument (judging by reference
      * equality).
      *
-     * @param vTry          the {@link io.vavr.control.Try} which contains a value.
-     * @param expectedValue the value we expect to be in the provided {@link io.vavr.control.Try}.
-     * @param <VALUE>       the type of the value contained in the {@link io.vavr.control.Try}.
+     * @param <VALUE>       the type of the value contained in the {@link Try}.
+     * @param vTry          the {@link Try} which contains a value.
+     * @param expectedValue the value we expect to be in the provided {@link Try}.
      * @return a error message factory
      */
     static <VALUE> TryShouldContain shouldContainSame(Try<VALUE> vTry, VALUE expectedValue) {
@@ -67,7 +67,7 @@ class TryShouldContain extends BasicErrorMessageFactory {
     /**
      * Indicates that an {@link io.vavr.control.Try} is empty so it doesn't contain the expected value.
      *
-     * @param expectedValue the value we expect to be in an {@link io.vavr.control.Try}.
+     * @param expectedValue the value we expect to be in an {@link Try}.
      * @return a error message factory.
      */
     static TryShouldContain shouldContain(Object expectedValue) {

@@ -17,11 +17,7 @@ import io.vavr.control.Option;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
-import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
-import org.assertj.core.internal.ComparisonStrategy;
-import org.assertj.core.internal.Conditions;
-import org.assertj.core.internal.FieldByFieldComparator;
-import org.assertj.core.internal.StandardComparisonStrategy;
+import org.assertj.core.internal.*;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.util.Comparator;
