@@ -33,9 +33,9 @@ class TryAssert_contains_usingFieldByFieldValueComparator_Test {
 
     @Test
     void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null),
-                "The expected value should not be <null>.");
+        assertThrows(AssertionError.class,
+                () -> assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null)
+        );
     }
 
     @Test

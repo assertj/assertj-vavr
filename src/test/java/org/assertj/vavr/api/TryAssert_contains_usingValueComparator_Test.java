@@ -37,13 +37,6 @@ class TryAssert_contains_usingValueComparator_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Try.success(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_successful_try_contains_expected_value() {
         assertThat(Try.success(new Foo("something")))
           .usingValueComparator(FOO_COMPARATOR)

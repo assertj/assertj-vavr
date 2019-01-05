@@ -17,13 +17,6 @@ class TryAssert_contains_Test {
     }
 
     @Test
-    void should_fail_when_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Try.success("some value")).contains(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_when_success_try_contains_equal_value() {
         final String actual = "OK";
         final String expected = new String(actual);
@@ -51,5 +44,10 @@ class TryAssert_contains_Test {
         assertThrows(AssertionError.class,
                 () -> assertThat(Try.failure(exception)).contains(exception),
                 "\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
+    }
+
+    @Test
+    void should_pass_when_success_try_contains_null() {
+        assertThat(Try.success(null)).contains(null);
     }
 }

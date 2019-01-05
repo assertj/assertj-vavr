@@ -83,7 +83,6 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      */
     public SELF contains(VALUE expectedValue) {
         isNotNull();
-        checkNotNull(expectedValue);
         if (actual.isEmpty()) throwAssertionError(shouldContain(expectedValue));
         if (!tryValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContain(actual, expectedValue));
@@ -181,7 +180,6 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      */
     public SELF containsSame(VALUE expectedValue) {
         isNotNull();
-        checkNotNull(expectedValue);
         if (actual.isEmpty()) throwAssertionError(shouldContain(expectedValue));
         if (actual.get() != expectedValue) throwAssertionError(shouldContainSame(actual, expectedValue));
         return myself;
