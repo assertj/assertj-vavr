@@ -18,9 +18,12 @@ class TryAssert_containsSame_Test {
 
     @Test
     void should_fail_when_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Try.success("some value")).containsSame(null),
-                "The expected value should not be <null>.");
+        assertThrows(AssertionError.class, () -> assertThat(Try.success("some value")).containsSame(null));
+    }
+
+    @Test
+    void should_pass_when_null_success_try_checked_on_containing_same_value() {
+        assertThat(Try.success(null)).containsSame(null);
     }
 
     @Test
