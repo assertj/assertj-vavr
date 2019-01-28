@@ -16,6 +16,9 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.assertj.core.api.AbstractAssert;
 
+import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
+import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
+
 /**
  * Assertions for {@link Validation}.
  *
@@ -31,4 +34,33 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
         super(actual, selfType);
     }
 
+    /**
+     * Verifies that the actual {@link Validation} is invalid.
+     *
+     * @return this assertion object.
+     */
+    public SELF isInvalid() {
+        assertIsInvalid();
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link Validation} is valid.
+     *
+     * @return this assertion object.
+     */
+    public SELF isValid() {
+        assertIsValid();
+        return myself;
+    }
+
+    private void assertIsInvalid() {
+        isNotNull();
+        if (actual.isValid()) throwAssertionError(shouldBeInvalid(actual));
+    }
+
+    private void assertIsValid() {
+        isNotNull();
+        if (actual.isInvalid()) throwAssertionError(shouldBeValid(actual));
+    }
 }
