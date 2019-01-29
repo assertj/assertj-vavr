@@ -17,14 +17,14 @@ import io.vavr.control.Validation;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build error message when an {@link Validation}
- * should contain a specific right value.
+ * Build error message when an {@link Validation} should contain a specific value.
  *
  * @author Michał Chmielarz
  */
 class ValidationShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
+    private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_INVALID = "%nExpecting:%n  <%s>%nto contain valid value:%n  <%s>%nbut was invalid.";
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_VALID = "%nExpecting:%n  <%s>%nto contain invalid value:%n  <%s>%nbut was valid.";
 
@@ -52,18 +52,50 @@ class ValidationShouldContain extends BasicErrorMessageFactory {
     }
 
     /**
-     * Indicates that the provided invalid {@link Validation} does not contain the provided argument as value.
+     * Indicates that the provided invalid {@link Validation} does not contain the provided argument as error value.
+     *
+     * @param validation         the {@link Validation} which contains a value.
+     * @param expectedErrorValue the value we expect to be in the provided in invalid {@link Validation}.
+     * @param <INVALID>          type of the value in the case of the invalid {@link Validation}.
+     * @param <VALID>            type of the value in the case of the valid {@link Validation}.
+     * @return an error message factory
+     */
+    static <INVALID, VALID> ValidationShouldContain shouldContainInvalid(Validation<INVALID, VALID> validation, INVALID expectedErrorValue) {
+        return validation.isInvalid() ?
+                new ValidationShouldContain(EXPECTING_TO_CONTAIN, validation, expectedErrorValue) :
+                shouldContainButIsValid(validation, expectedErrorValue);
+    }
+
+    /**
+     * Indicates that the provided {@link Validation} does not contain the provided argument (judging by reference
+     * equality).
      *
      * @param validation    the {@link Validation} which contains a value.
-     * @param expectedValue the value we expect to be in the provided in invalid {@link Validation}.
+     * @param expectedValue the value we expect to be in the provided valid {@link Validation}.
      * @param <INVALID>     type of the value in the case of the invalid {@link Validation}.
      * @param <VALID>       type of the value in the case of the valid {@link Validation}.
      * @return an error message factory
      */
-    static <INVALID, VALID> ValidationShouldContain shouldContainInvalid(Validation<INVALID, VALID> validation, INVALID expectedValue) {
+    static <INVALID, VALID> ValidationShouldContain shouldContainValidSame(Validation<INVALID, VALID> validation, VALID expectedValue) {
+        return validation.isValid() ?
+                new ValidationShouldContain(EXPECTING_TO_CONTAIN_SAME, validation, expectedValue) :
+                shouldContainButIsInvalid(validation, expectedValue);
+    }
+
+    /**
+     * Indicates that the provided {@link Validation} does not contain the provided argument (judging by reference
+     * equality).
+     *
+     * @param validation         the {@link Validation} which contains a value.
+     * @param expectedErrorValue the value we expect to be in the provided invalid {@link Validation}.
+     * @param <INVALID>          type of the value in the case of the invalid {@link Validation}.
+     * @param <VALID>            type of the value in the case of the valid {@link Validation}.
+     * @return an error message factory
+     */
+    static <INVALID, VALID> ValidationShouldContain shouldContainInvalidSame(Validation<INVALID, VALID> validation, VALID expectedErrorValue) {
         return validation.isInvalid() ?
-                new ValidationShouldContain(EXPECTING_TO_CONTAIN, validation, expectedValue) :
-                shouldContainButIsValid(validation, expectedValue);
+                new ValidationShouldContain(EXPECTING_TO_CONTAIN_SAME, validation, expectedErrorValue) :
+                shouldContainButIsValid(validation, expectedErrorValue);
     }
 
     /**
@@ -78,13 +110,13 @@ class ValidationShouldContain extends BasicErrorMessageFactory {
     }
 
     /**
-     * Indicates that an {@link Validation} is valid so it doesn't contain the expected invalid value.
+     * Indicates that an {@link Validation} is valid so it doesn't contain the expected error value.
      *
-     * @param validation           the {@link Validation} which contains a value.
-     * @param expectedInvalidValue the invalid value we expect to be in an {@link Validation}.
+     * @param validation         the {@link Validation} which contains a value.
+     * @param expectedErrorValue the error value we expect to be in an {@link Validation}.
      * @return an error message factory.
      */
-    static ValidationShouldContain shouldContainButIsValid(Validation<?, ?> validation, Object expectedInvalidValue) {
-        return new ValidationShouldContain(EXPECTING_TO_CONTAIN_BUT_IS_VALID, validation, expectedInvalidValue);
+    static ValidationShouldContain shouldContainButIsValid(Validation<?, ?> validation, Object expectedErrorValue) {
+        return new ValidationShouldContain(EXPECTING_TO_CONTAIN_BUT_IS_VALID, validation, expectedErrorValue);
     }
 }

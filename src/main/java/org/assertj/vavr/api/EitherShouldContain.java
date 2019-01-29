@@ -17,8 +17,7 @@ import io.vavr.control.Either;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build error message when an {@link Either}
- * should contain a specific right value.
+ * Build error message when an {@link Either} should contain a specific value.
  *
  * @author Alex Dukhno
  * @author Michał Chmielarz

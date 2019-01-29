@@ -19,10 +19,9 @@ import org.assertj.core.internal.ComparisonStrategy;
 import org.assertj.core.internal.StandardComparisonStrategy;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
-import static org.assertj.vavr.api.ValidationShouldContain.shouldContainInvalid;
-import static org.assertj.vavr.api.ValidationShouldContain.shouldContainValid;
+import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
+import static org.assertj.vavr.api.ValidationShouldContain.*;
 
 /**
  * Assertions for {@link Validation}.
@@ -79,16 +78,44 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
 
     /**
      * Verifies that the actual {@link Validation} is {@link Validation.Invalid}
-     * and contains the given value.
+     * and contains the given error value.
+     *
+     * @param expectedErrorValue the expected error value inside the {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsInvalid(INVALID expectedErrorValue) {
+        assertIsInvalid();
+        checkNotNull(expectedErrorValue);
+        if (!validationValueComparisonStrategy.areEqual(actual.getError(), expectedErrorValue))
+            throwAssertionError(shouldContainInvalid(actual, expectedErrorValue));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual valid {@link Validation} contains the instance given as an argument.
      *
      * @param expectedValue the expected value inside the {@link Validation}.
      * @return this assertion object.
      */
-    public SELF containsInvalid(INVALID expectedValue) {
-        assertIsInvalid();
+    public SELF containsValidSame(VALID expectedValue) {
+        assertIsValid();
         checkNotNull(expectedValue);
-        if (!validationValueComparisonStrategy.areEqual(actual.getError(), expectedValue))
-            throwAssertionError(shouldContainInvalid(actual, expectedValue));
+        if (actual.get() != expectedValue)
+            throwAssertionError(shouldContainValidSame(actual, expectedValue));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual invalid {@link Validation} contains the instance given as an argument.
+     *
+     * @param expectedErrorValue the expected value inside the {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsInvalidSame(VALID expectedErrorValue) {
+        assertIsInvalid();
+        checkNotNull(expectedErrorValue);
+        if (actual.getError() != expectedErrorValue)
+            throwAssertionError(shouldContainInvalidSame(actual, expectedErrorValue));
         return myself;
     }
 
