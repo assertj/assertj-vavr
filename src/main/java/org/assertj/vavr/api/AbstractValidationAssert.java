@@ -22,6 +22,8 @@ import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldContain.*;
+import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldContainInvalidInstanceOf;
+import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldContainValidInstanceOf;
 
 /**
  * Assertions for {@link Validation}.
@@ -116,6 +118,32 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
         checkNotNull(expectedErrorValue);
         if (actual.getError() != expectedErrorValue)
             throwAssertionError(shouldContainInvalidSame(actual, expectedErrorValue));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual valid {@link Validation} contains a value that is an instance of the argument.
+     *
+     * @param clazz the expected class of the value inside the valid {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsValidInstanceOf(Class<?> clazz) {
+        assertIsValid();
+        if (!clazz.isInstance(actual.get()))
+            throwAssertionError(shouldContainValidInstanceOf(actual, clazz));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual invalid {@link Validation} contains a value that is an instance of the argument.
+     *
+     * @param clazz the expected class of the value inside the invalid {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsInvalidInstanceOf(Class<?> clazz) {
+        assertIsInvalid();
+        if (!clazz.isInstance(actual.getError()))
+            throwAssertionError(shouldContainInvalidInstanceOf(actual, clazz));
         return myself;
     }
 
