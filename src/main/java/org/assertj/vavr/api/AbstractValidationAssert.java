@@ -15,9 +15,14 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Validation;
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.StandardComparisonStrategy;
 
+import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
+import static org.assertj.vavr.api.ValidationShouldContain.shouldContainInvalid;
+import static org.assertj.vavr.api.ValidationShouldContain.shouldContainValid;
 
 /**
  * Assertions for {@link Validation}.
@@ -30,8 +35,11 @@ import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
 abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SELF, INVALID, VALID>, INVALID, VALID> extends
         AbstractAssert<SELF, Validation<INVALID, VALID>> {
 
+    private ComparisonStrategy validationValueComparisonStrategy;
+
     AbstractValidationAssert(Validation<INVALID, VALID> actual, Class<?> selfType) {
         super(actual, selfType);
+        this.validationValueComparisonStrategy = StandardComparisonStrategy.instance();
     }
 
     /**
@@ -54,6 +62,36 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
         return myself;
     }
 
+    /**
+     * Verifies that the actual {@link Validation} is {@link Validation.Valid}
+     * and contains the given value.
+     *
+     * @param expectedValue the expected value inside the {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsValid(VALID expectedValue) {
+        assertIsValid();
+        checkNotNull(expectedValue);
+        if (!validationValueComparisonStrategy.areEqual(actual.get(), expectedValue))
+            throwAssertionError(shouldContainValid(actual, expectedValue));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link Validation} is {@link Validation.Invalid}
+     * and contains the given value.
+     *
+     * @param expectedValue the expected value inside the {@link Validation}.
+     * @return this assertion object.
+     */
+    public SELF containsInvalid(INVALID expectedValue) {
+        assertIsInvalid();
+        checkNotNull(expectedValue);
+        if (!validationValueComparisonStrategy.areEqual(actual.getError(), expectedValue))
+            throwAssertionError(shouldContainInvalid(actual, expectedValue));
+        return myself;
+    }
+
     private void assertIsInvalid() {
         isNotNull();
         if (actual.isValid()) throwAssertionError(shouldBeInvalid(actual));
@@ -62,5 +100,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     private void assertIsValid() {
         isNotNull();
         if (actual.isInvalid()) throwAssertionError(shouldBeValid(actual));
+    }
+
+    private void checkNotNull(Object expectedValue) {
+        checkArgument(expectedValue != null, "The expected value should not be <null>.");
     }
 }
