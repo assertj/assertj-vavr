@@ -78,7 +78,6 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      */
     public SELF containsValid(VALID expectedValue) {
         assertIsValid();
-        checkNotNull(expectedValue);
         if (!validationValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContainValid(actual, expectedValue));
         return myself;
@@ -107,7 +106,6 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      */
     public SELF containsValidSame(VALID expectedValue) {
         assertIsValid();
-        checkNotNull(expectedValue);
         if (actual.get() != expectedValue)
             throwAssertionError(shouldContainValidSame(actual, expectedValue));
         return myself;
