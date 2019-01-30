@@ -15,8 +15,10 @@ package org.assertj.vavr.api;
 
 import io.vavr.control.Validation;
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.FieldByFieldComparator;
 import org.assertj.core.internal.StandardComparisonStrategy;
 import org.assertj.core.util.CheckReturnValue;
 
@@ -162,6 +164,34 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     @CheckReturnValue
     public SELF usingValueComparator(Comparator<?> customComparator) {
         validationValueComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
+        return myself;
+    }
+
+    /**
+     * Use field/property by field/property comparison (including inherited fields/properties) instead of relying on
+     * actual type A <code>equals</code> method to compare the {@link Validation} value's object for incoming assertion
+     * checks. Private fields are included but this can be disabled using
+     * {@link Assertions#setAllowExtractingPrivateFields(boolean)}.
+     *
+     * @return {@code this} assertion object.
+     */
+    @CheckReturnValue
+    public SELF usingFieldByFieldValueComparator() {
+        return usingValueComparator(new FieldByFieldComparator());
+    }
+
+    /**
+     * Revert to standard comparison for incoming assertion {@link Validation} value checks.
+     * <p>
+     * This method should be used to disable a custom comparison strategy set by calling
+     * {@link #usingValueComparator(Comparator)}.
+     *
+     * @return {@code this} assertion object.
+     */
+    @CheckReturnValue
+    public SELF usingDefaultRightValueComparator() {
+        // fall back to default strategy to compare actual with other objects.
+        validationValueComparisonStrategy = StandardComparisonStrategy.instance();
         return myself;
     }
 
