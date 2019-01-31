@@ -37,13 +37,6 @@ class ValidationAssert_containsValid_usingValueComparator_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Validation.valid(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsValid(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_fail_if_validation_is_invalid() {
         final Validation<Foo, Object> actual = Validation.invalid(new Foo("something"));
 

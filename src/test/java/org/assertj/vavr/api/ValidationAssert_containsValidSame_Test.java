@@ -31,13 +31,6 @@ class ValidationAssert_containsValidSame_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Validation.valid("something")).containsValidSame(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_validation_contains_same_instance_as_valid_value() {
         final String value = "something";
         assertThat(Validation.valid(value)).containsValidSame(value);

@@ -30,14 +30,6 @@ class ValidationAssert_containsValid_usingFieldByFieldValueComparator_Test {
 	}
 
 	@Test
-	void should_fail_if_expected_value_is_null() {
-		assertThrows(
-				IllegalArgumentException.class, () -> assertThat(Validation.valid(new Foo("something")))
-						.usingFieldByFieldValueComparator().containsValid(null),
-				"The expected value should not be <null>.");
-	}
-
-	@Test
 	void should_pass_if_valid_validation_contains_expected_value() {
 		assertThat(Validation.valid(new Foo("something"))).usingFieldByFieldValueComparator()
 				.containsValid(new Foo("something"));
