@@ -30,14 +30,6 @@ class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test {
 	}
 
 	@Test
-	void should_fail_if_expected_value_is_null() {
-		assertThrows(
-				IllegalArgumentException.class, () -> assertThat(Either.right(new Foo("something")))
-						.usingFieldByFieldValueComparator().containsOnRight(null),
-				"The expected value should not be <null>.");
-	}
-
-	@Test
 	void should_pass_if_right_sided_either_contains_expected_value() {
 		assertThat(Either.right(new Foo("something"))).usingFieldByFieldValueComparator()
 				.containsOnRight(new Foo("something"));

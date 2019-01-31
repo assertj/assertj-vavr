@@ -37,13 +37,6 @@ class EitherAssert_containsOnRight_usingValueComparator_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Either.right(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).containsOnRight(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_fail_if_either_is_left_sided() {
         final Either<Foo, Object> actual = Either.left(new Foo("something"));
 
