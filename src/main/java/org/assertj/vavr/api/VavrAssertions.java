@@ -12,14 +12,14 @@
  */
 package org.assertj.vavr.api;
 
-import org.assertj.core.util.CheckReturnValue;
-
+import io.vavr.Lazy;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
-import io.vavr.Lazy;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
+import io.vavr.control.Validation;
+import org.assertj.core.util.CheckReturnValue;
 
 /**
  * Entry point for assertion methods for different Vavr types. Each method in this class is a static factory for a
@@ -36,10 +36,9 @@ public final class VavrAssertions {
     /**
      * Create assertion for {@link io.vavr.control.Either}.
      *
-     * @param <LEFT> the type of a value contained on left by <code>actual {@link Either}</code>.
+     * @param <LEFT>  the type of a value contained on left by <code>actual {@link Either}</code>.
      * @param <RIGHT> the type of a value contained on right by <code>actual {@link Either}</code>.
-     * @param actual the actual value.
-     *
+     * @param actual  the actual value.
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -51,8 +50,7 @@ public final class VavrAssertions {
      * Create assertion for {@link Lazy}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Lazy}</code>.
-     * @param actual the actual value.
-     *
+     * @param actual  the actual value.
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -64,8 +62,7 @@ public final class VavrAssertions {
      * Create assertion for {@link io.vavr.control.Option}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Option}</code>.
-     * @param actual the actual value.
-     *
+     * @param actual  the actual value.
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -77,8 +74,7 @@ public final class VavrAssertions {
      * Create assertion for {@link io.vavr.control.Try}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Try}</code>.
-     * @param actual the actual value.
-     *
+     * @param actual  the actual value.
      * @return the created assertion object.
      */
     @CheckReturnValue
@@ -96,5 +92,18 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <VALUE> SeqAssert<VALUE> assertThat(Seq<VALUE> actual) {
         return new SeqAssert<>(actual);
+    }
+
+    /**
+     * Create assertion for {@link io.vavr.control.Validation}.
+     *
+     * @param <INVALID> type of the value in the case of the invalid {@link Validation}.
+     * @param <VALID>   type of the value in the case of the valid {@link Validation}.
+     * @param actual    the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <INVALID, VALID> ValidationAssert<INVALID, VALID> assertThat(Validation<INVALID, VALID> actual) {
+        return new ValidationAssert<>(actual);
     }
 }

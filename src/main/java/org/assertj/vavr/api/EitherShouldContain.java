@@ -17,8 +17,7 @@ import io.vavr.control.Either;
 import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
- * Build error message when an {@link Either}
- * should contain a specific right value.
+ * Build error message when an {@link Either} should contain a specific value.
  *
  * @author Alex Dukhno
  * @author Michał Chmielarz
@@ -33,6 +32,7 @@ class EitherShouldContain extends BasicErrorMessageFactory {
     private static final String EXPECTING_TO_CONTAIN_ON_THE_RIGHT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [RIGHT]%nbut did not.";
     private static final String EXPECTING_ON_THE_LEFT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut had <%s> on the [RIGHT].";
     private static final String EXPECTING_ON_THE_RIGHT = "%nExpecting:%n  <%s>%nto contain on the [RIGHT]:%n  <%s>%nbut had <%s> on the [LEFT].";
+
     private EitherShouldContain(String message, Object actual, Object expected) {
         super(message, actual, expected);
     }
