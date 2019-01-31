@@ -79,7 +79,6 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
      */
     public SELF contains(VALUE expectedValue) {
         isNotNull();
-        checkNotNull(expectedValue);
         if (actual.isEmpty()) throwAssertionError(shouldContain(expectedValue));
         if (!optionValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContain(actual, expectedValue));
