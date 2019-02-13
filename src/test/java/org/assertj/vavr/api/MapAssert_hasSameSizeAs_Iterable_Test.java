@@ -18,10 +18,10 @@ import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
-import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
+import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MapAssert_hasSameSizeAs_Iterable_Test {
 
@@ -34,25 +34,34 @@ class MapAssert_hasSameSizeAs_Iterable_Test {
     @Test
     void should_fail_when_Map_is_null() {
         Iterable<String> iterable = List.of("single element");
-        assertThrows(AssertionError.class,
-                () -> assertThat((Map<String, String>) null).hasSameSizeAs(iterable),
-                shouldNotBeEmpty().create());
+
+        assertThatThrownBy(
+                () -> assertThat((Map<String, String>) null).hasSameSizeAs(iterable)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
     void should_fail_if_Map_is_not_of_expected_size() {
         final HashMap<Object, Object> actual = HashMap.empty();
         Iterable<String> iterable = List.of("single element");
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).hasSameSizeAs(iterable),
-                shouldHaveSameSizeAs(actual, 0, 1).create());
+
+        assertThatThrownBy(
+                () -> assertThat(actual).hasSameSizeAs(iterable)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldHaveSameSizeAs(actual, 0, 1).create());
     }
 
     @Test
     void should_fail_if_iterable_to_compare_with_is_null() {
         final HashMap<Object, Object> actual = HashMap.empty();
-        assertThrows(NullPointerException.class,
-                () -> assertThat(actual).hasSameSizeAs(null),
-                "The other Iterable to compare actual size with should not be null");
+
+        assertThatThrownBy(
+                () -> assertThat(actual).hasSameSizeAs(null)
+        )
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("The other Iterable to compare actual size with should not be null");
     }
 }

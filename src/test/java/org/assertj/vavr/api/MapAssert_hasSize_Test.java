@@ -17,9 +17,10 @@ import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
+import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MapAssert_hasSize_Test {
 
@@ -30,15 +31,21 @@ class MapAssert_hasSize_Test {
 
     @Test
     void should_fail_when_Map_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Map<String, String>) null).hasSize(1),
-                shouldNotBeEmpty().create());
+        assertThatThrownBy(
+                () -> assertThat((Map<String, String>) null).hasSize(1)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
     void should_fail_if_Map_is_not_of_expected_size() {
-        assertThrows(AssertionError.class,
-                () -> assertThat(HashMap.empty()).hasSize(1),
-                shouldNotBeEmpty().create());
+        final Map<Object, Object> actual = HashMap.empty();
+
+        assertThatThrownBy(
+                () -> assertThat(actual).hasSize(1)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldHaveSize(actual, 0, 1).create());
     }
 }

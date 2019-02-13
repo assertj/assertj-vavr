@@ -17,9 +17,10 @@ import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
+import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MapAssert_isNotEmpty_Test {
 
@@ -30,15 +31,19 @@ class MapAssert_isNotEmpty_Test {
 
     @Test
     void should_fail_when_Map_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Map<String, String>) null).isNotEmpty(),
-                shouldNotBeEmpty().create());
+        assertThatThrownBy(
+                () -> assertThat((Map<String, String>) null).isNotEmpty()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
     void should_fail_if_Map_is_empty() {
-        assertThrows(AssertionError.class,
-                () -> assertThat(HashMap.empty()).isNotEmpty(),
-                shouldNotBeEmpty().create());
+        assertThatThrownBy(
+                () -> assertThat(HashMap.empty()).isNotEmpty()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotBeEmpty().create());
     }
 }
