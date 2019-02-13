@@ -78,7 +78,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     @Override
     public SELF hasSameSizeAs(Iterable<?> other) {
         isNotNull();
-        checkNotNull(other, "The other Map to compare actual size with should not be null");
+        checkNotNull(other, "The other Iterable to compare actual size with should not be null");
         final long expectedSize = sizeOf(other);
         if (actual.size() != expectedSize)
             throwAssertionError(shouldHaveSameSizeAs(actual, actual.size(), expectedSize));
