@@ -15,19 +15,21 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldContain.shouldContainValid;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_containsValid_Test {
 
     @Test
     void should_fail_when_validation_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Validation<String, String>) null).containsValid("something"),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Validation<String, String>) null).containsValid("something")
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
@@ -40,9 +42,11 @@ class ValidationAssert_containsValid_Test {
         Validation<String, String> actual = Validation.valid("something");
         String expectedValue = "nothing";
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsValid(expectedValue),
-                shouldContainValid(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsValid(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainValid(actual, expectedValue).create());
     }
 
     @Test
@@ -50,8 +54,10 @@ class ValidationAssert_containsValid_Test {
         Validation<String, String> actual = Validation.invalid("nothing");
         String expectedValue = "something";
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsValid(expectedValue),
-                shouldBeValid(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsValid(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeValid(actual).create());
     }
 }
