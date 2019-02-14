@@ -15,26 +15,30 @@ package org.assertj.vavr.api;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
 import static org.assertj.vavr.api.OptionShouldContain.shouldContainSame;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_containsSame_Test {
 
     @Test
     void should_fail_when_option_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<String>) null).containsSame("something"),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<String>) null).containsSame("something")
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Option.of("something")).containsSame(null),
-                "The expected value should not be <null>.");
+        assertThatThrownBy(
+                () -> assertThat(Option.of("something")).containsSame(null)
+        )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The expected value should not be <null>.");
     }
 
     @Test
@@ -49,9 +53,11 @@ class OptionAssert_containsSame_Test {
         Option<String> actual = Option.of("not-expected");
         String expectedValue = "something";
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsSame(expectedValue),
-                shouldContainSame(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsSame(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainSame(actual, expectedValue).create());
     }
 
     @SuppressWarnings("RedundantStringConstructorCall")
@@ -60,17 +66,21 @@ class OptionAssert_containsSame_Test {
         Option<String> actual = Option.of(new String("something"));
         String expectedValue = new String("something");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsSame(expectedValue),
-                shouldContainSame(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsSame(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainSame(actual, expectedValue).create());
     }
 
     @Test
     void should_fail_if_option_is_empty() {
         String expectedValue = "something";
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(Option.none()).containsSame(expectedValue),
-                shouldContain(expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(Option.none()).containsSame(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContain(expectedValue).create());
     }
 }

@@ -15,10 +15,10 @@ package org.assertj.vavr.api;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_containsInstanceOf_Test {
 
@@ -26,15 +26,17 @@ class OptionAssert_containsInstanceOf_Test {
     void should_fail_if_option_is_empty() {
         Option<Object> actual = Option.none();
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsInstanceOf(Object.class),
-                shouldBePresent().create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsInstanceOf(Object.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBePresent().create());
     }
 
     @Test
     void should_pass_if_option_contains_required_type() {
         assertThat(Option.of("something")).containsInstanceOf(String.class)
-          .containsInstanceOf(Object.class);
+                .containsInstanceOf(Object.class);
     }
 
     @Test
@@ -46,9 +48,11 @@ class OptionAssert_containsInstanceOf_Test {
     void should_fail_if_option_contains_other_type_than_required() {
         Option<ParentClass> actual = Option.of(new ParentClass());
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsInstanceOf(OtherClass.class),
-                shouldContainInstanceOf(actual, OtherClass.class).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsInstanceOf(OtherClass.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainInstanceOf(actual, OtherClass.class).create());
     }
 
     private static class ParentClass {
