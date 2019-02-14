@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.LazyShouldBeEvaluated.shouldBeEvaluated;
+import static org.assertj.vavr.api.LazyShouldBeNotEvaluated.shouldBeNotEvaluated;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 class LazyAssert_isNotEvaluated_Test {
@@ -38,7 +38,7 @@ class LazyAssert_isNotEvaluated_Test {
                 () -> assertThat(lazy).isNotEvaluated()
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(shouldBeEvaluated().create());
+                .hasMessage(shouldBeNotEvaluated(lazy).create());
     }
 
     @Test
