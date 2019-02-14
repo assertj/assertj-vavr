@@ -16,33 +16,40 @@ import io.vavr.control.Option;
 import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.TryShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TryAssert_contains_usingFieldByFieldValueComparator_Test {
 
     @Test
     void should_fail_when_try_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
-                        .contains(new Foo("something")),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<Foo>) null)
+                        .usingFieldByFieldValueComparator()
+                        .contains(new Foo("something"))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_expected_value_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.success(new Foo("something"))).usingFieldByFieldValueComparator().contains(null)
-        );
+        assertThatThrownBy(
+                () -> assertThat(Try.success(new Foo("something")))
+                        .usingFieldByFieldValueComparator()
+                        .contains(null)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting:\n  <Success(Foo{value='something'})>\nto contain:\n  <null>\nbut did not.");
     }
 
     @Test
     void should_pass_if_successful_try_contains_expected_value() {
         assertThat(Try.success(new Foo("something")))
-          .usingFieldByFieldValueComparator()
-          .contains(new Foo("something"));
+                .usingFieldByFieldValueComparator()
+                .contains(new Foo("something"));
     }
 
     @Test
@@ -50,9 +57,11 @@ class TryAssert_contains_usingFieldByFieldValueComparator_Test {
         Try<Foo> actual = Try.success(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue),
-                shouldContain(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContain(actual, expectedValue).create());
     }
 
     private static class Foo {
