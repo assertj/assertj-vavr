@@ -14,6 +14,7 @@ package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -106,4 +107,18 @@ public final class VavrAssertions {
     public static <INVALID, VALID> ValidationAssert<INVALID, VALID> assertThat(Validation<INVALID, VALID> actual) {
         return new ValidationAssert<>(actual);
     }
+
+    /**
+     * Create assertion for {@link io.vavr.collection.Map}.
+     *
+     * @param <KEY>   key type of the {@link Map}.
+     * @param <VALUE> value type of the {@link Map}.
+     * @param actual  the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <KEY, VALUE> MapAssert<KEY, VALUE> assertThat(Map<KEY, VALUE> actual) {
+        return new MapAssert<>(actual);
+    }
+
 }
