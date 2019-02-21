@@ -22,6 +22,7 @@ import org.assertj.core.internal.ComparisonStrategy;
 import org.assertj.core.internal.StandardComparisonStrategy;
 
 import java.util.Comparator;
+import java.util.function.BiConsumer;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
@@ -47,6 +48,23 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     AbstractMapAssert(ACTUAL actual, Class<?> selfType) {
         super(actual, selfType);
         this.elementComparisonStrategy = StandardComparisonStrategy.instance();
+    }
+
+    /**
+     * Verifies that all the actual map entries satisfy the given {@code entryRequirements}.
+     * If the actual map is empty, this assertion succeeds as there is nothing to check.
+     *
+     * @param entryRequirements the given requirements that each entry must sastify.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException if the given entryRequirements {@link BiConsumer} is {@code null}.
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if one or more entries don't satisfy the given requirements.
+     */
+    public SELF allSatisfy(BiConsumer<? super KEY, ? super VALUE> entryRequirements) {
+        checkNotNull(entryRequirements, "The BiConsumer<K, V> expressing the assertions requirements must not be null");
+        isNotNull();
+        actual.forEach(entry -> entryRequirements.accept(entry._1, entry._2));
+        return myself;
     }
 
     @Override
