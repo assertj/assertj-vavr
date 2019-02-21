@@ -14,7 +14,10 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.Tuple2;
+import io.vavr.collection.Array;
+import io.vavr.collection.HashSet;
 import io.vavr.collection.Map;
+import io.vavr.collection.Set;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.EnumerableAssert;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
@@ -26,10 +29,12 @@ import java.util.function.BiConsumer;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
+import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.internal.Arrays.assertIsArray;
+import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
 import static org.assertj.core.util.IterableUtil.sizeOf;
 import static org.assertj.core.util.Preconditions.checkNotNull;
@@ -82,6 +87,38 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     public SELF isNotEmpty() {
         isNotNull();
         if (actual.isEmpty()) throwAssertionError(shouldNotBeEmpty());
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains the given entries, in any order.
+     * <p>This assertion succeeds if both actual map and given entries are empty.</p>
+     *
+     * @param entries the given entries.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException if the given argument is {@code null}.
+     * @throws NullPointerException if any of the entries in the given array is {@code null}.
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if the actual map does not contain the given entries.
+     */
+    public SELF contains(@SuppressWarnings("unchecked") Tuple2<KEY, VALUE>... entries) {
+        checkNotNull(entries, "Entries cannot be null");
+        isNotNull();
+        // if both actual and values are empty, then assertion passes.
+        if (actual.isEmpty() && entries.length == 0) return myself;
+        failIfEmptySinceActualIsNotEmpty(entries);
+        final Set<Tuple2<? extends KEY, ? extends VALUE>> notFound = Array
+                .of(entries)
+                .foldLeft(HashSet.empty(), (set, tuple) -> {
+                    if (actual.contains(tuple)) {
+                        return set;
+                    } else {
+                        return set.add(tuple);
+                    }
+                });
+        if (!notFound.isEmpty()) {
+            throwAssertionError(shouldContain(actual, entries, notFound));
+        }
         return myself;
     }
 
