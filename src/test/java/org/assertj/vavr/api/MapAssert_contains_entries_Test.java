@@ -45,6 +45,18 @@ class MapAssert_contains_entries_Test {
     }
 
     @Test
+    void should_fail_if_Map_is_not_empty_and_entries_is_an_empty_array() {
+        final Map<String, String> actual = HashMap.of("key1", "value1", "key3", "value3");
+        final Tuple2<String, String>[] entries = new Tuple2[]{};
+
+        assertThatThrownBy(
+                () -> assertThat(actual).contains(entries)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("actual is not empty");
+    }
+
+    @Test
     void should_fail_if_entries_parameter_null() {
         assertThatThrownBy(
                 () -> assertThat(HashMap.<String, String>empty()).contains((Tuple2<String, String>) null)
