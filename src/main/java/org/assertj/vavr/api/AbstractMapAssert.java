@@ -30,6 +30,7 @@ import java.util.function.BiConsumer;
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldContain.shouldContain;
+import static org.assertj.core.error.ShouldContainAnyOf.shouldContainAnyOf;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
@@ -37,6 +38,7 @@ import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
 import static org.assertj.core.util.IterableUtil.sizeOf;
+import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
 /**
@@ -98,6 +100,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      * @return {@code this} assertion object.
      * @throws NullPointerException if the given argument is {@code null}.
      * @throws NullPointerException if any of the entries in the given array is {@code null}.
+     * @throws AssertionError       if the actual map is not empty anf the given argument is an empty array.
      * @throws AssertionError       if the actual map is {@code null}.
      * @throws AssertionError       if the actual map does not contain the given entries.
      */
@@ -120,6 +123,29 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
             throwAssertionError(shouldContain(actual, entries, notFound));
         }
         return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains at least one of the given entries.
+     *
+     * @param entries the given entries.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException     if the given argument is {@code null}.
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
+     * @throws AssertionError           if the actual map is not empty anf the given argument is an empty array.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map does not contain any of the given entries.
+     */
+    public SELF containsAnyOf(@SuppressWarnings("unchecked") Tuple2<KEY, VALUE>... entries) {
+        checkNotNull(entries, "Entries cannot be null");
+        isNotNull();
+        // if both actual and values are empty, then assertion passes.
+        if (actual.isEmpty() && entries.length == 0) return myself;
+        failIfEmptySinceActualIsNotEmpty(entries);
+        for (Tuple2<KEY, VALUE> entry : entries) {
+            if (containsEntry(actual, entry)) return myself;
+        }
+        throw new AssertionError(shouldContainAnyOf(actual, entries).create());
     }
 
     @Override
@@ -160,4 +186,8 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         return myself;
     }
 
+    private boolean containsEntry(Map<KEY, VALUE> actual, Tuple2<KEY, VALUE> entry) {
+        checkNotNull(entry, "Entries to look for should not be null");
+        return actual.containsKey(entry._1) && areEqual(actual.get(entry._1).get(), entry._2);
+    }
 }
