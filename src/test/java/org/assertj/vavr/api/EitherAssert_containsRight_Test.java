@@ -31,13 +31,6 @@ class EitherAssert_containsRight_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Either.right("something")).containsOnRight(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_either_contains_expected_value_on_right_side() {
         assertThat(Either.right("something")).containsOnRight("something");
     }

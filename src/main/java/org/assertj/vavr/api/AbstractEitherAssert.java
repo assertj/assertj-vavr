@@ -82,7 +82,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      */
     public SELF containsOnRight(RIGHT expectedValue) {
         assertIsRight();
-        checkNotNull(expectedValue);
         if (!eitherValueComparisonStrategy.areEqual(actual.get(), expectedValue))
             throwAssertionError(shouldContainOnRight(actual, expectedValue));
         return myself;
@@ -97,7 +96,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      */
     public SELF containsOnLeft(LEFT expectedValue) {
         assertIsLeft();
-        checkNotNull(expectedValue);
         if (!eitherValueComparisonStrategy.areEqual(actual.getLeft(), expectedValue))
             throwAssertionError(shouldContainOnLeft(actual, expectedValue));
         return myself;
@@ -111,7 +109,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      */
     public SELF containsRightSame(RIGHT expectedValue) {
         assertIsRight();
-        checkNotNull(expectedValue);
         if (actual.get() != expectedValue)
             throwAssertionError(shouldContainSameOnRight(actual, expectedValue));
         return myself;
@@ -125,7 +122,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      */
     public SELF containsLeftSame(LEFT expectedValue) {
         assertIsLeft();
-        checkNotNull(expectedValue);
         if (actual.getLeft() != expectedValue)
             throwAssertionError(shouldContainSameOnLeft(actual, expectedValue));
         return myself;
