@@ -36,13 +36,6 @@ class OptionAssert_contains_usingValueComparator_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Option.of(new Foo("something"))).usingValueComparator(FOO_COMPARATOR).contains(null),
-                "The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of(new Foo("something"))).usingValueComparator(FOO_COMPARATOR)
           .contains(new Foo("SoMething"));
