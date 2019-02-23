@@ -8,18 +8,18 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2017 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  */
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EitherAssert_containsRightInstanceOf_Test {
 
@@ -27,24 +27,28 @@ class EitherAssert_containsRightInstanceOf_Test {
     void should_fail_if_either_is_null() {
         Either<Object, Object> actual = null;
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsRightInstanceOf(Object.class),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsRightInstanceOf(Object.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_either_is_left() {
         Either<String, Object> actual = Either.left("some");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsRightInstanceOf(Object.class),
-                shouldBeRight(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsRightInstanceOf(Object.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeRight(actual).create());
     }
 
     @Test
     void should_pass_if_either_contains_required_type_on_right() {
         assertThat(Either.right("something")).containsRightInstanceOf(String.class)
-          .containsRightInstanceOf(Object.class);
+                .containsRightInstanceOf(Object.class);
     }
 
     @Test
@@ -56,9 +60,11 @@ class EitherAssert_containsRightInstanceOf_Test {
     void should_fail_if_either_contains_other_type_on_right_than_required() {
         Either<Object, ParentClass> actual = Either.right(new ParentClass());
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsRightInstanceOf(OtherClass.class),
-                shouldContainOnRightInstanceOf(actual, OtherClass.class).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsRightInstanceOf(OtherClass.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainOnRightInstanceOf(actual, OtherClass.class).create());
     }
 
     private static class ParentClass {
