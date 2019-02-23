@@ -35,17 +35,6 @@ class OptionAssert_contains_usingFieldByFieldValueComparator_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThatThrownBy(
-                () -> assertThat(Option.of(new Foo("something")))
-                        .usingFieldByFieldValueComparator()
-                        .contains(null)
-        )
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator()
                 .contains(new Foo("something"));

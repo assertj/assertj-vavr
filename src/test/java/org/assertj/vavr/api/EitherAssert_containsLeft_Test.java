@@ -33,15 +33,6 @@ class EitherAssert_containsLeft_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThatThrownBy(
-                () -> assertThat(Either.left("something")).containsOnLeft(null)
-        )
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_either_contains_expected_value_on_left_side() {
         assertThat(Either.left("something")).containsOnLeft("something");
     }

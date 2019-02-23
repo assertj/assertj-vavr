@@ -15,26 +15,30 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
 import static org.assertj.vavr.api.ValidationShouldContain.shouldContainInvalidSame;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_containsInvalidSame_Test {
 
     @Test
     void should_fail_when_validation_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Validation<String, String>) null).containsInvalidSame("something"),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Validation<String, String>) null).containsInvalidSame("something")
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Validation.invalid("something")).containsInvalidSame(null),
-                "The expected value should not be <null>.");
+        assertThatThrownBy(
+                () -> assertThat(Validation.invalid("something")).containsInvalidSame(null)
+        )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The expected value should not be <null>.");
     }
 
     @Test
@@ -48,9 +52,11 @@ class ValidationAssert_containsInvalidSame_Test {
         Validation<String, String> actual = Validation.invalid("something");
         final String expectedValue = new String("something");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsInvalidSame(expectedValue),
-                shouldContainInvalidSame(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsInvalidSame(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainInvalidSame(actual, expectedValue).create());
     }
 
     @Test
@@ -58,8 +64,10 @@ class ValidationAssert_containsInvalidSame_Test {
         Validation<String, String> actual = Validation.valid("nothing");
         String expectedValue = "something";
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsInvalidSame(expectedValue),
-                shouldBeInvalid(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsInvalidSame(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeInvalid(actual).create());
     }
 }

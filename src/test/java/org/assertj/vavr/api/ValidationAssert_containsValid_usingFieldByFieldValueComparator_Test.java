@@ -15,62 +15,71 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldContain.shouldContainValid;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_containsValid_usingFieldByFieldValueComparator_Test {
 
-	@Test
-	void should_fail_when_validation_is_null() {
-		assertThrows(AssertionError.class, () -> assertThat((Validation<String, Foo>) null)
-				.usingFieldByFieldValueComparator().containsValid(new Foo("something")), actualIsNull());
-	}
+    @Test
+    void should_fail_when_validation_is_null() {
+        assertThatThrownBy(
+                () -> assertThat((Validation<String, Foo>) null)
+                        .usingFieldByFieldValueComparator()
+                        .containsValid(new Foo("something"))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
+    }
 
-	@Test
-	void should_pass_if_valid_validation_contains_expected_value() {
-		assertThat(Validation.valid(new Foo("something"))).usingFieldByFieldValueComparator()
-				.containsValid(new Foo("something"));
-	}
+    @Test
+    void should_pass_if_valid_validation_contains_expected_value() {
+        assertThat(Validation.valid(new Foo("something"))).usingFieldByFieldValueComparator()
+                .containsValid(new Foo("something"));
+    }
 
-	@Test
-	void should_fail_if_valid_validation_does_not_contain_expected_value() {
-		Validation<String, Foo> actual = Validation.valid(new Foo("something"));
-		Foo expectedValue = new Foo("something else");
+    @Test
+    void should_fail_if_valid_validation_does_not_contain_expected_value() {
+        Validation<String, Foo> actual = Validation.valid(new Foo("something"));
+        Foo expectedValue = new Foo("something else");
 
-		assertThrows(AssertionError.class,
-				() -> assertThat(actual).usingFieldByFieldValueComparator().containsValid(expectedValue),
-				shouldContainValid(actual, expectedValue).create());
-	}
+        assertThatThrownBy(
+                () -> assertThat(actual).usingFieldByFieldValueComparator().containsValid(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainValid(actual, expectedValue).create());
+    }
 
-	@Test
-	void should_fail_if_validation_is_invalid() {
-		Foo expectedValue = new Foo("test");
-		final Validation<Foo, Object> actual = Validation.invalid(new Foo("something else"));
+    @Test
+    void should_fail_if_validation_is_invalid() {
+        Foo expectedValue = new Foo("test");
+        final Validation<Foo, Object> actual = Validation.invalid(new Foo("something else"));
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).usingFieldByFieldValueComparator().containsValid(expectedValue),
-                shouldBeValid(actual).create());
-	}
+        assertThatThrownBy(
+                () -> assertThat(actual).usingFieldByFieldValueComparator().containsValid(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeValid(actual).create());
+    }
 
-	private static class Foo {
+    private static class Foo {
 
-		private final String value;
+        private final String value;
 
-		Foo(String value) {
-			this.value = value;
-		}
+        Foo(String value) {
+            this.value = value;
+        }
 
-		@SuppressWarnings("unused")
-		String getValue() {
-			return value;
-		}
+        @SuppressWarnings("unused")
+        String getValue() {
+            return value;
+        }
 
-		@Override
-		public String toString() {
-			return "Foo{" + "value='" + value + '\'' + '}';
-		}
-	}
+        @Override
+        public String toString() {
+            return "Foo{" + "value='" + value + '\'' + '}';
+        }
+    }
 }

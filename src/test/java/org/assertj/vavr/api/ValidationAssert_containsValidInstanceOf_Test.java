@@ -15,11 +15,11 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldContainValidInstanceOf;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_containsValidInstanceOf_Test {
 
@@ -27,24 +27,28 @@ class ValidationAssert_containsValidInstanceOf_Test {
     void should_fail_if_validation_is_null() {
         Validation<Object, Object> actual = null;
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsValidInstanceOf(Object.class),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsValidInstanceOf(Object.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_validation_is_invalid() {
         Validation<String, Object> actual = Validation.invalid("some");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsValidInstanceOf(Object.class),
-                shouldBeValid(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsValidInstanceOf(Object.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeValid(actual).create());
     }
 
     @Test
     void should_pass_if_validation_contains_valid_value_of_required_type() {
         assertThat(Validation.valid("something")).containsValidInstanceOf(String.class)
-          .containsValidInstanceOf(Object.class);
+                .containsValidInstanceOf(Object.class);
     }
 
     @Test
@@ -56,9 +60,11 @@ class ValidationAssert_containsValidInstanceOf_Test {
     void should_fail_if_validation_contains_other_type_than_required() {
         Validation<Object, ParentClass> actual = Validation.valid(new ParentClass());
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).containsValidInstanceOf(OtherClass.class),
-                shouldContainValidInstanceOf(actual, OtherClass.class).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).containsValidInstanceOf(OtherClass.class)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainValidInstanceOf(actual, OtherClass.class).create());
     }
 
     private static class ParentClass {

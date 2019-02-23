@@ -32,21 +32,11 @@ class EitherAssert_containsOnRight_usingFieldByFieldValueComparator_Test {
                 .hasMessage(actualIsNull());
     }
 
-    @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThatThrownBy(
-                () -> assertThat(Either.right(new Foo("something")))
-                        .usingFieldByFieldValueComparator().containsOnRight(null)
-        )
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("The expected value should not be <null>.");
-    }
-
-    @Test
-    void should_pass_if_right_sided_either_contains_expected_value() {
-        assertThat(Either.right(new Foo("something"))).usingFieldByFieldValueComparator()
-                .containsOnRight(new Foo("something"));
-    }
+	@Test
+	void should_pass_if_right_sided_either_contains_expected_value() {
+		assertThat(Either.right(new Foo("something"))).usingFieldByFieldValueComparator()
+				.containsOnRight(new Foo("something"));
+	}
 
     @Test
     void should_fail_if_right_sided_either_does_not_contain_expected_value() {

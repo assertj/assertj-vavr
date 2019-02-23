@@ -33,15 +33,6 @@ class EitherAssert_containsRightSame_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null() {
-        assertThatThrownBy(
-                () -> assertThat(Either.right("something")).containsRightSame(null)
-        )
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_either_contains_same_instance_on_right_side() {
         final String value = "something";
         assertThat(Either.right(value)).containsRightSame(value);

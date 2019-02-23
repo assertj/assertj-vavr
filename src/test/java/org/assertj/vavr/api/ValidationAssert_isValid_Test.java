@@ -15,10 +15,10 @@ package org.assertj.vavr.api;
 import io.vavr.control.Validation;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_isValid_Test {
 
@@ -29,17 +29,21 @@ class ValidationAssert_isValid_Test {
 
     @Test
     void should_fail_when_Validation_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Validation<String, String>) null).isValid(),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Validation<String, String>) null).isValid()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_Validation_is_invalid() {
         Validation<String, String> actual = Validation.invalid("invalid");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).isValid(),
-                shouldBeValid(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).isValid()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeValid(actual).create());
     }
 }
