@@ -1,3 +1,5 @@
+package org.assertj.vavr.api;
+
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,7 +12,6 @@
  *
  * Copyright 2012-2017 the original author or authors.
  */
-package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;

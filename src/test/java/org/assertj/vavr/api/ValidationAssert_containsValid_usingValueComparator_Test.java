@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeValid.shouldBeValid;
 import static org.assertj.vavr.api.ValidationShouldContain.shouldContainValid;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidationAssert_containsValid_usingValueComparator_Test {
 
@@ -30,20 +30,24 @@ class ValidationAssert_containsValid_usingValueComparator_Test {
 
     @Test
     void should_fail_when_validation_is_null() {
-        assertThrows(AssertionError.class,
+        assertThatThrownBy(
                 () -> assertThat((Validation<String, Foo>) null).usingValueComparator(FOO_COMPARATOR)
-                        .containsValid(new Foo("something")),
-                actualIsNull());
+                        .containsValid(new Foo("something"))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_validation_is_invalid() {
         final Validation<Foo, Object> actual = Validation.invalid(new Foo("something"));
 
-        assertThrows(AssertionError.class,
+        assertThatThrownBy(
                 () -> assertThat(actual).usingValueComparator(FOO_COMPARATOR)
-                        .containsValid(new Object()),
-                shouldBeValid(actual).create());
+                        .containsValid(new Object())
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeValid(actual).create());
     }
 
     @Test
@@ -58,9 +62,11 @@ class ValidationAssert_containsValid_usingValueComparator_Test {
         Validation<String, Foo> actual = Validation.valid(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsValid(expectedValue),
-                shouldContainValid(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).usingValueComparator(FOO_COMPARATOR).containsValid(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContainValid(actual, expectedValue).create());
     }
 
     private static class Foo {
