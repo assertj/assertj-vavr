@@ -16,32 +16,39 @@ package org.assertj.vavr.api;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.OptionShouldContain.shouldContain;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_contains_usingFieldByFieldValueComparator_Test {
 
     @Test
     void should_fail_when_option_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<Foo>) null).usingFieldByFieldValueComparator()
-                        .contains(new Foo("something")),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<Foo>) null)
+                        .usingFieldByFieldValueComparator()
+                        .contains(new Foo("something"))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_expected_value_is_null() {
-        assertThrows(IllegalArgumentException.class,
-                () -> assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator().contains(null),
-                "The expected value should not be <null>.");
+        assertThatThrownBy(
+                () -> assertThat(Option.of(new Foo("something")))
+                        .usingFieldByFieldValueComparator()
+                        .contains(null)
+        )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The expected value should not be <null>.");
     }
 
     @Test
     void should_pass_if_option_contains_expected_value() {
         assertThat(Option.of(new Foo("something"))).usingFieldByFieldValueComparator()
-          .contains(new Foo("something"));
+                .contains(new Foo("something"));
     }
 
     @Test
@@ -49,18 +56,22 @@ class OptionAssert_contains_usingFieldByFieldValueComparator_Test {
         Option<Foo> actual = Option.of(new Foo("something"));
         Foo expectedValue = new Foo("something else");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue),
-                shouldContain(actual, expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).usingFieldByFieldValueComparator().contains(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContain(actual, expectedValue).create());
     }
 
     @Test
     void should_fail_if_option_is_empty() {
         Foo expectedValue = new Foo("test");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(Option.none()).usingFieldByFieldValueComparator().contains(expectedValue),
-                shouldContain(expectedValue).create());
+        assertThatThrownBy(
+                () -> assertThat(Option.none()).usingFieldByFieldValueComparator().contains(expectedValue)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldContain(expectedValue).create());
     }
 
     private static class Foo {

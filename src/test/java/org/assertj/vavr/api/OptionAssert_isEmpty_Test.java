@@ -15,10 +15,10 @@ package org.assertj.vavr.api;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.OptionShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_isEmpty_Test {
 
@@ -29,17 +29,21 @@ class OptionAssert_isEmpty_Test {
 
     @Test
     void should_fail_when_Option_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<String>) null).isEmpty(),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<String>) null).isEmpty()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_Option_is_present() {
         Option<String> actual = Option.of("not-empty");
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).isEmpty(),
-                shouldBeEmpty(actual).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).isEmpty()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeEmpty(actual).create());
     }
 }

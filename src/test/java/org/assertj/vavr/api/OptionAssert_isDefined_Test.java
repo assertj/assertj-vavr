@@ -15,10 +15,10 @@ package org.assertj.vavr.api;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.OptionShouldBePresent.shouldBePresent;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_isDefined_Test {
 
@@ -29,15 +29,19 @@ class OptionAssert_isDefined_Test {
 
     @Test
     void should_fail_when_Option_is_empty() {
-        assertThrows(AssertionError.class,
-                () -> assertThat(Option.none()).isDefined(),
-                shouldBePresent().create());
+        assertThatThrownBy(
+                () -> assertThat(Option.none()).isDefined()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBePresent().create());
     }
 
     @Test
     void should_fail_when_Option_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<String>) null).isDefined(),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<String>) null).isDefined()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 }
