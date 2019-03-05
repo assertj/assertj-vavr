@@ -13,6 +13,7 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Map;
 import org.assertj.core.api.AbstractObjectAssert;
@@ -33,6 +34,7 @@ import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
+import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.IterableUtil.sizeOf;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
@@ -136,6 +138,20 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     public SELF containsAllEntriesOf(Iterable<Tuple2<KEY, VALUE>> other) {
         final Tuple2<KEY, VALUE>[] entries = StreamSupport.stream(other.spliterator(), false).toArray(Tuple2[]::new);
         maps.assertContains(info, actual, entries);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains the given entry.
+     *
+     * @param key   the given key to check.
+     * @param value the given value to check.
+     * @return {@code this} assertion object.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map does not contain the given entries.
+     */
+    public SELF containsEntry(KEY key, VALUE value) {
+        maps.assertContains(info, actual, array(Tuple.of(key, value)));
         return myself;
     }
 
