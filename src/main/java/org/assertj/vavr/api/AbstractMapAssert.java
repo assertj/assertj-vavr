@@ -156,6 +156,21 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     }
 
     /**
+     * Verifies that the actual map does not contain the given entries.
+     *
+     * @param entries the given entries.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException     if the given argument is {@code null}.
+     * @throws IllegalArgumentException if the given argument is an empty array.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map contains any of the given entries.
+     */
+    public SELF doesNotContain(Tuple2<KEY, VALUE>... entries) {
+        maps.assertDoesNotContain(info, actual, entries);
+        return myself;
+    }
+
+    /**
      * Verifies that the actual map does not contain the given entry.
      *
      * @param key   key of the entry.
