@@ -11,6 +11,7 @@ import org.assertj.core.internal.Failures;
 import org.assertj.core.internal.Objects;
 
 import static org.assertj.core.error.ShouldContain.shouldContain;
+import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
@@ -73,6 +74,39 @@ public final class Maps {
                 });
         if (!notFound.isEmpty()) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
+        }
+    }
+
+    /**
+     * Asserts that the given {@code Map} does not contain the given entries.
+     *
+     * @param <K>     key type
+     * @param <V>     value type
+     * @param info    contains information about the assertion.
+     * @param actual  the given {@code Map}.
+     * @param entries the entries that are expected to be in the given {@code Map}.
+     * @throws NullPointerException     if the array of entries is {@code null}.
+     * @throws IllegalArgumentException if the array of entries is empty.
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
+     * @throws AssertionError           if the given {@code Map} is {@code null}.
+     * @throws AssertionError           if the given {@code Map} contains any of the given entries.
+     */
+    public <K, V> void assertDoesNotContain(AssertionInfo info, Map<K, V> actual,
+                                            Tuple2<K, V>[] entries) {
+        failIfNullOrEmpty(entries);
+        assertNotNull(info, actual);
+        failIfEmptySinceActualIsNotEmpty(entries);
+        final Set<Tuple2<? extends K, ? extends V>> found = Array
+                .of(entries)
+                .foldLeft(HashSet.empty(), (set, tuple) -> {
+                    if (actual.contains(tuple)) {
+                        return set.add(tuple);
+                    } else {
+                        return set;
+                    }
+                });
+        if (!found.isEmpty()) {
+            throw failures.failure(info, shouldNotContain(actual, entries, found));
         }
     }
 

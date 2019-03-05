@@ -22,7 +22,7 @@ import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 @SuppressWarnings("unchecked")
-class MapAssert_contains_entry_Test {
+class MapAssert_containsEntry_Test {
 
     @Test
     void should_pass_if_Map_contains_the_given_entry() {
