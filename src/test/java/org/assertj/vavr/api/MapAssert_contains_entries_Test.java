@@ -62,7 +62,7 @@ class MapAssert_contains_entries_Test {
                 () -> assertThat(HashMap.<String, String>empty()).contains((Tuple2<String, String>[]) null)
         )
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("Entries cannot be null");
+                .hasMessage("The array of entries to look for should not be null");
     }
 
     @Test

@@ -16,6 +16,7 @@ package org.assertj.vavr.api;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
+import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import org.junit.jupiter.api.Test;
 
@@ -24,74 +25,70 @@ import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 @SuppressWarnings("unchecked")
-class MapAssert_contains_anyOf_entries_Test {
+class MapAssert_containsAllEntriesOf_Test {
 
     private static final Tuple2<String, String> ENTRY1 = Tuple.of("key1", "value1");
     private static final Tuple2<String, String> ENTRY2 = Tuple.of("key2", "value2");
-    private static final Tuple2<String, String> ENTRY3 = Tuple.of("key3", "value3");
 
     @Test
-    void should_pass_if_Map_contains_any_of_entries() {
+    void should_pass_if_Map_contains_all_entries() {
         final Map<String, String> actual = HashMap.of(
-                "key1", "value1", "key2", "value2"
+                "key1", "value1", "key2", "value2", "key3", "value3"
         );
 
-        assertThat(actual).containsAnyOf(ENTRY1, ENTRY3);
+        assertThat(actual).containsAllEntriesOf(List.of(ENTRY1, ENTRY2));
     }
 
     @Test
     void should_pass_if_map_and_entries_parameter_are_empty() {
-        final Tuple2<String, String>[] entries = new Tuple2[0];
-        assertThat(HashMap.<String, String>empty()).containsAnyOf(entries);
+        assertThat(HashMap.<String, String>empty()).containsAllEntriesOf(List.empty());
     }
 
     @Test
     void should_fail_if_Map_is_not_empty_and_entries_is_an_empty_array() {
         final Map<String, String> actual = HashMap.of("key1", "value1", "key3", "value3");
-        final Tuple2<String, String>[] entries = new Tuple2[]{};
 
         assertThatThrownBy(
-                () -> assertThat(actual).containsAnyOf(entries)
+                () -> assertThat(actual).containsAllEntriesOf(List.empty())
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("actual is not empty");
     }
 
     @Test
-    void should_fail_if_entries_parameter_null() {
+    void should_fail_if_entries_parameter_is_null() {
         assertThatThrownBy(
-                () -> assertThat(HashMap.<String, String>empty()).containsAnyOf((Tuple2<String, String>[]) null)
+                () -> assertThat(HashMap.<String, String>empty()).containsAllEntriesOf(null)
         )
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("The array of entries to look for should not be null");
+                .hasMessage(null);
     }
 
     @Test
     void should_fail_if_one_of_entries_is_null() {
         assertThatThrownBy(
-                () -> assertThat(HashMap.<String, String>empty()).containsAnyOf(ENTRY1, null)
+                () -> assertThat(HashMap.<String, String>empty()).containsAllEntriesOf(List.of(ENTRY1, null))
         )
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Entries to look for should not be null");
+                .isInstanceOf(NullPointerException.class);
     }
 
     @Test
     void should_fail_when_Map_is_null() {
         assertThatThrownBy(
-                () -> assertThat((Map<String, String>) null).containsAnyOf(ENTRY1)
+                () -> assertThat((Map<String, String>) null).containsAllEntriesOf(List.of(ENTRY1))
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
-    void should_fail_if_Map_does_not_contain_any_of_entries() {
+    void should_fail_if_Map_does_not_contain_all_entries() {
         final Map<String, String> actual = HashMap.of("key1", "value1", "key3", "value3");
 
         assertThatThrownBy(
-                () -> assertThat(actual).containsAnyOf(ENTRY2)
+                () -> assertThat(actual).containsAllEntriesOf(List.of(ENTRY1, ENTRY2))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <HashMap((key1, value1), (key3, value3))>\nto contain at least one of the following elements:\n  <[(key2, value2)]>\nbut none were found ");
+                .hasMessage("\nExpecting:\n <HashMap((key1, value1), (key3, value3))>\nto contain:\n <[(key1, value1), (key2, value2)]>\nbut could not find:\n <HashSet((key2, value2))>\n");
     }
 }
