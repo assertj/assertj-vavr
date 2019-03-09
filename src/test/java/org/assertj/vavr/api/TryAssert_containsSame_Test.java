@@ -3,22 +3,28 @@ package org.assertj.vavr.api;
 import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TryAssert_containsSame_Test {
 
     @Test
     void should_fail_when_try_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Try<String>) null).containsSame(""),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Try<String>) null).containsSame("")
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_when_expected_value_is_null() {
-        assertThrows(AssertionError.class, () -> assertThat(Try.success("some value")).containsSame(null));
+        assertThatThrownBy(
+                () -> assertThat(Try.success("some value")).containsSame(null)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting:\n  <Success(some value)>\nto contain the instance (i.e. compared with ==):\n  <null>\nbut did not.");
     }
 
     @Test
@@ -30,18 +36,22 @@ class TryAssert_containsSame_Test {
     void should_fail_when_success_try_contains_not_the_same_value() {
         final String actual = "OK";
         final String expected = new String(actual);
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.success(actual)).containsSame(expected),
-                "\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
+        assertThatThrownBy(
+                () -> assertThat(Try.success(actual)).containsSame(expected)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
     }
 
     @Test
     void should_fail_when_success_try_contains_different_value() {
         final String actual = "OK";
         final String expected = "different";
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.success(actual)).containsSame(expected),
-                "\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
+        assertThatThrownBy(
+                () -> assertThat(Try.success(actual)).containsSame(expected)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
     }
 
     @Test
@@ -53,8 +63,10 @@ class TryAssert_containsSame_Test {
     @Test
     void should_fail_when_try_is_a_failure() {
         final NullPointerException exception = new NullPointerException();
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.failure(exception)).containsSame(exception),
-                "\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
+        assertThatThrownBy(
+                () -> assertThat(Try.failure(exception)).containsSame(exception)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
     }
 }

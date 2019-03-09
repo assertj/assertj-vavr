@@ -3,17 +3,19 @@ package org.assertj.vavr.api;
 import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TryAssert_contains_Test {
 
     @Test
     void should_fail_when_try_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Try<String>) null).contains(""),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Try<String>) null).contains("")
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
@@ -33,17 +35,21 @@ class TryAssert_contains_Test {
     void should_fail_when_success_try_contains_different_value() {
         final String actual = "OK";
         final String expected = "different";
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.success(actual)).contains(expected),
-                "\nExpecting:\n  <Success(OK)>\nto contain:\n  <\"different\">\nbut did not.");
+        assertThatThrownBy(
+                () -> assertThat(Try.success(actual)).contains(expected)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain:\n  <\"different\">\nbut did not.");
     }
 
     @Test
     void should_fail_when_try_is_a_failure() {
         final NullPointerException exception = new NullPointerException();
-        assertThrows(AssertionError.class,
-                () -> assertThat(Try.failure(exception)).contains(exception),
-                "\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
+        assertThatThrownBy(
+                () -> assertThat(Try.failure(exception)).contains(exception)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
     }
 
     @Test

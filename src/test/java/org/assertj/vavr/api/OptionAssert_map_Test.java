@@ -16,17 +16,19 @@ import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
 import static io.vavr.API.Some;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionAssert_map_Test {
 
     @Test
     void should_fail_when_Option_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((Option<String>) null).map(String::length),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((Option<String>) null).map(String::length)
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
@@ -37,10 +39,10 @@ class OptionAssert_map_Test {
     @Test
     void should_pass_when_Option_contains_a_value() {
         assertThat(Option.of("42"))
-          .map(String::length)
-          .contains(2);
+                .map(String::length)
+                .contains(2);
         assertThat(Option.of("42"))
-          .map(s -> null)
-          .isEqualTo(Some(null));
+                .map(s -> null)
+                .isEqualTo(Some(null));
     }
 }

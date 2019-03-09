@@ -16,11 +16,11 @@ import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SeqAssert_doesNotContain_atIndex_Test {
 
@@ -32,24 +32,30 @@ class SeqAssert_doesNotContain_atIndex_Test {
 
     @Test
     void should_fail_when_List_is_null() {
-        assertThrows(AssertionError.class,
-                () -> assertThat((List<String>) null).doesNotContain("something", atIndex(0)),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat((List<String>) null).doesNotContain("something", atIndex(0))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 
     @Test
     void should_fail_if_given_index_is_greater_than_list_size() {
         final Seq<String> actual = List.of("something");
-        assertThrows(IndexOutOfBoundsException.class,
-                () -> assertThat(actual).doesNotContain(null, atIndex(2)),
-                "Index should be between <0> and <0> (inclusive) but was:\n <2>");
+        assertThatThrownBy(
+                () -> assertThat(actual).doesNotContain(null, atIndex(2))
+        )
+                .isInstanceOf(IndexOutOfBoundsException.class)
+                .hasMessage("Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
     void should_fail_if_List_contains_provided_element_at_given_index() {
         Seq<String> actual = List.of("a", "b", "c");
-        assertThrows(AssertionError.class,
-                () -> assertThat(actual).doesNotContain("a", atIndex(0)),
-                shouldNotContainAtIndex(actual, "a", atIndex(0)).create());
+        assertThatThrownBy(
+                () -> assertThat(actual).doesNotContain("a", atIndex(0))
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotContainAtIndex(actual, "a", atIndex(0)).create());
     }
 }

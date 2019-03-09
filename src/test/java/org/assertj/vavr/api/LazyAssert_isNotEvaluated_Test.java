@@ -8,17 +8,17 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * <p>
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  */
 package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
-import static org.assertj.vavr.api.LazyShouldBeEvaluated.shouldBeEvaluated;
+import static org.assertj.vavr.api.LazyShouldBeNotEvaluated.shouldBeNotEvaluated;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LazyAssert_isNotEvaluated_Test {
 
@@ -34,17 +34,21 @@ class LazyAssert_isNotEvaluated_Test {
         Lazy<Double> lazy = Lazy.of(Math::random);
         lazy.get();
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(lazy).isNotEvaluated(),
-                shouldBeEvaluated().create());
+        assertThatThrownBy(
+                () -> assertThat(lazy).isNotEvaluated()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeNotEvaluated(lazy).create());
     }
 
     @Test
     void should_fail_when_Lazy_is_null() {
         Lazy<Double> lazy = null;
 
-        assertThrows(AssertionError.class,
-                () -> assertThat(lazy).isNotEvaluated(),
-                actualIsNull());
+        assertThatThrownBy(
+                () -> assertThat(lazy).isNotEvaluated()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(actualIsNull());
     }
 }
