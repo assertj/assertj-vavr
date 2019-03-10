@@ -15,7 +15,12 @@ package org.assertj.vavr.api;
 
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.collection.Array;
+import io.vavr.collection.HashMap;
+import io.vavr.collection.List;
 import io.vavr.collection.Map;
+import io.vavr.collection.Set;
+
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.EnumerableAssert;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
@@ -25,6 +30,8 @@ import org.assertj.vavr.internal.Maps;
 
 import java.util.Comparator;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
@@ -224,4 +231,9 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         return myself;
     }
 
+    public SELF containsOnly(Iterable<Tuple2<KEY, VALUE>> entries) {
+        isNotNull();
+        maps.assertContainsOnly(info, actual, entries);
+        return myself;
+    }
 }
