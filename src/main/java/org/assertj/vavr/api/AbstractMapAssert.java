@@ -192,6 +192,12 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         return myself;
     }
 
+    public SELF containsOnlyKeys(KEY... keys) {
+        isNotNull();
+        maps.assertContainsOnlyKeys(info, actual, keys);
+        return myself;
+  }
+
     @Override
     public SELF hasSize(int expectedSize) {
         isNotNull();
