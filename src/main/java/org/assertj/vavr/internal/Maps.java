@@ -2,16 +2,21 @@ package org.assertj.vavr.internal;
 
 import io.vavr.Tuple2;
 import io.vavr.collection.Array;
-import io.vavr.collection.HashSet;
+import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import io.vavr.collection.Set;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.error.ShouldContainAnyOf;
+import org.assertj.core.error.ShouldNotBeNull;
+import org.assertj.core.error.ShouldNotContainNull;
 import org.assertj.core.internal.Failures;
 import org.assertj.core.internal.Objects;
 
+import java.util.function.Predicate;
+
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
+import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
@@ -63,15 +68,7 @@ public final class Maps {
         // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<? extends K, ? extends V>> notFound = Array
-                .of(entries)
-                .foldLeft(HashSet.empty(), (set, tuple) -> {
-                    if (actual.contains(tuple)) {
-                        return set;
-                    } else {
-                        return set.add(tuple);
-                    }
-                });
+        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notContainFrom(actual)).toSet();
         if (!notFound.isEmpty()) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
         }
@@ -96,15 +93,7 @@ public final class Maps {
         failIfNullOrEmpty(entries);
         assertNotNull(info, actual);
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<? extends K, ? extends V>> found = Array
-                .of(entries)
-                .foldLeft(HashSet.empty(), (set, tuple) -> {
-                    if (actual.contains(tuple)) {
-                        return set.add(tuple);
-                    } else {
-                        return set;
-                    }
-                });
+        final Set<Tuple2<K, V>> found = Array.of(entries).filter(actual::contains).toSet();
         if (!found.isEmpty()) {
             throw failures.failure(info, shouldNotContain(actual, entries, found));
         }
@@ -132,4 +121,20 @@ public final class Maps {
         Objects.instance().assertNotNull(info, actual);
     }
 
+    public <K, V> void assertContainsOnly(AssertionInfo info, Map<K, V> actual, Iterable<Tuple2<K, V>> entries) {
+        if (entries == null) {
+            throw failures.failure("Expected entries should not be null");
+        } else {
+            Map<K, V> expected = HashMap.ofEntries(entries);
+            Map<K, V> notExpected = actual.filter(notContainFrom(expected));
+            if (!notExpected.isEmpty()) {
+                Map<K, V> notFound = expected.filter(notContainFrom(actual));
+                throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
+            }
+        }
+    }
+
+    private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
+        return tuple -> !map.contains(tuple);
+    }
 }
