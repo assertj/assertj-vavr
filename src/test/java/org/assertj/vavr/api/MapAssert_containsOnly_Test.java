@@ -13,36 +13,59 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
-import org.junit.jupiter.api.Test;
-
+import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 class MapAssert_containsOnly_Test {
+
   @Test
-  void should_pass_if_Map_contains_only_given_entry() {
+  void should_pass_if_Map_contains_only_given_entries() {
     final Map<String, String> actual = HashMap.of("key", "value");
 
     assertThat(actual).containsOnly(List.of(Map.entry("key", "value")));
   }
 
   @Test
-  void should_shrug() {
+  void should_fail_when_Map_is_null() {
+    assertThatThrownBy(
+            () -> assertThat((Map<String, String>) null).containsOnly(List.of(Map.entry("key", "value")))
+    )
+            .isInstanceOf(AssertionError.class)
+            .hasMessage(shouldNotBeNull().create());
+  }
+
+
+  @Test
+  void should_fail_if_entries_parameter_is_null() {
     final Map<String, String> actual = HashMap.of("key", "value");
 
     assertThatThrownBy(
-        () -> assertThat(actual).containsOnly(null)
+            () -> assertThat(actual).containsOnly(null)
     )
-        .isInstanceOf(AssertionError.class)
-        .hasMessage("Expected entries should not be null");
+            .isInstanceOf(AssertionError.class)
+            .hasMessage("Expected entries should not be null");
   }
 
   @Test
-  void should_fail_if_Map_contains_more_than_given_entry() {
+  void should_fail_if_one_of_entries_is_null() {
+    final Map<String, String> actual = HashMap.of("key", "value");
+    final List<Tuple2<String, String>> entries = List.empty();
+
+    assertThatThrownBy(
+            () -> assertThat(actual).containsOnly(entries.append(null))
+    )
+            .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
+  void should_fail_if_Map_contains_more_than_given_entries() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(

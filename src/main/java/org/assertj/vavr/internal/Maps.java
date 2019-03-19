@@ -7,16 +7,14 @@ import io.vavr.collection.Map;
 import io.vavr.collection.Set;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.error.ShouldContainAnyOf;
-import org.assertj.core.error.ShouldNotBeNull;
-import org.assertj.core.error.ShouldNotContainNull;
 import org.assertj.core.internal.Failures;
 import org.assertj.core.internal.Objects;
 
 import java.util.function.Predicate;
 
 import static org.assertj.core.error.ShouldContain.shouldContain;
-import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
+import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
@@ -99,6 +97,33 @@ public final class Maps {
         }
     }
 
+    /**
+     * Asserts that the given {@code Map} contains the given entries only.
+     *
+     * @param <K>     key type
+     * @param <V>     value type
+     * @param info    contains information about the assertion.
+     * @param actual  the given {@code Map}.
+     * @param entries the entries that are expected to only be in the given {@code Map}.
+     * @throws AssertionError           if the array of entries is {@code null}.
+     * @throws AssertionError           if the array of entries is empty.
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
+     * @throws AssertionError           if the given {@code Map} is {@code null}.
+     * @throws AssertionError           if the given {@code Map} contains any of the given entries.
+     */
+    public <K, V> void assertContainsOnly(AssertionInfo info, Map<K, V> actual, Iterable<Tuple2<K, V>> entries) {
+        if (entries == null) {
+            throw failures.failure("Expected entries should not be null");
+        } else {
+            Map<K, V> expected = HashMap.ofEntries(entries);
+            Map<K, V> notExpected = actual.filter(notContainFrom(expected));
+            if (!notExpected.isEmpty()) {
+                Map<K, V> notFound = expected.filter(notContainFrom(actual));
+                throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
+            }
+        }
+    }
+
     private <K, V> boolean containsEntry(Map<K, V> actual, Tuple2<? extends K, ? extends V> entry) {
         checkNotNull(entry, "Entries to look for should not be null");
         return actual.containsKey(entry._1) && areEqual(actual.get(entry._1).get(), entry._2);
@@ -119,19 +144,6 @@ public final class Maps {
 
     private void assertNotNull(AssertionInfo info, Map<?, ?> actual) {
         Objects.instance().assertNotNull(info, actual);
-    }
-
-    public <K, V> void assertContainsOnly(AssertionInfo info, Map<K, V> actual, Iterable<Tuple2<K, V>> entries) {
-        if (entries == null) {
-            throw failures.failure("Expected entries should not be null");
-        } else {
-            Map<K, V> expected = HashMap.ofEntries(entries);
-            Map<K, V> notExpected = actual.filter(notContainFrom(expected));
-            if (!notExpected.isEmpty()) {
-                Map<K, V> notFound = expected.filter(notContainFrom(actual));
-                throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
-            }
-        }
     }
 
     private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
