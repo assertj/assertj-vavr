@@ -32,8 +32,6 @@ import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
-import static org.assertj.core.internal.Arrays.assertIsArray;
-import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.IterableUtil.sizeOf;
 import static org.assertj.core.util.Preconditions.checkNotNull;
@@ -192,6 +190,25 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         return myself;
     }
 
+    /**
+     * Verifies that the actual map contains only the given entries and nothing else, <b>in order</b>.<br>
+     * This assertion should only be used with maps that have a consistent iteration order (i.e. don't use it with
+     * {@link io.vavr.collection.HashMap}, prefer {@link #containsOnly} methods in that case).
+     *
+     * @param entries the given entries.
+     * @return {@code this} assertions object
+     * @throws NullPointerException     if the given entries array is {@code null}.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws IllegalArgumentException if the given entries array is empty.
+     * @throws AssertionError           if the actual map does not contain the given entries with same order, i.e. the actual map
+     *                                  contains some or none of the given entries, or the actual map contains more entries than the given ones
+     *                                  or entries are the same but the order is not.
+     */
+    public SELF containsExactly(@SuppressWarnings("unchecked") Tuple2<? extends KEY, ? extends VALUE>... entries) {
+        maps.assertContainsExactly(info, actual, entries);
+        return myself;
+    }
+
     public SELF containsOnlyKeys(KEY... keys) {
         isNotNull();
         maps.assertContainsOnlyKeys(info, actual, keys);
@@ -218,9 +235,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
 
     @Override
     public SELF hasSameSizeAs(Object array) {
-        isNotNull();
-        assertIsArray(info, array);
-        hasSameSizeAsCheck(info, actual, array, actual.size());
+        maps.assertHasSameSizeAs(info, actual, array);
         return myself;
     }
 

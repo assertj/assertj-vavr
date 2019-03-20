@@ -39,7 +39,7 @@ class MapAssert_contains_entries_Test {
     }
 
     @Test
-    void should_pass_if_map_and_entries_parameter_are_empty() {
+    void should_pass_if_Map_and_entries_parameter_are_empty() {
         final Tuple2<String, String>[] entries = new Tuple2[0];
         assertThat(HashMap.<String, String>empty()).contains(entries);
     }
