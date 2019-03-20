@@ -17,6 +17,7 @@ import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys;
+import static org.assertj.core.error.ShouldContainValue.shouldContainValue;
 import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.internal.Arrays.assertIsArray;
@@ -223,6 +224,22 @@ public final class Maps {
             Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
+    }
+
+    /**
+     * Verifies that the actual map contain the given value.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param value  the given value
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map not contains the given value.
+     */
+    public <K, V> void assertContainsValue(AssertionInfo info, Map<K, V> actual, V value) {
+        assertNotNull(info, actual);
+        if (!actual.containsValue(value)) throw failures.failure(info, shouldContainValue(actual, value));
     }
 
     /**

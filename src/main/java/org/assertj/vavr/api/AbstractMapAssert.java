@@ -254,6 +254,19 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     }
 
     /**
+     * Verifies that the actual map contains the given value.
+     *
+     * @param value the value to look for.
+     * @return {@code this} assertions object
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map does not contain the given value.
+     */
+    public SELF containsValue(VALUE value) {
+        maps.assertContainsValue(info, actual, value);
+        return myself;
+    }
+
+    /**
      * Verifies that the actual map contains the given values.
      *
      * @param values the values to look for in the actual map.
