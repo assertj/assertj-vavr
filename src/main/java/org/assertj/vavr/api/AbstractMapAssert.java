@@ -230,15 +230,39 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws AssertionError           if the actual map does not contain the given key.
      * @throws IllegalArgumentException if the given argument is an empty array.
+     * @throws NullPointerException     if the array of keys is {@code null}.
      */
     public SELF containsKeys(@SuppressWarnings("unchecked") KEY... keys) {
         maps.assertContainsKeys(info, actual, keys);
         return myself;
     }
 
+    /**
+     * Verifies that the actual map contains only the given keys and nothing else, in any order.
+
+     * @param keys the given keys that should be in the actual map.
+     * @return {@code this} assertions object
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map does not contain the given keys, i.e. the actual map contains some or none
+     *                                  of the given keys, or the actual map contains more entries than the given ones.
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     * @throws IllegalArgumentException if the given argument is an empty array.
+     */
     public SELF containsOnlyKeys(KEY... keys) {
-        isNotNull();
         maps.assertContainsOnlyKeys(info, actual, keys);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains the given values.
+     *
+     * @param values the values to look for in the actual map.
+     * @return {@code this} assertions object
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map does not contain the given values.
+     */
+    public SELF containsValues(@SuppressWarnings("unchecked") VALUE... values) {
+        maps.assertContainsValues(info, actual, values);
         return myself;
     }
 

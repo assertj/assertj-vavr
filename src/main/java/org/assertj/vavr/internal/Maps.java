@@ -2,6 +2,7 @@ package org.assertj.vavr.internal;
 
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.Value;
 import io.vavr.collection.*;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.error.ShouldContainAnyOf;
@@ -16,6 +17,7 @@ import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys;
+import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
@@ -224,6 +226,29 @@ public final class Maps {
     }
 
     /**
+     * Verifies that the actual map contain the given values.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param values the given values
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if the actual map not contains the given values.
+     * @throws NullPointerException if values vararg is {@code null}.
+     */
+    public <K, V> void assertContainsValues(AssertionInfo info, Map<K, V> actual,
+                                            @SuppressWarnings("unchecked") V... values) {
+        assertNotNull(info, actual);
+        checkNotNull(values, "The array of values to look for should not be null");
+        if (actual.isEmpty() && values.length == 0) return;
+
+        Set<V> expected = HashSet.of(values);
+        Set<V> notFound = expected.filter(notContainFrom(actual.values()));
+        if (!notFound.isEmpty()) throw failures.failure(info, shouldContainValues(actual, notFound.toJavaSet()));
+    }
+
+    /**
      * Asserts that the number of entries in the given {@code Map} has the same size as the other array.
      *
      * @param info  contains information about the assertion.
@@ -300,7 +325,7 @@ public final class Maps {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notContainFrom(Set<K> keys) {
+    private static <K> Predicate<K> notContainFrom(Value<K> keys) {
         return key -> !keys.contains(key);
     }
 }
