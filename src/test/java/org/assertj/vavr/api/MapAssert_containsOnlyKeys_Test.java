@@ -13,9 +13,7 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
-import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
-import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import org.junit.jupiter.api.Test;
 
@@ -23,95 +21,86 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class MapAssert_containsOnly_Test {
+class MapAssert_containsOnlyKeys_Test {
 
   @Test
-  void should_pass_if_Map_contains_only_given_entries() {
+  void should_pass_if_Map_contains_only_given_keys() {
     final Map<String, String> actual = HashMap.of("key", "value");
 
-    assertThat(actual).containsOnly(List.of(Map.entry("key", "value")));
+    assertThat(actual).containsOnlyKeys("key");
   }
 
   @Test
   void should_fail_when_Map_is_null() {
     assertThatThrownBy(
-            () -> assertThat((Map<String, String>) null).containsOnly(List.of(Map.entry("key", "value")))
+            () -> assertThat((Map<String, String>) null).containsOnlyKeys("key")
     )
             .isInstanceOf(AssertionError.class)
             .hasMessage(shouldNotBeNull().create());
   }
 
   @Test
-  void should_fail_if_entries_parameter_is_null() {
+  void should_fail_if_keys_parameter_is_null() {
     final Map<String, String> actual = HashMap.of("key", "value");
 
     assertThatThrownBy(
-            () -> assertThat(actual).containsOnly(null)
+            () -> assertThat(actual).containsOnlyKeys((String[]) null)
     )
             .isInstanceOf(NullPointerException.class)
-            .hasMessage("The entries to look for should not be null");
+            .hasMessage("The array of keys to look for should not be null");
   }
 
   @Test
-  void should_fail_if_entries_parameter_is_empty_but_actual_Map_is_not() {
+  void should_fail_if_keys_parameter_is_empty() {
     final Map<String, String> actual = HashMap.of("key", "value");
-    final Iterable<Tuple2<String, String>> entries = List.empty();
+    final String[] keys = new String[0];
 
     assertThatThrownBy(
-            () -> assertThat(actual).containsOnly(entries)
+            () -> assertThat(actual).containsOnlyKeys(keys)
     )
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The entries to look for should not be empty");
+            .hasMessage("The array of keys to look for should not be empty");
   }
 
   @Test
-  void should_fail_if_one_of_entries_is_null() {
-    final Map<String, String> actual = HashMap.of("key", "value");
-    final List<Tuple2<String, String>> entries = List.empty();
-
-    assertThatThrownBy(
-            () -> assertThat(actual).containsOnly(entries.append(null))
-    )
-            .isInstanceOf(NullPointerException.class);
-  }
-
-  @Test
-  void should_fail_if_Map_contains_more_than_given_entries() {
+  void should_fail_if_Map_contains_more_than_given_keys() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(
-        () -> assertThat(actual).containsOnly(HashMap.of("key-1", "value-1"))
+        () -> assertThat(actual).containsOnlyKeys("key-1")
     )
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
                 "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
-                "to contain only:\n" +
-                "  <HashMap((key-1, value-1))>\n" +
-                "but the following elements were unexpected:\n" +
-                "  <HashMap((key-2, value-2))>\n"
+                "to contain only following keys:\n" +
+                "  <HashSet(key-1)>\n" +
+                "keys not found:\n" +
+                "  <HashSet()>\n" +
+                "and keys not expected:\n" +
+                "  <HashSet(key-2)>\n"
         );
   }
 
   @Test
-  void should_fail_if_Map_has_same_size_but_contains_different_entries() {
+  void should_fail_if_Map_has_same_size_but_contains_different_keys() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(
-        () -> assertThat(actual).containsOnly(HashMap.of("key-1", "value-1", "key-3", "value-3"))
+        () -> assertThat(actual).containsOnlyKeys("key-1", "key-3")
     )
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
                 "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
-                "to contain only:\n" +
-                "  <HashMap((key-1, value-1), (key-3, value-3))>\n" +
-                "elements not found:\n" +
-                "  <HashMap((key-3, value-3))>\n" +
-                "and elements not expected:\n" +
-                "  <HashMap((key-2, value-2))>\n"
+                "to contain only following keys:\n" +
+                "  <HashSet(key-1, key-3)>\n" +
+                "keys not found:\n" +
+                "  <HashSet(key-3)>\n" +
+                "and keys not expected:\n" +
+                "  <HashSet(key-2)>\n"
         );
   }
 }
