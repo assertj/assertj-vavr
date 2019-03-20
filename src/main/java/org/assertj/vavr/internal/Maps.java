@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainExactly.elementsDifferAtIndex;
 import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
+import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
@@ -95,6 +96,31 @@ public final class Maps {
         final Set<Tuple2<K, V>> found = Array.of(entries).filter(actual::contains).toSet();
         if (!found.isEmpty()) {
             throw failures.failure(info, shouldNotContain(actual, entries, found));
+        }
+    }
+
+    /**
+     * Verifies that the actual {@code Map} contains the given keys.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     * @throws IllegalArgumentException if the array of keys is empty.
+     * @throws AssertionError           if the given {@code Map} is {@code null}.
+     * @throws AssertionError           if the given {@code Map} does not contain the given keys.
+     */
+    public <K, V> void assertContainsKeys(AssertionInfo info, Map<K, V> actual,
+                                          @SuppressWarnings("unchecked") K... keys) {
+        doCommonContainsCheck(info, actual, keys);
+        if (doCommonEmptinessChecks(actual, keys)) return;
+
+        Set<K> expected = HashSet.of(keys);
+        Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
+        if (!notFound.isEmpty()) {
+            throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
         }
     }
 
@@ -186,12 +212,8 @@ public final class Maps {
      * @throws AssertionError           if the given {@code Map} does not contain the given keys.
      */
     public <K, V> void assertContainsOnlyKeys(AssertionInfo info, Map<K, V> actual, K[] keys) {
-        assertNotNull(info, actual);
-        failIfNull(keys);
-        if (actual.isEmpty() && keys.length == 0) {
-            return;
-        }
-        failIfEmpty(keys);
+        doCommonContainsCheck(info, actual, keys);
+        if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
         Set<K> notExpected = actual.keySet().filter(notContainFrom(expected));
@@ -221,6 +243,19 @@ public final class Maps {
                                               Tuple2<? extends K, ? extends V>[] entries) {
         assertNotNull(info, actual);
         failIfNull(entries);
+    }
+
+    private <K, V> void doCommonContainsCheck(AssertionInfo info, Map<K, V> actual, K[] keys) {
+        assertNotNull(info, actual);
+        failIfNull(keys);
+    }
+
+    private <K, V> boolean doCommonEmptinessChecks(Map<K, V> actual, K[] keys) {
+        if (actual.isEmpty() && keys.length == 0) {
+            return true;
+        }
+        failIfEmpty(keys);
+        return false;
     }
 
     private <K, V> boolean containsEntry(Map<K, V> actual, Tuple2<? extends K, ? extends V> entry) {
