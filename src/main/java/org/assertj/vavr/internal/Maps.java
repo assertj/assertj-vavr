@@ -151,7 +151,7 @@ public final class Maps {
         failIfEmpty(entries);
         assertHasSameSizeAs(info, actual, entries);
 
-        final Map<K, V> expectedEntries = LinkedHashMap.ofEntries(entries);
+        final Map<K, V> expectedEntries = asLinkedMap(entries);
         final Map<K, V> notExpected = actual.filter(entry -> !expectedEntries.contains(entry));
         final Map<K, V> notFound = expectedEntries.filter(entry -> !actual.contains(entry));
 
@@ -159,7 +159,7 @@ public final class Maps {
             // check entries order
             int index = 0;
             for (K keyFromActual : actual.keySet()) {
-                if (!areEqual(keyFromActual, entries[index]._1)) {
+                if (areNotEqual(keyFromActual, entries[index]._1)) {
                     Tuple2<K, V> actualEntry = Tuple.of(keyFromActual, actual.get(keyFromActual).get());
                     throw failures.failure(info, elementsDifferAtIndex(actualEntry, entries[index], index));
                 }
@@ -257,8 +257,24 @@ public final class Maps {
         checkNotNull(keys, "The array of keys to look for should not be null");
     }
 
-    private void assertNotNull(AssertionInfo info, Map<?, ?> actual) {
+    private static <K> boolean areNotEqual(K actualKey, K expectedKey) {
+        return !areEqual(actualKey, expectedKey);
+    }
+
+    private static void assertNotNull(AssertionInfo info, Map<?, ?> actual) {
         Objects.instance().assertNotNull(info, actual);
+    }
+
+    private static <K, V> Map<K, V> asLinkedMap(Tuple2<? extends K, ? extends V>[] entries) {
+        if (entries.length != nonNullEntries(entries).length()) {
+            throw new NullPointerException("One of expected entries is null");
+        } else {
+            return LinkedHashMap.ofEntries(entries);
+        }
+    }
+
+    private static <K, V> Array<Tuple2<? extends K, ? extends V>> nonNullEntries(Tuple2<? extends K, ? extends V>[] entries) {
+        return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
     private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
