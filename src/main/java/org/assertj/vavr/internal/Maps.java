@@ -1,5 +1,6 @@
 package org.assertj.vavr.internal;
 
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.*;
 import org.assertj.core.api.AssertionInfo;
@@ -10,10 +11,14 @@ import org.assertj.core.internal.Objects;
 import java.util.function.Predicate;
 
 import static org.assertj.core.error.ShouldContain.shouldContain;
+import static org.assertj.core.error.ShouldContainExactly.elementsDifferAtIndex;
+import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
+import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
+import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
 import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.core.util.Preconditions.checkNotNull;
@@ -32,8 +37,7 @@ public final class Maps {
 
     public <K, V> void assertContainsAnyOf(AssertionInfo info, Map<K, V> actual,
                                            Tuple2<K, V>[] entries) {
-        failIfNull(entries);
-        assertNotNull(info, actual);
+        doCommonContainsCheck(info, actual, entries);
         // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
@@ -59,8 +63,7 @@ public final class Maps {
      */
     public <K, V> void assertContains(AssertionInfo info, Map<K, V> actual,
                                       Tuple2<K, V>[] entries) {
-        failIfNull(entries);
-        assertNotNull(info, actual);
+        doCommonContainsCheck(info, actual, entries);
         // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
@@ -125,6 +128,51 @@ public final class Maps {
     }
 
     /**
+     * Verifies that the actual map contains only the given entries and nothing else, <b>in order</b>.<br>
+     * This assertion should only be used with map that have a consistent iteration order (i.e. don't use it with
+     * {@link io.vavr.collection.HashMap}).
+     *
+     * @param <K>     key type
+     * @param <V>     value type
+     * @param info    contains information about the assertion.
+     * @param actual  the given {@code Map}.
+     * @param entries the given entries.
+     * @throws NullPointerException     if the given entries array is {@code null}.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws IllegalArgumentException if the given entries array is empty.
+     * @throws AssertionError           if the actual map does not contain the given entries with same order, i.e. the actual map
+     *                                  contains some or none of the given entries, or the actual map contains more entries than the given ones
+     *                                  or entries are the same but the order is not.
+     */
+    public <K, V> void assertContainsExactly(AssertionInfo info, Map<K, V> actual,
+                                             @SuppressWarnings("unchecked") Tuple2<? extends K, ? extends V>... entries) {
+        doCommonContainsCheck(info, actual, entries);
+        if (actual.isEmpty() && entries.length == 0) return;
+        failIfEmpty(entries);
+        assertHasSameSizeAs(info, actual, entries);
+
+        final Map<K, V> expectedEntries = asLinkedMap(entries);
+        final Map<K, V> notExpected = actual.filter(entry -> !expectedEntries.contains(entry));
+        final Map<K, V> notFound = expectedEntries.filter(entry -> !actual.contains(entry));
+
+        if (notExpected.isEmpty() && notFound.isEmpty()) {
+            // check entries order
+            int index = 0;
+            for (K keyFromActual : actual.keySet()) {
+                if (areNotEqual(keyFromActual, entries[index]._1)) {
+                    Tuple2<K, V> actualEntry = Tuple.of(keyFromActual, actual.get(keyFromActual).get());
+                    throw failures.failure(info, elementsDifferAtIndex(actualEntry, entries[index], index));
+                }
+                index++;
+            }
+            // all entries are in the same order.
+            return;
+        }
+
+        throw failures.failure(info, shouldContainExactly(actual, List.of(entries), notFound, notExpected));
+    }
+
+    /**
      * Asserts that the given {@code Map} contains the given keys, in any order.
      *
      * @param <K>     key type
@@ -151,6 +199,28 @@ public final class Maps {
             Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
+    }
+
+    /**
+     * Asserts that the number of entries in the given {@code Map} has the same size as the other array.
+     *
+     * @param info  contains information about the assertion.
+     * @param map   the given {@code Map}.
+     * @param other the group to compare
+     * @throws AssertionError if the given {@code Map} is {@code null}.
+     * @throws AssertionError if the given array is {@code null}.
+     * @throws AssertionError if the number of entries in the given {@code Map} does not have the same size.
+     */
+    public void assertHasSameSizeAs(AssertionInfo info, Map<?, ?> map, Object other) {
+        assertNotNull(info, map);
+        assertIsArray(info, other);
+        hasSameSizeAsCheck(info, map, other, map.size());
+    }
+
+    private <K, V> void doCommonContainsCheck(AssertionInfo info, Map<K, V> actual,
+                                              Tuple2<? extends K, ? extends V>[] entries) {
+        assertNotNull(info, actual);
+        failIfNull(entries);
     }
 
     private <K, V> boolean containsEntry(Map<K, V> actual, Tuple2<? extends K, ? extends V> entry) {
@@ -187,8 +257,24 @@ public final class Maps {
         checkNotNull(keys, "The array of keys to look for should not be null");
     }
 
-    private void assertNotNull(AssertionInfo info, Map<?, ?> actual) {
+    private static <K> boolean areNotEqual(K actualKey, K expectedKey) {
+        return !areEqual(actualKey, expectedKey);
+    }
+
+    private static void assertNotNull(AssertionInfo info, Map<?, ?> actual) {
         Objects.instance().assertNotNull(info, actual);
+    }
+
+    private static <K, V> Map<K, V> asLinkedMap(Tuple2<? extends K, ? extends V>[] entries) {
+        if (entries.length != nonNullEntries(entries).length()) {
+            throw new NullPointerException("One of expected entries is null");
+        } else {
+            return LinkedHashMap.ofEntries(entries);
+        }
+    }
+
+    private static <K, V> Array<Tuple2<? extends K, ? extends V>> nonNullEntries(Tuple2<? extends K, ? extends V>[] entries) {
+        return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
     private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
