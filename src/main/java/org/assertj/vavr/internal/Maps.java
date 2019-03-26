@@ -53,9 +53,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of entries is {@code null}.
      * @throws IllegalArgumentException if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -79,9 +79,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of entries is {@code null}.
      * @throws IllegalArgumentException if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -104,8 +104,8 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
      * @param keys   the given keys
      * @throws NullPointerException     if the array of keys is {@code null}.
      * @throws IllegalArgumentException if the array of keys is empty.
@@ -129,9 +129,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to only be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to only be in the given {@code Map}
      * @throws AssertionError           if the array of entries is {@code null}.
      * @throws AssertionError           if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -160,9 +160,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the given entries
      * @throws NullPointerException     if the given entries array is {@code null}.
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws IllegalArgumentException if the given entries array is empty.
@@ -203,9 +203,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param keys    the keys that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param keys    the keys that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of keys is {@code null}.
      * @throws IllegalArgumentException if the array of keys is empty.
      * @throws AssertionError           if the given {@code Map} is {@code null}.
@@ -226,8 +226,8 @@ public final class Maps {
     /**
      * Asserts that the number of entries in the given {@code Map} has the same size as the other array.
      *
-     * @param info  contains information about the assertion.
-     * @param map   the given {@code Map}.
+     * @param info  contains information about the assertion
+     * @param map   the given {@code Map}
      * @param other the group to compare
      * @throws AssertionError if the given {@code Map} is {@code null}.
      * @throws AssertionError if the given array is {@code null}.
