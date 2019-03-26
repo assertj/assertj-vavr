@@ -240,7 +240,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     /**
      * Verifies that the actual map contains only the given keys and nothing else, in any order.
      *
-     * @param keys the given keys that should be in the actual map.
+     * @param keys the given keys that should be in the actual map
      * @return {@code this} assertions object
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws AssertionError           if the actual map does not contain the given keys, i.e. the actual map contains some or none
@@ -256,7 +256,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     /**
      * Verifies that the actual map contains the given values.
      *
-     * @param values the values to look for in the actual map.
+     * @param values the values to look for in the actual map
      * @return {@code this} assertions object
      * @throws AssertionError if the actual map is {@code null}.
      * @throws AssertionError if the actual map does not contain the given values.
