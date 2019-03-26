@@ -68,8 +68,8 @@ public final class Maps {
         // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notContainFrom(actual)).toSet();
-        if (!notFound.isEmpty()) {
+        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notPresentIn(actual)).toSet();
+        if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
         }
     }
@@ -94,7 +94,7 @@ public final class Maps {
         assertNotNull(info, actual);
         failIfEmptySinceActualIsNotEmpty(entries);
         final Set<Tuple2<K, V>> found = Array.of(entries).filter(actual::contains).toSet();
-        if (!found.isEmpty()) {
+        if (isNotEmpty(found)) {
             throw failures.failure(info, shouldNotContain(actual, entries, found));
         }
     }
@@ -118,8 +118,8 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
-        if (!notFound.isEmpty()) {
+        Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+        if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
         }
     }
@@ -146,9 +146,9 @@ public final class Maps {
         }
         failIfEmpty(entries);
         Map<K, V> expected = HashMap.ofEntries(entries);
-        Map<K, V> notExpected = actual.filter(notContainFrom(expected));
-        if (!notExpected.isEmpty()) {
-            Map<K, V> notFound = expected.filter(notContainFrom(actual));
+        Map<K, V> notExpected = actual.filter(notPresentIn(expected));
+        if (isNotEmpty(notExpected)) {
+            Map<K, V> notFound = expected.filter(notPresentIn(actual));
             throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
         }
     }
@@ -216,9 +216,9 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notExpected = actual.keySet().filter(notContainFrom(expected));
-        if (!notExpected.isEmpty()) {
-            Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
+        Set<K> notExpected = actual.keySet().filter(notPresentIn(expected));
+        if (isNotEmpty(notExpected)) {
+            Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
     }
@@ -312,11 +312,15 @@ public final class Maps {
         return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
-    private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
+    private static <K, V> Predicate<Tuple2<K, V>> notPresentIn(Map<K, V> map) {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notContainFrom(Set<K> keys) {
+    private static <K> Predicate<K> notPresentIn(Set<K> keys) {
         return key -> !keys.contains(key);
+    }
+
+    private static boolean isNotEmpty(Traversable traversable) {
+        return !traversable.isEmpty();
     }
 }
