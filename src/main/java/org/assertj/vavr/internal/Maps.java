@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainExactly.elementsDifferAtIndex;
 import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
+import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldContainOnly.shouldContainOnly;
 import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
@@ -52,9 +53,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of entries is {@code null}.
      * @throws IllegalArgumentException if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -67,8 +68,8 @@ public final class Maps {
         // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notContainFrom(actual)).toSet();
-        if (!notFound.isEmpty()) {
+        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notPresentIn(actual)).toSet();
+        if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
         }
     }
@@ -78,9 +79,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of entries is {@code null}.
      * @throws IllegalArgumentException if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -93,8 +94,33 @@ public final class Maps {
         assertNotNull(info, actual);
         failIfEmptySinceActualIsNotEmpty(entries);
         final Set<Tuple2<K, V>> found = Array.of(entries).filter(actual::contains).toSet();
-        if (!found.isEmpty()) {
+        if (isNotEmpty(found)) {
             throw failures.failure(info, shouldNotContain(actual, entries, found));
+        }
+    }
+
+    /**
+     * Verifies that the actual {@code Map} contains the given keys.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     * @throws IllegalArgumentException if the array of keys is empty.
+     * @throws AssertionError           if the given {@code Map} is {@code null}.
+     * @throws AssertionError           if the given {@code Map} does not contain the given keys.
+     */
+    public <K, V> void assertContainsKeys(AssertionInfo info, Map<K, V> actual,
+                                          @SuppressWarnings("unchecked") K... keys) {
+        doCommonContainsCheck(info, actual, keys);
+        if (doCommonEmptinessChecks(actual, keys)) return;
+
+        Set<K> expected = HashSet.of(keys);
+        Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+        if (isNotEmpty(notFound)) {
+            throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
         }
     }
 
@@ -103,9 +129,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to only be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to only be in the given {@code Map}
      * @throws AssertionError           if the array of entries is {@code null}.
      * @throws AssertionError           if the array of entries is empty.
      * @throws NullPointerException     if any of the entries in the given array is {@code null}.
@@ -120,9 +146,9 @@ public final class Maps {
         }
         failIfEmpty(entries);
         Map<K, V> expected = HashMap.ofEntries(entries);
-        Map<K, V> notExpected = actual.filter(notContainFrom(expected));
-        if (!notExpected.isEmpty()) {
-            Map<K, V> notFound = expected.filter(notContainFrom(actual));
+        Map<K, V> notExpected = actual.filter(notPresentIn(expected));
+        if (isNotEmpty(notExpected)) {
+            Map<K, V> notFound = expected.filter(notPresentIn(actual));
             throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
         }
     }
@@ -134,9 +160,9 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the given entries
      * @throws NullPointerException     if the given entries array is {@code null}.
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws IllegalArgumentException if the given entries array is empty.
@@ -177,26 +203,22 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param keys    the keys that are expected to be in the given {@code Map}.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param keys    the keys that are expected to be in the given {@code Map}
      * @throws NullPointerException     if the array of keys is {@code null}.
      * @throws IllegalArgumentException if the array of keys is empty.
      * @throws AssertionError           if the given {@code Map} is {@code null}.
      * @throws AssertionError           if the given {@code Map} does not contain the given keys.
      */
     public <K, V> void assertContainsOnlyKeys(AssertionInfo info, Map<K, V> actual, K[] keys) {
-        assertNotNull(info, actual);
-        failIfNull(keys);
-        if (actual.isEmpty() && keys.length == 0) {
-            return;
-        }
-        failIfEmpty(keys);
+        doCommonContainsCheck(info, actual, keys);
+        if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notExpected = actual.keySet().filter(notContainFrom(expected));
-        if (!notExpected.isEmpty()) {
-            Set<K> notFound = expected.filter(notContainFrom(actual.keySet()));
+        Set<K> notExpected = actual.keySet().filter(notPresentIn(expected));
+        if (isNotEmpty(notExpected)) {
+            Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
     }
@@ -204,8 +226,8 @@ public final class Maps {
     /**
      * Asserts that the number of entries in the given {@code Map} has the same size as the other array.
      *
-     * @param info  contains information about the assertion.
-     * @param map   the given {@code Map}.
+     * @param info  contains information about the assertion
+     * @param map   the given {@code Map}
      * @param other the group to compare
      * @throws AssertionError if the given {@code Map} is {@code null}.
      * @throws AssertionError if the given array is {@code null}.
@@ -221,6 +243,19 @@ public final class Maps {
                                               Tuple2<? extends K, ? extends V>[] entries) {
         assertNotNull(info, actual);
         failIfNull(entries);
+    }
+
+    private <K, V> void doCommonContainsCheck(AssertionInfo info, Map<K, V> actual, K[] keys) {
+        assertNotNull(info, actual);
+        failIfNull(keys);
+    }
+
+    private <K, V> boolean doCommonEmptinessChecks(Map<K, V> actual, K[] keys) {
+        if (actual.isEmpty() && keys.length == 0) {
+            return true;
+        }
+        failIfEmpty(keys);
+        return false;
     }
 
     private <K, V> boolean containsEntry(Map<K, V> actual, Tuple2<? extends K, ? extends V> entry) {
@@ -277,11 +312,15 @@ public final class Maps {
         return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
-    private static <K, V> Predicate<Tuple2<K, V>> notContainFrom(Map<K, V> map) {
+    private static <K, V> Predicate<Tuple2<K, V>> notPresentIn(Map<K, V> map) {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notContainFrom(Set<K> keys) {
+    private static <K> Predicate<K> notPresentIn(Set<K> keys) {
         return key -> !keys.contains(key);
+    }
+
+    private static boolean isNotEmpty(Traversable traversable) {
+        return !traversable.isEmpty();
     }
 }
