@@ -239,7 +239,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
 
     /**
      * Verifies that the actual map contains only the given keys and nothing else, in any order.
-
+     *
      * @param keys the given keys that should be in the actual map.
      * @return {@code this} assertions object
      * @throws AssertionError           if the actual map is {@code null}.

@@ -89,7 +89,8 @@ class MapAssert_containsExactly_Test {
         assertThatThrownBy(
                 () -> assertThat(actual).containsExactly(ENTRY1, null)
         )
-                .isInstanceOf(NullPointerException.class);
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("One of expected entries is null");
     }
 
     @Test
@@ -122,7 +123,7 @@ class MapAssert_containsExactly_Test {
     }
 
     @Test
-    void should_fail_if_Map_does_not_contain_all_entries_in_smae_order() {
+    void should_fail_if_Map_does_not_contain_all_entries_in_same_order() {
         final Map<String, String> actual = LinkedHashMap.of("key1", "value1", "key3", "value3");
 
         assertThatThrownBy(
