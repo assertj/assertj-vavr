@@ -53,17 +53,16 @@ class MapAssert_containsKeys_Test {
   @Test
   void should_fail_if_keys_parameter_is_empty() {
     final Map<String, String> actual = HashMap.of("key", "value");
-    final String[] keys = new String[0];
 
     assertThatThrownBy(
-            () -> assertThat(actual).containsKeys(keys)
+            () -> assertThat(actual).containsKeys(new String[0])
     )
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("The array of keys to look for should not be empty");
   }
 
   @Test
-  void should_fail_if_Map_does_not_contain_all_given_keys() {
+  void should_fail_if_Map_contains_different_keys() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(

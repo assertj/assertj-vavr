@@ -55,15 +55,15 @@ class MapAssert_containsValues_Test {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(
-        () -> assertThat(actual).containsValues("value-1", "value-3", "value-4")
+        () -> assertThat(actual).containsValues("value-1", "value-3")
     )
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
                 "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
-                "to contain values:\n" +
-                "  <[\"value-4\", \"value-3\"]>"
+                "to contain value:\n" +
+                "  <\"value-3\">"
         );
   }
 }
