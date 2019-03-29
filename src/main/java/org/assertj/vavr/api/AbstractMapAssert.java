@@ -57,7 +57,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      * Verifies that all the actual map entries satisfy the given {@code entryRequirements}.
      * If the actual map is empty, this assertion succeeds as there is nothing to check.
      *
-     * @param entryRequirements the given requirements that each entry must sastify.
+     * @param entryRequirements the given requirements that each entry must satisfy.
      * @return {@code this} assertion object.
      * @throws NullPointerException if the given entryRequirements {@link BiConsumer} is {@code null}.
      * @throws AssertionError       if the actual map is {@code null}.
@@ -196,7 +196,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      * {@link io.vavr.collection.HashMap}, prefer {@link #containsOnly} methods in that case).
      *
      * @param entries the given entries.
-     * @return {@code this} assertions object
+     * @return {@code this} assertions object.
      * @throws NullPointerException     if the given entries array is {@code null}.
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws IllegalArgumentException if the given entries array is empty.
@@ -212,8 +212,8 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     /**
      * Verifies that the actual map contains the given key.
      *
-     * @param key the given key
-     * @return {@code this} assertions object
+     * @param key the given key.
+     * @return {@code this} assertions object.
      * @throws AssertionError if the actual map is {@code null}.
      * @throws AssertionError if the actual map does not contain the given key.
      */
@@ -225,20 +225,44 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     /**
      * Verifies that the actual map contains the given keys.
      *
-     * @param keys the given keys
-     * @return {@code this} assertions object
+     * @param keys the given keys.
+     * @return {@code this} assertions object.
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws AssertionError           if the actual map does not contain the given key.
      * @throws IllegalArgumentException if the given argument is an empty array.
+     * @throws NullPointerException     if the array of keys is {@code null}.
      */
     public SELF containsKeys(@SuppressWarnings("unchecked") KEY... keys) {
         maps.assertContainsKeys(info, actual, keys);
         return myself;
     }
 
+    /**
+     * Verifies that the actual map contains only the given keys and nothing else, in any order.
+     *
+     * @param keys the given keys that should be in the actual map.
+     * @return {@code this} assertions object.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map does not contain the given keys, i.e. the actual map contains some or none
+     *                                  of the given keys, or the actual map contains more entries than the given ones.
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     * @throws IllegalArgumentException if the given argument is an empty array.
+     */
     public SELF containsOnlyKeys(KEY... keys) {
-        isNotNull();
         maps.assertContainsOnlyKeys(info, actual, keys);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains the given values.
+     *
+     * @param values the values to look for in the actual map.
+     * @return {@code this} assertions object.
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map does not contain the given values.
+     */
+    public SELF containsValues(@SuppressWarnings("unchecked") VALUE... values) {
+        maps.assertContainsValues(info, actual, values);
         return myself;
     }
 
