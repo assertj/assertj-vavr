@@ -225,7 +225,7 @@ public final class Maps {
     }
 
     /**
-     * Verifies that the actual map contain the given values.
+     * Verifies that the actual map contains the given values.
      *
      * @param <K>    key type
      * @param <V>    value type
