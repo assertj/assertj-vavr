@@ -168,8 +168,8 @@ public final class Maps {
      * @throws NullPointerException     if the given entries array is {@code null}.
      * @throws AssertionError           if the actual map is {@code null}.
      * @throws IllegalArgumentException if the given entries array is empty.
-     * @throws AssertionError           if the actual map does not contain the given entries with same order, i.e. the actual map.
-     *                                  contains some or none of the given entries, or the actual map contains more entries than the given ones.
+     * @throws AssertionError           if the actual map does not contain the given entries with same order, i.e. the actual map
+     *                                  contains some or none of the given entries, or the actual map contains more entries than the given ones
      *                                  or entries are the same but the order is not.
      */
     public <K, V> void assertContainsExactly(AssertionInfo info, Map<K, V> actual,
@@ -249,7 +249,7 @@ public final class Maps {
     }
 
     /**
-     * Verifies that the actual map contain the given value.
+     * Verifies that the actual map contains the given value.
      *
      * @param <K>    key type
      * @param <V>    value type
