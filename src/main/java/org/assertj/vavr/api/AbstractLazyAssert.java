@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
-import org.assertj.core.api.AbstractAssert;
 
 import static org.assertj.vavr.api.LazyShouldBeEvaluated.shouldBeEvaluated;
 import static org.assertj.vavr.api.LazyShouldBeNotEvaluated.shouldBeNotEvaluated;
@@ -25,7 +24,7 @@ import static org.assertj.vavr.api.LazyShouldBeNotEvaluated.shouldBeNotEvaluated
  * @param <VALUE> type of the value contained in the {@link Lazy}.
  */
 abstract class AbstractLazyAssert<SELF extends AbstractLazyAssert<SELF, VALUE>, VALUE> extends
-  AbstractAssert<SELF, Lazy<VALUE>> {
+        AbstractValueAssert<SELF, Lazy<VALUE>> {
 
     AbstractLazyAssert(Lazy<VALUE> actual, Class<?> selfType) {
         super(actual, selfType);

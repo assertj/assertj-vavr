@@ -8,8 +8,7 @@ import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 
 public class SeqAssert<ELEMENT>
-		extends
-        AbstractSeqAssert<SeqAssert<ELEMENT>, Seq<ELEMENT>, ELEMENT, ObjectAssert<ELEMENT>> {
+		extends AbstractSeqAssert<SeqAssert<ELEMENT>, Seq<ELEMENT>, ELEMENT, ObjectAssert<ELEMENT>> {
 
 	private final AssertFactory<ELEMENT, ObjectAssert<ELEMENT>> assertFactory;
 

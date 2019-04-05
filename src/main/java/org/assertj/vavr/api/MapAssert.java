@@ -10,6 +10,7 @@ import io.vavr.collection.Map;
  * @author Michał Chmielarz
  */
 public class MapAssert<KEY, VALUE> extends AbstractMapAssert<MapAssert<KEY, VALUE>, Map<KEY, VALUE>, KEY, VALUE> {
+
     MapAssert(Map<KEY, VALUE> actual) {
         super(actual, MapAssert.class);
     }

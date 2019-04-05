@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Either;
-import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -27,10 +26,7 @@ import java.util.Comparator;
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainOnRight;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnLeft;
-import static org.assertj.vavr.api.EitherShouldContain.shouldContainSameOnRight;
+import static org.assertj.vavr.api.EitherShouldContain.*;
 import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnLeftInstanceOf;
 import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOnRightInstanceOf;
 
@@ -44,7 +40,7 @@ import static org.assertj.vavr.api.EitherShouldContainInstanceOf.shouldContainOn
  * @author Michał Chmielarz
  */
 abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT, RIGHT>, LEFT, RIGHT> extends
-  AbstractAssert<SELF, Either<LEFT, RIGHT>> {
+        AbstractValueAssert<SELF, Either<LEFT, RIGHT>> {
 
     private ComparisonStrategy eitherValueComparisonStrategy;
 

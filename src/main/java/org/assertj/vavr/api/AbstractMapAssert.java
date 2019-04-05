@@ -16,7 +16,6 @@ package org.assertj.vavr.api;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Map;
-import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.EnumerableAssert;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -43,7 +42,7 @@ import static org.assertj.core.util.Preconditions.checkNotNull;
  * @param <VALUE> value type of the {@link Map}.
  */
 abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Map<KEY, VALUE>, KEY, VALUE>
-        extends AbstractObjectAssert<SELF, ACTUAL> implements EnumerableAssert<SELF, Tuple2<? extends KEY, ? extends VALUE>> {
+        extends AbstractValueAssert<SELF, ACTUAL> implements EnumerableAssert<SELF, Tuple2<? extends KEY, ? extends VALUE>> {
 
     private final Maps maps = Maps.instance();
     private ComparisonStrategy elementComparisonStrategy;

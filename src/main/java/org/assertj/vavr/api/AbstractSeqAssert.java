@@ -15,7 +15,6 @@ package org.assertj.vavr.api;
 
 import io.vavr.collection.Seq;
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.AbstractIterableAssert;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.IndexedObjectEnumerableAssert;
 import org.assertj.core.data.Index;
@@ -33,8 +32,8 @@ import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
 import static org.assertj.core.util.Preconditions.checkNotNull;
-import static org.assertj.vavr.api.SeqShouldBeSorted.*;
 import static org.assertj.vavr.api.SeqShouldBeAtIndex.shouldBeAtIndex;
+import static org.assertj.vavr.api.SeqShouldBeSorted.*;
 import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
 
 /**
@@ -45,10 +44,10 @@ import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
  * @author Michał Chmielarz
  */
 abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>,
-        ACTUAL extends Seq<?extends ELEMENT>,
+        ACTUAL extends Seq<? extends ELEMENT>,
         ELEMENT,
         ELEMENT_ASSERT extends AbstractAssert<ELEMENT_ASSERT, ELEMENT>>
-        extends AbstractIterableAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>
+        extends AbstractTraversableAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>
         implements IndexedObjectEnumerableAssert<SELF, ELEMENT> {
 
     private ComparisonStrategy seqElementComparisonStrategy;

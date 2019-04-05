@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Option;
-import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.core.internal.*;
@@ -39,7 +38,7 @@ import static org.assertj.vavr.api.OptionShouldContainInstanceOf.shouldContainIn
  * @author Grzegorz Piwowarek
  */
 abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALUE>, VALUE> extends
-  AbstractAssert<SELF, Option<VALUE>> {
+        AbstractValueAssert<SELF, Option<VALUE>> {
 
     private Conditions conditions = Conditions.instance();
 
