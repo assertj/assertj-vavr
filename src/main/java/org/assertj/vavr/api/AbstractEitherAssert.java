@@ -161,10 +161,10 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      * <p>
      * Assertions will pass :
      * <pre><code class='java'> // one requirement
-     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; assertThat(it).isEqualTo("something"));
+     * assertThat(Either.right("something")).hasRightValueSatisfying(it -&gt; assertThat(it).isEqualTo("something"));
      *
      * // multiple requirements
-     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; {
+     * assertThat(Either.right("something")).hasRightValueSatisfying(it -&gt; {
      *   assertThat(it).isEqualTo("something");
      *   assertThat(it).startsWith("some");
      *   assertThat(it).endsWith("thing");
@@ -172,20 +172,20 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
      *
      * Assertions will fail :
      * <pre><code class='java'>
-     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; assertThat(it).isEqualTo("something else"));
+     * assertThat(Either.right("something")).hasRightValueSatisfying(it -&gt; assertThat(it).isEqualTo("something else"));
      *
      * // fail because Either is left-sided, there is no value to perform assertion on
-     * assertThat(Either.left(42)).hasValueSatisfying(it -&gt; {});</code></pre>
+     * assertThat(Either.left(42)).hasRightValueSatisfying(it -&gt; {});</code></pre>
      *
      * @param requirement to further assert on the right-sided object contained inside the {@link io.vavr.control.Either}.
      * @return this assertion object.
      */
-    public SELF hasValueSatisfying(Consumer<RIGHT> requirement) {
+    public SELF hasRightValueSatisfying(Consumer<RIGHT> requirement) {
         assertIsRight();
         requirement.accept(actual.get());
         return myself;
     }
-    
+
     /**
      * Verifies that the actual {@link io.vavr.control.Either} contains a left-sided value and gives this value to the given
      * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the

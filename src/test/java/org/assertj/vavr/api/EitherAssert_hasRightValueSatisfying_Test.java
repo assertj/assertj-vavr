@@ -22,14 +22,14 @@ import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class EitherAssert_hasValueSatisfying_Test {
+class EitherAssert_hasRightValueSatisfying_Test {
 
     @Test
     void should_fail_when_either_is_null() {
         Either<Integer, String> actual = null;
 
         assertThatThrownBy(
-                () -> assertThat(actual).hasValueSatisfying(it -> {})
+                () -> assertThat(actual).hasRightValueSatisfying(it -> {})
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(actualIsNull());
@@ -40,7 +40,7 @@ class EitherAssert_hasValueSatisfying_Test {
         Either<Integer, String> actual = Either.left(42);
 
         assertThatThrownBy(
-                () -> assertThat(actual).hasValueSatisfying(it -> {})
+                () -> assertThat(actual).hasRightValueSatisfying(it -> {})
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(shouldBeRight(actual).create());
@@ -51,7 +51,7 @@ class EitherAssert_hasValueSatisfying_Test {
         Either<Integer, String> actual = Either.right("something");
 
         assertThatThrownBy(
-                () -> assertThat(actual).hasValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something else"))
+                () -> assertThat(actual).hasRightValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something else"))
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(format("%nExpecting:%n <\"something\">%nto be equal to:%n <\"something else\">%nbut was not."));
@@ -61,6 +61,6 @@ class EitherAssert_hasValueSatisfying_Test {
     void should_pass_if_consumer_passes() {
         Either<Integer, String> actual = Either.right("something");
 
-        assertThat(actual).hasValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something"));
+        assertThat(actual).hasRightValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something"));
     }
 }
