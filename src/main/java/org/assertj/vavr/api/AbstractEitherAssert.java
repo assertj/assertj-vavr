@@ -185,8 +185,7 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         requirement.accept(actual.get());
         return myself;
     }
-
-
+    
     /**
      * Verifies that the actual {@link io.vavr.control.Either} contains a left-sided value and gives this value to the given
      * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the
