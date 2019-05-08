@@ -23,6 +23,7 @@ import org.assertj.core.internal.StandardComparisonStrategy;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.util.Comparator;
+import java.util.function.Consumer;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
@@ -150,6 +151,71 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         assertIsLeft();
         if (!clazz.isInstance(actual.getLeft()))
             throwAssertionError(shouldContainOnLeftInstanceOf(actual, clazz));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} contains a right-sided value and gives this value to the given
+     * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the
+     * containing object, as further requirement(s) for the value.
+     * <p>
+     * Assertions will pass :
+     * <pre><code class='java'> // one requirement
+     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; assertThat(it).isEqualTo("something"));
+     *
+     * // multiple requirements
+     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; {
+     *   assertThat(it).isEqualTo("something");
+     *   assertThat(it).startsWith("some");
+     *   assertThat(it).endsWith("thing");
+     * }); </code></pre>
+     *
+     * Assertions will fail :
+     * <pre><code class='java'>
+     * assertThat(Either.right("something")).hasValueSatisfying(it -&gt; assertThat(it).isEqualTo("something else"));
+     *
+     * // fail because Either is left-sided, there is no value to perform assertion on
+     * assertThat(Either.left(42)).hasValueSatisfying(it -&gt; {});</code></pre>
+     *
+     * @param requirement to further assert on the right-sided object contained inside the {@link io.vavr.control.Either}.
+     * @return this assertion object.
+     */
+    public SELF hasValueSatisfying(Consumer<RIGHT> requirement) {
+        assertIsRight();
+        requirement.accept(actual.get());
+        return myself;
+    }
+
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Either} contains a left-sided value and gives this value to the given
+     * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the
+     * containing object, as further requirement(s) for the value.
+     * <p>
+     * Assertions will pass :
+     * <pre><code class='java'> // one requirement
+     * assertThat(Either.left(42)).hasLeftValueSatisfying(it -&gt; assertThat(it).isEqualTo(42));
+     *
+     * // multiple requirements
+     * assertThat(Either.left(42)).hasLeftValueSatisfying(it -&gt; {
+     *   assertThat(it).isEqualTo(42);
+     *   assertThat(it).isLessThan(100);
+     *   assertThat(it).isGreaterThan(0);
+     * }); </code></pre>
+     *
+     * Assertions will fail :
+     * <pre><code class='java'>
+     * assertThat(Either.left(42)).hasLeftValueSatisfying(it -&gt; assertThat(it).isEqualTo(24));
+     *
+     * // fail because Either is right-sided, there is no value to perform assertion on
+     * assertThat(Either.right("something")).hasLeftValueSatisfying(it -&gt; {});</code></pre>
+     *
+     * @param requirement to further assert on the left-sided object contained inside the {@link io.vavr.control.Either}.
+     * @return this assertion object.
+     */
+    public SELF hasLeftValueSatisfying(Consumer<LEFT> requirement) {
+        assertIsLeft();
+        requirement.accept(actual.getLeft());
         return myself;
     }
 
