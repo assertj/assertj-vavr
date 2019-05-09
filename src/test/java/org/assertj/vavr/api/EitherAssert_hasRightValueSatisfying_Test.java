@@ -13,10 +13,10 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
@@ -51,7 +51,7 @@ class EitherAssert_hasRightValueSatisfying_Test {
         Either<Integer, String> actual = Either.right("something");
 
         assertThatThrownBy(
-                () -> assertThat(actual).hasRightValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something else"))
+                () -> assertThat(actual).hasRightValueSatisfying(it -> assertThat(it).isEqualTo("something else"))
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(format("%nExpecting:%n <\"something\">%nto be equal to:%n <\"something else\">%nbut was not."));
@@ -61,6 +61,6 @@ class EitherAssert_hasRightValueSatisfying_Test {
     void should_pass_if_consumer_passes() {
         Either<Integer, String> actual = Either.right("something");
 
-        assertThat(actual).hasRightValueSatisfying(it -> Assertions.assertThat(it).isEqualTo("something"));
+        assertThat(actual).hasRightValueSatisfying(it -> assertThat(it).isEqualTo("something"));
     }
 }

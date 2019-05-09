@@ -13,10 +13,10 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
@@ -51,7 +51,7 @@ class EitherAssert_hasLeftValueSatisfying_Test {
         Either<Integer, String> actual = Either.left(42);
 
         assertThatThrownBy(
-                () -> assertThat(actual).hasLeftValueSatisfying(it -> Assertions.assertThat(it).isEqualTo(24))
+                () -> assertThat(actual).hasLeftValueSatisfying(it -> assertThat(it).isEqualTo(24))
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(format("%nExpecting:%n <42>%nto be equal to:%n <24>%nbut was not."));
@@ -61,6 +61,6 @@ class EitherAssert_hasLeftValueSatisfying_Test {
     void should_pass_if_consumer_passes() {
         Either<Integer, String> actual = Either.left(42);
 
-        assertThat(actual).hasLeftValueSatisfying(it -> Assertions.assertThat(it).isEqualTo(42));
+        assertThat(actual).hasLeftValueSatisfying(it -> assertThat(it).isEqualTo(42));
     }
 }
