@@ -151,8 +151,6 @@ public class VavrAssumptions {
         return asAssumption(ValidationAssert.class, Validation.class, actual);
     }
 
-    // private methods
-
     private static <ASSERTION, ACTUAL> ASSERTION asAssumption(Class<ASSERTION> assertionType,
                                                               Class<ACTUAL> actualType,
                                                               Object actual) {
@@ -167,7 +165,7 @@ public class VavrAssumptions {
             Constructor<? extends ASSERTION> constructor = type.getConstructor(constructorTypes);
             return constructor.newInstance(constructorParams);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Cannot create assumption instance", e);
         }
     }
 
@@ -179,7 +177,7 @@ public class VavrAssumptions {
                 () -> generateAssumptionClass(assertClass));
     }
 
-    protected static <ASSERTION> Class<? extends ASSERTION> generateAssumptionClass(Class<ASSERTION> assertionType) {
+    private static <ASSERTION> Class<? extends ASSERTION> generateAssumptionClass(Class<ASSERTION> assertionType) {
         return BYTE_BUDDY.subclass(assertionType)
                 .method(any())
                 .intercept(ASSUMPTION)

@@ -1,5 +1,6 @@
 package org.assertj.vavr.api;
 
+import io.vavr.control.Try;
 import org.assertj.core.internal.bytebuddy.dynamic.loading.ClassInjector;
 import org.assertj.core.internal.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 
@@ -9,22 +10,14 @@ import java.lang.reflect.Method;
 class ClassLoadingStrategyFactory {
 
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
-    private static final Method PRIVATE_LOOKUP_IN;
-
-    static {
-        Method privateLookupIn;
-        try {
-            privateLookupIn = MethodHandles.class.getMethod("privateLookupIn", Class.class, MethodHandles.Lookup.class);
-        } catch (Exception e) {
-            privateLookupIn = null;
-        }
-        PRIVATE_LOOKUP_IN = privateLookupIn;
-    }
+    private static final Method PRIVATE_LOOKUP_IN = Try.of(
+        () -> MethodHandles.class.getMethod("privateLookupIn", Class.class, MethodHandles.Lookup.class)
+    ).getOrElse((Method) null);
 
     static ClassLoadingStrategy<ClassLoader> classLoadingStrategy(Class<?> assertClass) {
         if (ClassInjector.UsingReflection.isAvailable()) {
             return ClassLoadingStrategy.Default.INJECTION;
-        } else if (ClassInjector.UsingLookup.isAvailable()) {
+        } else if (ClassInjector.UsingLookup.isAvailable() && PRIVATE_LOOKUP_IN != null) {
             try {
                 return ClassLoadingStrategy.UsingLookup.of(PRIVATE_LOOKUP_IN.invoke(null, assertClass, LOOKUP));
             } catch (Exception e) {
