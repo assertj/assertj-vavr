@@ -14,14 +14,9 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Try;
-import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
-import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
-import org.assertj.core.internal.ComparisonStrategy;
-import org.assertj.core.internal.Conditions;
-import org.assertj.core.internal.FieldByFieldComparator;
-import org.assertj.core.internal.StandardComparisonStrategy;
+import org.assertj.core.internal.*;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.util.Comparator;
@@ -44,7 +39,7 @@ import static org.assertj.vavr.api.TryShouldContainInstanceOf.shouldContainInsta
  * @author Grzegorz Piwowarek
  */
 abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VALUE> extends
-  AbstractAssert<SELF, Try<VALUE>> {
+        AbstractValueAssert<SELF, Try<VALUE>> {
 
     private Conditions conditions = Conditions.instance();
 

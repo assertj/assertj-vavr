@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Validation;
-import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -40,7 +39,7 @@ import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldConta
  * @author Michał Chmielarz
  */
 abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SELF, INVALID, VALID>, INVALID, VALID> extends
-        AbstractAssert<SELF, Validation<INVALID, VALID>> {
+        AbstractValueAssert<SELF, Validation<INVALID, VALID>> {
 
     private ComparisonStrategy validationValueComparisonStrategy;
 
