@@ -14,6 +14,8 @@ package org.assertj.vavr.api;
 
 import org.assertj.core.error.BasicErrorMessageFactory;
 
+import java.io.StringWriter;
+
 import static java.lang.String.format;
 
 /**
@@ -23,8 +25,18 @@ import static java.lang.String.format;
  */
 class TryShouldBeSuccess extends BasicErrorMessageFactory {
 
-    private TryShouldBeSuccess() {
-        super(format("%nExpecting Try to be a Success, but wasn't"));
+    private TryShouldBeSuccess(Class<? extends Throwable> clazz, String message, StackTraceElement[] stackTrace) {
+        super(format("%nExpecting Try to be a Success, but was a Failure:" +
+                "%n- exception class: %s" +
+                "%n- message: %s" +
+                "%n- stack trace:\n%s", clazz.getName(), message, asString(stackTrace)));
+    }
+
+    private static String asString(StackTraceElement[] stackTrace) {
+        StringWriter s = new StringWriter();
+        for (StackTraceElement traceElement : stackTrace)
+            s.append("\tat ").append(String.valueOf(traceElement)).append("\n");
+        return s.toString();
     }
 
     /**
@@ -33,7 +45,7 @@ class TryShouldBeSuccess extends BasicErrorMessageFactory {
      * @return a error message factory.
      * @throws java.lang.NullPointerException if Try is null.
      */
-    static TryShouldBeSuccess shouldBeSuccess() {
-        return new TryShouldBeSuccess();
+    static TryShouldBeSuccess shouldBeSuccess(Class<? extends Throwable> clazz, String message, StackTraceElement[] stackTrace) {
+        return new TryShouldBeSuccess(clazz, message, stackTrace);
     }
 }
