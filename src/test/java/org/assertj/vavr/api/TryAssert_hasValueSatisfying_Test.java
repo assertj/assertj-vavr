@@ -27,7 +27,12 @@ class TryAssert_hasValueSatisfying_Test {
                 })
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting Try to be a Success, but wasn't");
+                .hasMessageMatching(
+                        "\\nExpecting Try to be a Success, but was a Failure:\\n" +
+                        "- exception class: java\\.lang\\.NullPointerException\\n" +
+                        "- message: null\\n" +
+                        "- stack trace:\\n" +
+                        "(\\tat .*(\\n)?)+");
     }
 
     @Test
