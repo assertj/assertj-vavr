@@ -246,7 +246,10 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
 
     private void assertIsSuccess() {
         isNotNull();
-        if (actual.isEmpty()) throwAssertionError(shouldBeSuccess());
+        if (actual.isEmpty()) {
+            final Throwable cause = actual.getCause();
+            throwAssertionError(shouldBeSuccess(cause.getClass(), cause.getMessage(), cause.getStackTrace()));
+        }
     }
 
     private void assertIsFailure() {
