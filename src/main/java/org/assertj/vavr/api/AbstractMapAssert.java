@@ -253,6 +253,34 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
     }
 
     /**
+     * Verifies that the actual map does not contain the given key.
+     *
+     * @param key the given key.
+     * @return {@code this} assertions object.
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map contains the given key.
+     */
+    @SuppressWarnings("unchecked")
+    public SELF doesNotContainKey(KEY key) {
+        return doesNotContainKeys(key);
+    }
+
+    /**
+     * Verifies that the actual map does not contain the given keys.
+     *
+     * @param keys the given keys.
+     * @return {@code this} assertions object.
+     * @throws AssertionError           if the actual map is {@code null}.
+     * @throws AssertionError           if the actual map contains the given key.
+     * @throws IllegalArgumentException if the given argument is an empty array.
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     */
+    public SELF doesNotContainKeys(@SuppressWarnings("unchecked") KEY... keys) {
+        maps.assertDoesNotContainKeys(info, actual, keys);
+        return myself;
+    }
+
+    /**
      * Verifies that the actual map contains the given value.
      *
      * @param value the value to look for.
