@@ -383,16 +383,16 @@ public final class Maps {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notPresentIn(Set<K> keys) {
-        return key -> !keys.contains(key);
+    private static <K> Predicate<K> notPresentIn(Set<K> elements) {
+        return elem -> !elements.contains(elem);
     }
 
-    private static <K> Predicate<K> presentIn(Set<K> keys) {
-        return key -> keys.contains(key);
+    private static <K> Predicate<K> presentIn(Set<K> elements) {
+        return elem -> elements.contains(elem);
     }
 
-    private static <K> Predicate<K> notPresentIn(Seq<K> keys) {
-        return key -> !keys.contains(key);
+    private static <K> Predicate<K> notPresentIn(Seq<K> elements) {
+        return elem -> !elements.contains(elem);
     }
 
     private static boolean isNotEmpty(Traversable traversable) {
