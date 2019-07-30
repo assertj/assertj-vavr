@@ -19,6 +19,7 @@ import static org.assertj.core.error.ShouldContainOnlyKeys.shouldContainOnlyKeys
 import static org.assertj.core.error.ShouldContainValue.shouldContainValue;
 import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
+import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
@@ -123,6 +124,31 @@ public final class Maps {
         Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
+        }
+    }
+
+    /**
+     * Verifies that the actual {@code Map} does not contain the given keys.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param keys   the given keys.
+     * @throws NullPointerException     if the array of keys is {@code null}.
+     * @throws IllegalArgumentException if the array of keys is empty.
+     * @throws AssertionError           if the given {@code Map} is {@code null}.
+     * @throws AssertionError           if the given {@code Map} contains the given keys.
+     */
+    public <K, V> void assertDoesNotContainKeys(AssertionInfo info, Map<K, V> actual,
+                                                @SuppressWarnings("unchecked") K... keys) {
+        doCommonContainsCheck(info, actual, keys);
+        if (doCommonEmptinessChecks(actual, keys)) return;
+
+        Set<K> expected = HashSet.of(keys);
+        Set<K> found = expected.filter(presentIn(actual.keySet()));
+        if (isNotEmpty(found)) {
+            throw failures.failure(info, shouldNotContainKeys(actual, found.toJavaSet()));
         }
     }
 
@@ -357,12 +383,16 @@ public final class Maps {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notPresentIn(Set<K> keys) {
-        return key -> !keys.contains(key);
+    private static <K> Predicate<K> notPresentIn(Set<K> elements) {
+        return elem -> !elements.contains(elem);
     }
 
-    private static <K> Predicate<K> notPresentIn(Seq<K> keys) {
-        return key -> !keys.contains(key);
+    private static <K> Predicate<K> presentIn(Set<K> elements) {
+        return elem -> elements.contains(elem);
+    }
+
+    private static <K> Predicate<K> notPresentIn(Seq<K> elements) {
+        return elem -> !elements.contains(elem);
     }
 
     private static boolean isNotEmpty(Traversable traversable) {

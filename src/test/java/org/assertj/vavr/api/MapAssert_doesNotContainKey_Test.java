@@ -21,62 +21,62 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class MapAssert_containsKey_Test {
+class MapAssert_doesNotContainKey_Test {
 
   @Test
-  void should_pass_if_Map_contains_given_key() {
+  void should_pass_if_Map_does_not_contain_given_key() {
     final Map<String, String> actual = HashMap.of("key1", "value1", "key2", "value2");
 
-    assertThat(actual).containsKey("key1");
+    assertThat(actual).doesNotContainKey("key3");
   }
 
   @Test
   void should_fail_when_Map_is_null() {
     assertThatThrownBy(
-            () -> assertThat((Map<String, String>) null).containsKey("key")
+            () -> assertThat((Map<String, String>) null).doesNotContainKey("key")
     )
             .isInstanceOf(AssertionError.class)
             .hasMessage(shouldNotBeNull().create());
   }
 
   @Test
-  void should_fail_if_Map_does_not_contain_given_key() {
+  void should_fail_if_Map_contains_given_key() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
     assertThatThrownBy(
-        () -> assertThat(actual).containsKey("key-3")
+        () -> assertThat(actual).doesNotContainKey("key-1")
     )
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                " <HashMap((key-1, value-1), (key-2, value-2))>\n" +
-                "to contain key:\n" +
-                " <\"key-3\">"
+                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
+                "not to contain key:\n" +
+                "  <\"key-1\">"
         );
   }
 
   @Test
-  void should_fail_if_Map_does_not_contain_key_as_null() {
+  void should_pass_if_Map_does_not_contain_null_as_key() {
     final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
 
-    assertThatThrownBy(
-        () -> assertThat(actual).containsKey(null)
-    )
-        .isInstanceOf(AssertionError.class)
-        .hasMessage(
-            "\n" +
-                "Expecting:\n" +
-                " <HashMap((key-1, value-1), (key-2, value-2))>\n" +
-                "to contain key:\n" +
-                " <null>"
-        );
+    assertThat(actual).doesNotContainKey(null);
   }
 
   @Test
-  void should_pass_if_Map_contains_key_as_null() {
+  void should_fail_if_Map_contains_null_as_key() {
     final Map<String, String> actual = HashMap.of(null, "value-1", "key-2", "value-2");
 
-    assertThat(actual).containsKey(null);
+    assertThatThrownBy(
+        () -> assertThat(actual).doesNotContainKey(null)
+    )
+        .isInstanceOf(AssertionError.class)
+        .hasMessage(
+            "\n" +
+                "Expecting:\n" +
+                "  <HashMap((null, value-1), (key-2, value-2))>\n" +
+                "not to contain key:\n" +
+                "  <null>"
+        );
   }
 }
