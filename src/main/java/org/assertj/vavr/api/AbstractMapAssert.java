@@ -306,6 +306,32 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         return myself;
     }
 
+    /**
+     * Verifies that the actual map does not contain the given value.
+     *
+     * @param value the value to look for.
+     * @return {@code this} assertions object.
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map contains the given value.
+     */
+    public SELF doesNotContainValue(VALUE value) {
+        maps.assertDoesNotContainValue(info, actual, value);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map does not contain the given values.
+     *
+     * @param values the values to look for in the actual map.
+     * @return {@code this} assertions object.
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map contains the given values.
+     */
+    public SELF doesNotContainValues(@SuppressWarnings("unchecked") VALUE... values) {
+        maps.assertDoesNotContainValues(info, actual, values);
+        return myself;
+    }
+
     @Override
     public SELF hasSize(int expectedSize) {
         isNotNull();

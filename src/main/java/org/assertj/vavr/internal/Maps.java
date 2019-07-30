@@ -20,12 +20,14 @@ import static org.assertj.core.error.ShouldContainValue.shouldContainValue;
 import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
+import static org.assertj.core.error.ShouldNotContainValue.shouldNotContainValue;
 import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
 import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.core.util.Preconditions.checkNotNull;
+import static org.assertj.vavr.api.ShouldNotContainValues.shouldNotContainValues;
 
 public final class Maps {
 
@@ -270,8 +272,31 @@ public final class Maps {
         if (actual.isEmpty() && values.length == 0) return;
 
         Set<V> expected = HashSet.of(values);
-        Set<V> notFound = expected.filter(notPresentIn(actual.values()));
+        Set<V> notFound = expected.filter(valueNotPresentIn(actual.values()));
         if (isNotEmpty(notFound)) throw failures.failure(info, shouldContainValues(actual, notFound.toJavaSet()));
+    }
+
+    /**
+     * Verifies that the actual map does not contain the given values.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param values the given values.
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if the actual map contains the given values.
+     * @throws NullPointerException if values vararg is {@code null}.
+     */
+    public <K, V> void assertDoesNotContainValues(AssertionInfo info, Map<K, V> actual,
+                                                  @SuppressWarnings("unchecked") V... values) {
+        assertNotNull(info, actual);
+        checkNotNull(values, "The array of values to look for should not be null");
+        if (actual.isEmpty() && values.length == 0) return;
+
+        Set<V> expected = HashSet.of(values);
+        Set<V> found = expected.filter(valuePresentIn(actual.values()));
+        if (isNotEmpty(found)) throw failures.failure(info, shouldNotContainValues(actual, found.toJavaSet()));
     }
 
     /**
@@ -288,6 +313,22 @@ public final class Maps {
     public <K, V> void assertContainsValue(AssertionInfo info, Map<K, V> actual, V value) {
         assertNotNull(info, actual);
         if (!actual.containsValue(value)) throw failures.failure(info, shouldContainValue(actual, value));
+    }
+
+    /**
+     * Verifies that the actual map does not contain the given value.
+     *
+     * @param <K>    key type
+     * @param <V>    value type
+     * @param info   contains information about the assertion.
+     * @param actual the given {@code Map}.
+     * @param value  the given value.
+     * @throws AssertionError if the actual map is {@code null}.
+     * @throws AssertionError if the actual map contains the given value.
+     */
+    public <K, V> void assertDoesNotContainValue(AssertionInfo info, Map<K, V> actual, V value) {
+        assertNotNull(info, actual);
+        if (actual.containsValue(value)) throw failures.failure(info, shouldNotContainValue(actual, value));
     }
 
     /**
@@ -388,11 +429,15 @@ public final class Maps {
     }
 
     private static <K> Predicate<K> presentIn(Set<K> keys) {
-        return key -> keys.contains(key);
+        return keys::contains;
     }
 
-    private static <K> Predicate<K> notPresentIn(Seq<K> keys) {
-        return key -> !keys.contains(key);
+    private <V> Predicate<V> valuePresentIn(Seq<V> values) {
+        return values::contains;
+    }
+
+    private static <V> Predicate<V> valueNotPresentIn(Seq<V> values) {
+        return value -> !values.contains(value);
     }
 
     private static boolean isNotEmpty(Traversable traversable) {
