@@ -424,20 +424,20 @@ public final class Maps {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notPresentIn(Set<K> keys) {
-        return key -> !keys.contains(key);
+    private static <K> Predicate<K> notPresentIn(Set<K> elements) {
+        return elem -> !elements.contains(elem);
     }
 
-    private static <K> Predicate<K> presentIn(Set<K> keys) {
-        return keys::contains;
+    private static <K> Predicate<K> presentIn(Set<K> elements) {
+        return elements::contains;
     }
 
-    private <V> Predicate<V> valuePresentIn(Seq<V> values) {
-        return values::contains;
+    private <V> Predicate<V> valuePresentIn(Seq<V> elements) {
+        return elements::contains;
     }
 
-    private static <V> Predicate<V> valueNotPresentIn(Seq<V> values) {
-        return value -> !values.contains(value);
+    private static <V> Predicate<V> valueNotPresentIn(Seq<V> elements) {
+        return elem -> !elements.contains(elem);
     }
 
     private static boolean isNotEmpty(Traversable traversable) {

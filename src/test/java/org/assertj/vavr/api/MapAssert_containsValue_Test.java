@@ -31,6 +31,13 @@ class MapAssert_containsValue_Test {
   }
 
   @Test
+  void should_allow_to_check_null_value() {
+    final Map<String, String> actual = HashMap.of("key1", null, "key2", "value2");
+
+    assertThat(actual).containsValue(null);
+  }
+
+  @Test
   void should_fail_when_Map_is_null() {
     assertThatThrownBy(
             () -> assertThat((Map<String, String>) null).containsValue("value")

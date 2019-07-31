@@ -55,4 +55,28 @@ class MapAssert_doesNotContainKey_Test {
                 "  <\"key-1\">"
         );
   }
+
+  @Test
+  void should_pass_if_Map_does_not_contain_null_as_key() {
+    final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
+
+    assertThat(actual).doesNotContainKey(null);
+  }
+
+  @Test
+  void should_fail_if_Map_contains_null_as_key() {
+    final Map<String, String> actual = HashMap.of(null, "value-1", "key-2", "value-2");
+
+    assertThatThrownBy(
+        () -> assertThat(actual).doesNotContainKey(null)
+    )
+        .isInstanceOf(AssertionError.class)
+        .hasMessage(
+            "\n" +
+                "Expecting:\n" +
+                "  <HashMap((null, value-1), (key-2, value-2))>\n" +
+                "not to contain key:\n" +
+                "  <null>"
+        );
+  }
 }
