@@ -3,13 +3,18 @@ package org.assertj.vavr.internal;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.*;
+import io.vavr.control.Option;
 import org.assertj.core.api.AssertionInfo;
+import org.assertj.core.api.Condition;
 import org.assertj.core.error.ShouldContainAnyOf;
+import org.assertj.core.internal.Conditions;
 import org.assertj.core.internal.Failures;
 import org.assertj.core.internal.Objects;
 
 import java.util.function.Predicate;
 
+import static io.vavr.Predicates.not;
+import static org.assertj.core.error.ElementsShouldBe.elementsShouldBe;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainExactly.elementsDifferAtIndex;
 import static org.assertj.core.error.ShouldContainExactly.shouldContainExactly;
@@ -35,16 +40,42 @@ public final class Maps {
 
     private Failures failures = Failures.instance();
 
+    private Conditions conditions = Conditions.instance();
+
     private Maps() {}
 
     public static Maps instance() {
         return INSTANCE;
     }
 
+    /**
+     * Verifies that the given {@code Map} contains the value for given {@code key} that satisfy given {@code valueCondition}.
+     *
+     * @param <K>            key type
+     * @param <V>            value type
+     * @param info           contains information about the assertion.
+     * @param actual         the given {@code Map}.
+     * @param key            the given key to check.
+     * @param valueCondition the given condition for check value.
+     * @throws NullPointerException if the given values is {@code null}.
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if the actual map not contains the given {@code key}.
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
+     */
+    @SuppressWarnings("unchecked")
+    public <K, V> void assertHasEntrySatisfying(AssertionInfo info, Map<K, V> actual, K key,
+                                                Condition<? super V> valueCondition) {
+        conditions.assertIsNotNull(valueCondition);
+        assertContainsKeys(info, actual, key);
+        Option<V> value = actual.get(key);
+        value
+            .filter(valueCondition::matches)
+            .getOrElseThrow(() -> failures.failure(info, elementsShouldBe(actual, value, valueCondition)));
+    }
+
     public <K, V> void assertContainsAnyOf(AssertionInfo info, Map<K, V> actual,
                                            Tuple2<K, V>[] entries) {
         doCommonContainsCheck(info, actual, entries);
-        // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
         for (Tuple2<? extends K, ? extends V> entry : entries) {
@@ -70,10 +101,9 @@ public final class Maps {
     public <K, V> void assertContains(AssertionInfo info, Map<K, V> actual,
                                       Tuple2<K, V>[] entries) {
         doCommonContainsCheck(info, actual, entries);
-        // if both actual and values are empty, then assertion passes.
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notPresentIn(actual)).toSet();
+        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(entryNotPresentIn(actual)).toSet();
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
         }
@@ -123,7 +153,7 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+        Set<K> notFound = expected.filter(keyNotPresentIn(actual.keySet()));
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
         }
@@ -148,7 +178,7 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> found = expected.filter(presentIn(actual.keySet()));
+        Set<K> found = expected.filter(keyPresentIn(actual.keySet()));
         if (isNotEmpty(found)) {
             throw failures.failure(info, shouldNotContainKeys(actual, found.toJavaSet()));
         }
@@ -171,14 +201,12 @@ public final class Maps {
     public <K, V> void assertContainsOnly(AssertionInfo info, Map<K, V> actual, Iterable<Tuple2<K, V>> entries) {
         assertNotNull(info, actual);
         failIfNull(entries);
-        if (actual.isEmpty() && !entries.iterator().hasNext()) {
-            return;
-        }
+        if (actual.isEmpty() && !entries.iterator().hasNext()) return;
         failIfEmpty(entries);
         Map<K, V> expected = HashMap.ofEntries(entries);
-        Map<K, V> notExpected = actual.filter(notPresentIn(expected));
+        Map<K, V> notExpected = actual.filter(entryNotPresentIn(expected));
         if (isNotEmpty(notExpected)) {
-            Map<K, V> notFound = expected.filter(notPresentIn(actual));
+            Map<K, V> notFound = expected.filter(entryNotPresentIn(actual));
             throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
         }
     }
@@ -246,9 +274,9 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notExpected = actual.keySet().filter(notPresentIn(expected));
+        Set<K> notExpected = actual.keySet().filter(keyNotPresentIn(expected));
         if (isNotEmpty(notExpected)) {
-            Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+            Set<K> notFound = expected.filter(keyNotPresentIn(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
     }
@@ -420,24 +448,24 @@ public final class Maps {
         return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
-    private static <K, V> Predicate<Tuple2<K, V>> notPresentIn(Map<K, V> map) {
+    private static <K, V> Predicate<Tuple2<K, V>> entryNotPresentIn(Map<K, V> map) {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notPresentIn(Set<K> elements) {
-        return elem -> !elements.contains(elem);
+    private static <K> Predicate<K> keyNotPresentIn(Set<K> elements) {
+        return not(keyPresentIn(elements));
     }
 
-    private static <K> Predicate<K> presentIn(Set<K> elements) {
+    private static <K> Predicate<K> keyPresentIn(Set<K> elements) {
         return elements::contains;
     }
 
-    private <V> Predicate<V> valuePresentIn(Seq<V> elements) {
+    private static <V> Predicate<V> valuePresentIn(Seq<V> elements) {
         return elements::contains;
     }
 
     private static <V> Predicate<V> valueNotPresentIn(Seq<V> elements) {
-        return elem -> !elements.contains(elem);
+        return not(valuePresentIn(elements));
     }
 
     private static boolean isNotEmpty(Traversable traversable) {

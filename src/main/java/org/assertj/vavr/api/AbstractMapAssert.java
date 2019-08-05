@@ -16,6 +16,7 @@ package org.assertj.vavr.api;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Map;
+import org.assertj.core.api.Condition;
 import org.assertj.core.api.EnumerableAssert;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -66,6 +67,22 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
         checkNotNull(entryRequirements, "The BiConsumer<K, V> expressing the assertions requirements must not be null");
         isNotNull();
         actual.forEach(entry -> entryRequirements.accept(entry._1, entry._2));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual map contains a value for the given {@code key} that satisfies the given {@code valueCondition}.
+     *
+     * @param key            the given key to check.
+     * @param valueCondition the given condition for check value.
+     * @return {@code this} assertion object.
+     * @throws NullPointerException if the given values is {@code null}.
+     * @throws AssertionError       if the actual map is {@code null}.
+     * @throws AssertionError       if the actual map not contains the given {@code key}.
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
+     */
+    public SELF hasEntrySatisfying(KEY key, Condition<? super VALUE> valueCondition) {
+        maps.assertHasEntrySatisfying(info, actual, key, valueCondition);
         return myself;
     }
 
