@@ -13,6 +13,7 @@ import org.assertj.core.internal.Objects;
 
 import java.util.function.Predicate;
 
+import static io.vavr.Predicates.not;
 import static org.assertj.core.error.ElementsShouldBe.elementsShouldBe;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainExactly.elementsDifferAtIndex;
@@ -102,7 +103,7 @@ public final class Maps {
         doCommonContainsCheck(info, actual, entries);
         if (actual.isEmpty() && entries.length == 0) return;
         failIfEmptySinceActualIsNotEmpty(entries);
-        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(notPresentIn(actual)).toSet();
+        final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(entryNotPresentIn(actual)).toSet();
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
         }
@@ -152,7 +153,7 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+        Set<K> notFound = expected.filter(keyNotPresentIn(actual.keySet()));
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContainKeys(actual, notFound.toJavaSet()));
         }
@@ -177,7 +178,7 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> found = expected.filter(presentIn(actual.keySet()));
+        Set<K> found = expected.filter(keyPresentIn(actual.keySet()));
         if (isNotEmpty(found)) {
             throw failures.failure(info, shouldNotContainKeys(actual, found.toJavaSet()));
         }
@@ -203,9 +204,9 @@ public final class Maps {
         if (actual.isEmpty() && !entries.iterator().hasNext()) return;
         failIfEmpty(entries);
         Map<K, V> expected = HashMap.ofEntries(entries);
-        Map<K, V> notExpected = actual.filter(notPresentIn(expected));
+        Map<K, V> notExpected = actual.filter(entryNotPresentIn(expected));
         if (isNotEmpty(notExpected)) {
-            Map<K, V> notFound = expected.filter(notPresentIn(actual));
+            Map<K, V> notFound = expected.filter(entryNotPresentIn(actual));
             throw failures.failure(info, shouldContainOnly(actual, expected, notFound, notExpected));
         }
     }
@@ -273,9 +274,9 @@ public final class Maps {
         if (doCommonEmptinessChecks(actual, keys)) return;
 
         Set<K> expected = HashSet.of(keys);
-        Set<K> notExpected = actual.keySet().filter(notPresentIn(expected));
+        Set<K> notExpected = actual.keySet().filter(keyNotPresentIn(expected));
         if (isNotEmpty(notExpected)) {
-            Set<K> notFound = expected.filter(notPresentIn(actual.keySet()));
+            Set<K> notFound = expected.filter(keyNotPresentIn(actual.keySet()));
             throw failures.failure(info, shouldContainOnlyKeys(actual, expected, notFound, notExpected));
         }
     }
@@ -447,24 +448,24 @@ public final class Maps {
         return Array.of(entries).filter(java.util.Objects::nonNull);
     }
 
-    private static <K, V> Predicate<Tuple2<K, V>> notPresentIn(Map<K, V> map) {
+    private static <K, V> Predicate<Tuple2<K, V>> entryNotPresentIn(Map<K, V> map) {
         return tuple -> !map.contains(tuple);
     }
 
-    private static <K> Predicate<K> notPresentIn(Set<K> elements) {
-        return elem -> !elements.contains(elem);
+    private static <K> Predicate<K> keyNotPresentIn(Set<K> elements) {
+        return not(keyPresentIn(elements));
     }
 
-    private static <K> Predicate<K> presentIn(Set<K> elements) {
+    private static <K> Predicate<K> keyPresentIn(Set<K> elements) {
         return elements::contains;
     }
 
-    private <V> Predicate<V> valuePresentIn(Seq<V> elements) {
+    private static <V> Predicate<V> valuePresentIn(Seq<V> elements) {
         return elements::contains;
     }
 
     private static <V> Predicate<V> valueNotPresentIn(Seq<V> elements) {
-        return elem -> !elements.contains(elem);
+        return not(valuePresentIn(elements));
     }
 
     private static boolean isNotEmpty(Traversable traversable) {
