@@ -79,7 +79,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      * @throws NullPointerException if the given values is {@code null}.
      * @throws AssertionError       if the actual map is {@code null}.
      * @throws AssertionError       if the actual map not contains the given {@code key}.
-     * @throws AssertionError       if the actual map contains the given key, but value not match the given {@code valueCondition}.
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
      */
     public SELF hasEntrySatisfying(KEY key, Condition<? super VALUE> valueCondition) {
         maps.assertHasEntrySatisfying(info, actual, key, valueCondition);

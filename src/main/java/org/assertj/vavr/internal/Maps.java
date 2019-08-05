@@ -59,13 +59,13 @@ public final class Maps {
      * @throws NullPointerException if the given values is {@code null}.
      * @throws AssertionError       if the actual map is {@code null}.
      * @throws AssertionError       if the actual map not contains the given {@code key}.
-     * @throws AssertionError       if the actual map contains the given key, but value not match the given {@code valueCondition}.
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
      */
     @SuppressWarnings("unchecked")
     public <K, V> void assertHasEntrySatisfying(AssertionInfo info, Map<K, V> actual, K key,
                                                 Condition<? super V> valueCondition) {
-        assertContainsKeys(info, actual, key);
         conditions.assertIsNotNull(valueCondition);
+        assertContainsKeys(info, actual, key);
         Option<V> value = actual.get(key);
         value
             .filter(valueCondition::matches)
