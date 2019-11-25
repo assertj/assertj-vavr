@@ -15,6 +15,7 @@ package org.assertj.vavr.api;
 import io.vavr.Lazy;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
+import io.vavr.collection.Multimap;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -119,6 +120,19 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <KEY, VALUE> MapAssert<KEY, VALUE> assertThat(Map<KEY, VALUE> actual) {
         return new MapAssert<>(actual);
+    }
+
+    /**
+     * Create assertion for {@link io.vavr.collection.Multimap}.
+     *
+     * @param <KEY>   key type of the {@link Multimap}.
+     * @param <VALUE> value type of the {@link Multimap}.
+     * @param actual  the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <KEY, VALUE> MultimapAssert<KEY, VALUE> assertThat(Multimap<KEY, VALUE> actual) {
+        return new MultimapAssert<>(actual);
     }
 
 }

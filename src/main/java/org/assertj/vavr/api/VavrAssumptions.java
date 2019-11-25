@@ -2,6 +2,7 @@ package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
 import io.vavr.collection.Map;
+import io.vavr.collection.Multimap;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -96,6 +97,20 @@ public class VavrAssumptions {
     @SuppressWarnings("unchecked")
     public static <K, V> AbstractMapAssert<?, ?, K, V> assumeThat(Map<K, V> actual) {
         return asAssumption(MapAssert.class, Map.class, actual);
+    }
+
+    /**
+     * Creates a new instance of <code>{@link MultimapAssert}</code> assumption.
+     *
+     * @param <K>    the type of keys in the multimap.
+     * @param <V>    the type of values in the multimap.
+     * @param actual the actual value.
+     * @return the created assumption for assertion object.
+     */
+    @CheckReturnValue
+    @SuppressWarnings("unchecked")
+    public static <K, V> AbstractMultimapAssert<?, ?, K, V> assumeThat(Multimap<K, V> actual) {
+        return asAssumption(MultimapAssert.class, Multimap.class, actual);
     }
 
     /**
