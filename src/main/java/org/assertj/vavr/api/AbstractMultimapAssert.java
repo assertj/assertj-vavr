@@ -135,7 +135,7 @@ class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, K
      * @return {@code this} assertion object.
      * @throws NullPointerException if the given values is {@code null}.
      * @throws AssertionError       if the actual multimap is {@code null}.
-     * @throws AssertionError       if the actual multimap not contains the given {@code key}.
+     * @throws AssertionError       if the actual multimap does not contain the given {@code key}.
      * @throws AssertionError       if the actual multimap contains the given key, but value does not match the given {@code valueCondition}.
      */
     public SELF hasEntrySatisfying(KEY key, Condition<? super VALUE> valueCondition) {
@@ -231,7 +231,6 @@ class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, K
         multimaps.assertContainsOnlyKeys(info, actual, keys);
         return myself;
     }
-
 
     /**
      * Verifies that the actual multimap does not contain the given key.

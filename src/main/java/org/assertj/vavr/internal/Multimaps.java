@@ -54,14 +54,14 @@ public final class Multimaps {
      *
      * @param <K>            key type
      * @param <V>            value type
-     * @param info           contains information about the assertion.
-     * @param actual         the given {@code Multimap}.
-     * @param key            the given key to check.
-     * @param valueCondition the given condition for check value.
-     * @throws NullPointerException if the given values is {@code null}.
-     * @throws AssertionError       if the actual map is {@code null}.
-     * @throws AssertionError       if the actual map not contains the given {@code key}.
-     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
+     * @param info           contains information about the assertion
+     * @param actual         the given {@code Multimap}
+     * @param key            the given key to check
+     * @param valueCondition the given condition for check value
+     * @throws NullPointerException if the given values is {@code null}
+     * @throws AssertionError       if the actual map is {@code null}
+     * @throws AssertionError       if the actual map does not contain the given {@code key}
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}
      */
     @SuppressWarnings("unchecked")
     public <K, V> void assertHasEntrySatisfying(AssertionInfo info, Multimap<K, V> actual, K key,
@@ -91,14 +91,14 @@ public final class Multimaps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Multimap}.
-     * @param entries the entries that are expected to be in the given {@code Multimap}.
-     * @throws NullPointerException     if the array of entries is {@code null}.
-     * @throws IllegalArgumentException if the array of entries is empty.
-     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} does not contain the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Multimap}
+     * @param entries the entries that are expected to be in the given {@code Multimap}
+     * @throws NullPointerException     if the array of entries is {@code null}
+     * @throws IllegalArgumentException if the array of entries is empty
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} does not contain the given entries
      */
     public <K, V> void assertContains(AssertionInfo info, Multimap<K, V> actual,
                                       Tuple2<K, V>[] entries) {
@@ -116,14 +116,14 @@ public final class Multimaps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Multimap}.
-     * @param entries the entries that are expected to only be in the given {@code Multimap}.
-     * @throws AssertionError       if the array of entries is {@code null}.
-     * @throws AssertionError       if the array of entries is empty.
-     * @throws NullPointerException if any of the entries in the given array is {@code null}.
-     * @throws AssertionError       if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError       if the given {@code Multimap} contains any of the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Multimap}
+     * @param entries the entries that are expected to only be in the given {@code Multimap}
+     * @throws AssertionError       if the array of entries is {@code null}
+     * @throws AssertionError       if the array of entries is empty
+     * @throws NullPointerException if any of the entries in the given array is {@code null}
+     * @throws AssertionError       if the given {@code Multimap} is {@code null}
+     * @throws AssertionError       if the given {@code Multimap} contains any of the given entries
      */
     public <K, V> void assertContainsOnly(AssertionInfo info, Multimap<K, V> actual, Iterable<Tuple2<K, V>> entries) {
         assertNotNull(info, actual);
@@ -146,15 +146,15 @@ public final class Multimaps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Multimap}.
-     * @param entries the given entries.
-     * @throws NullPointerException     if the given entries array is {@code null}.
-     * @throws AssertionError           if the actual map is {@code null}.
-     * @throws IllegalArgumentException if the given entries array is empty.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Multimap}
+     * @param entries the given entries
+     * @throws NullPointerException     if the given entries array is {@code null}
+     * @throws AssertionError           if the actual map is {@code null}
+     * @throws IllegalArgumentException if the given entries array is empty
      * @throws AssertionError           if the actual {@code Multimap} does not contain the given entries with same order, i.e. the actual {@code Multimap}
      *                                  contains some or none of the given entries, or the actual {@code Multimap} contains more entries than the given ones
-     *                                  or entries are the same but the order is not.
+     *                                  or entries are the same but the order is not
      */
     public <K, V> void assertContainsExactly(AssertionInfo info, Multimap<K, V> actual,
                                              @SuppressWarnings("unchecked") Tuple2<? extends K, ? extends V>... entries) {
@@ -189,14 +189,14 @@ public final class Multimaps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Multimap}.
-     * @param entries the entries that are expected to be in the given {@code Multimap}.
-     * @throws NullPointerException     if the array of entries is {@code null}.
-     * @throws IllegalArgumentException if the array of entries is empty.
-     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} contains any of the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Multimap}
+     * @param entries the entries that are expected to be in the given {@code Multimap}
+     * @throws NullPointerException     if the array of entries is {@code null}
+     * @throws IllegalArgumentException if the array of entries is empty
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} contains any of the given entries
      */
     public <K, V> void assertDoesNotContain(AssertionInfo info, Multimap<K, V> actual,
                                             Tuple2<K, V>[] entries) {
@@ -214,13 +214,13 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param keys   the given keys.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} does not contain the given keys.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Multimap} is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} does not contain the given keys
      */
     public <K, V> void assertContainsKeys(AssertionInfo info, Multimap<K, V> actual,
                                           @SuppressWarnings("unchecked") K... keys) {
@@ -239,13 +239,13 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param keys   the keys that are expected to be in the given {@code Multimap}.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} does not contain the given keys.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param keys   the keys that are expected to be in the given {@code Multimap}
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Multimap} is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} does not contain the given keys
      */
     public <K, V> void assertContainsOnlyKeys(AssertionInfo info, Multimap<K, V> actual, K[] keys) {
         doCommonContainsCheck(info, actual, keys);
@@ -264,13 +264,13 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param keys   the given keys.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError           if the given {@code Multimap} contains the given keys.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Multimap} is {@code null}
+     * @throws AssertionError           if the given {@code Multimap} contains the given keys
      */
     public <K, V> void assertDoesNotContainKeys(AssertionInfo info, Multimap<K, V> actual,
                                                 @SuppressWarnings("unchecked") K... keys) {
@@ -289,11 +289,11 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param value  the given value.
-     * @throws AssertionError if the actual {@code Multimap} is {@code null}.
-     * @throws AssertionError if the actual {@code Multimap} not contains the given value.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param value  the given value
+     * @throws AssertionError if the actual {@code Multimap} is {@code null}
+     * @throws AssertionError if the actual {@code Multimap} does not contain the given value
      */
     public <K, V> void assertContainsValue(AssertionInfo info, Multimap<K, V> actual, V value) {
         assertNotNull(info, actual);
@@ -305,12 +305,12 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param values the given values.
-     * @throws AssertionError       if the actual {@code Multimap} is {@code null}.
-     * @throws AssertionError       if the actual {@code Multimap} not contains the given values.
-     * @throws NullPointerException if values vararg is {@code null}.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param values the given values
+     * @throws AssertionError       if the actual {@code Multimap} is {@code null}
+     * @throws AssertionError       if the actual {@code Multimap} does not contain the given values
+     * @throws NullPointerException if values vararg is {@code null}
      */
     public <K, V> void assertContainsValues(AssertionInfo info, Multimap<K, V> actual,
                                             @SuppressWarnings("unchecked") V... values) {
@@ -328,11 +328,11 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param value  the given value.
-     * @throws AssertionError if the actual {@code Multimap} is {@code null}.
-     * @throws AssertionError if the actual {@code Multimap} contains the given value.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param value  the given value
+     * @throws AssertionError if the actual {@code Multimap} is {@code null}
+     * @throws AssertionError if the actual {@code Multimap} contains the given value
      */
     public <K, V> void assertDoesNotContainValue(AssertionInfo info, Multimap<K, V> actual, V value) {
         assertNotNull(info, actual);
@@ -344,12 +344,12 @@ public final class Multimaps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Multimap}.
-     * @param values the given values.
-     * @throws AssertionError       if the actual {@code Multimap} is {@code null}.
-     * @throws AssertionError       if the actual {@code Multimap} contains the given values.
-     * @throws NullPointerException if values vararg is {@code null}.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Multimap}
+     * @param values the given values
+     * @throws AssertionError       if the actual {@code Multimap} is {@code null}
+     * @throws AssertionError       if the actual {@code Multimap} contains the given values
+     * @throws NullPointerException if values vararg is {@code null}
      */
     public <K, V> void assertDoesNotContainValues(AssertionInfo info, Multimap<K, V> actual,
                                                   @SuppressWarnings("unchecked") V... values) {
@@ -366,12 +366,12 @@ public final class Multimaps {
     /**
      * Asserts that the number of entries in the given {@code Multimap} has the same size as the other array.
      *
-     * @param info  contains information about the assertion.
-     * @param multimap   the given {@code Multimap}.
-     * @param other the group to compare.
-     * @throws AssertionError if the given {@code Multimap} is {@code null}.
-     * @throws AssertionError if the given array is {@code null}.
-     * @throws AssertionError if the number of entries in the given {@code Multimap} does not have the same size.
+     * @param info  contains information about the assertion
+     * @param multimap   the given {@code Multimap}
+     * @param other the group to compare
+     * @throws AssertionError if the given {@code Multimap} is {@code null}
+     * @throws AssertionError if the given array is {@code null}
+     * @throws AssertionError if the number of entries in the given {@code Multimap} does not have the same size
      */
     public void assertHasSameSizeAs(AssertionInfo info, Multimap<?, ?> multimap, Object other) {
         assertNotNull(info, multimap);
