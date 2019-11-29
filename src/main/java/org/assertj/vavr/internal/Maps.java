@@ -53,14 +53,14 @@ public final class Maps {
      *
      * @param <K>            key type
      * @param <V>            value type
-     * @param info           contains information about the assertion.
-     * @param actual         the given {@code Map}.
-     * @param key            the given key to check.
-     * @param valueCondition the given condition for check value.
-     * @throws NullPointerException if the given values is {@code null}.
-     * @throws AssertionError       if the actual map is {@code null}.
-     * @throws AssertionError       if the actual map not contains the given {@code key}.
-     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}.
+     * @param info           contains information about the assertion
+     * @param actual         the given {@code Map}
+     * @param key            the given key to check
+     * @param valueCondition the given condition for check value
+     * @throws NullPointerException if the given values is {@code null}
+     * @throws AssertionError       if the actual map is {@code null}
+     * @throws AssertionError       if the actual map does not contain the given {@code key}
+     * @throws AssertionError       if the actual map contains the given key, but value does not match the given {@code valueCondition}
      */
     @SuppressWarnings("unchecked")
     public <K, V> void assertHasEntrySatisfying(AssertionInfo info, Map<K, V> actual, K key,
@@ -89,14 +89,14 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
-     * @throws NullPointerException     if the array of entries is {@code null}.
-     * @throws IllegalArgumentException if the array of entries is empty.
-     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} does not contain the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
+     * @throws NullPointerException     if the array of entries is {@code null}
+     * @throws IllegalArgumentException if the array of entries is empty
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} does not contain the given entries
      */
     public <K, V> void assertContains(AssertionInfo info, Map<K, V> actual,
                                       Tuple2<K, V>[] entries) {
@@ -114,14 +114,14 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to be in the given {@code Map}.
-     * @throws NullPointerException     if the array of entries is {@code null}.
-     * @throws IllegalArgumentException if the array of entries is empty.
-     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} contains any of the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to be in the given {@code Map}
+     * @throws NullPointerException     if the array of entries is {@code null}
+     * @throws IllegalArgumentException if the array of entries is empty
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} contains any of the given entries
      */
     public <K, V> void assertDoesNotContain(AssertionInfo info, Map<K, V> actual,
                                             Tuple2<K, V>[] entries) {
@@ -139,13 +139,13 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param keys   the given keys.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} does not contain the given keys.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} does not contain the given keys
      */
     public <K, V> void assertContainsKeys(AssertionInfo info, Map<K, V> actual,
                                           @SuppressWarnings("unchecked") K... keys) {
@@ -164,13 +164,13 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param keys   the given keys.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} contains the given keys.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param keys   the given keys
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} contains the given keys
      */
     public <K, V> void assertDoesNotContainKeys(AssertionInfo info, Map<K, V> actual,
                                                 @SuppressWarnings("unchecked") K... keys) {
@@ -189,14 +189,14 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the entries that are expected to only be in the given {@code Map}.
-     * @throws AssertionError           if the array of entries is {@code null}.
-     * @throws AssertionError           if the array of entries is empty.
-     * @throws NullPointerException     if any of the entries in the given array is {@code null}.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} contains any of the given entries.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the entries that are expected to only be in the given {@code Map}
+     * @throws AssertionError           if the array of entries is {@code null}
+     * @throws AssertionError           if the array of entries is empty
+     * @throws NullPointerException     if any of the entries in the given array is {@code null}
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} contains any of the given entries
      */
     public <K, V> void assertContainsOnly(AssertionInfo info, Map<K, V> actual, Iterable<Tuple2<K, V>> entries) {
         assertNotNull(info, actual);
@@ -218,15 +218,15 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param entries the given entries.
-     * @throws NullPointerException     if the given entries array is {@code null}.
-     * @throws AssertionError           if the actual map is {@code null}.
-     * @throws IllegalArgumentException if the given entries array is empty.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param entries the given entries
+     * @throws NullPointerException     if the given entries array is {@code null}
+     * @throws AssertionError           if the actual map is {@code null}
+     * @throws IllegalArgumentException if the given entries array is empty
      * @throws AssertionError           if the actual map does not contain the given entries with same order, i.e. the actual map
      *                                  contains some or none of the given entries, or the actual map contains more entries than the given ones
-     *                                  or entries are the same but the order is not.
+     *                                  or entries are the same but the order is not
      */
     public <K, V> void assertContainsExactly(AssertionInfo info, Map<K, V> actual,
                                              @SuppressWarnings("unchecked") Tuple2<? extends K, ? extends V>... entries) {
@@ -261,13 +261,13 @@ public final class Maps {
      *
      * @param <K>     key type
      * @param <V>     value type
-     * @param info    contains information about the assertion.
-     * @param actual  the given {@code Map}.
-     * @param keys    the keys that are expected to be in the given {@code Map}.
-     * @throws NullPointerException     if the array of keys is {@code null}.
-     * @throws IllegalArgumentException if the array of keys is empty.
-     * @throws AssertionError           if the given {@code Map} is {@code null}.
-     * @throws AssertionError           if the given {@code Map} does not contain the given keys.
+     * @param info    contains information about the assertion
+     * @param actual  the given {@code Map}
+     * @param keys    the keys that are expected to be in the given {@code Map}
+     * @throws NullPointerException     if the array of keys is {@code null}
+     * @throws IllegalArgumentException if the array of keys is empty
+     * @throws AssertionError           if the given {@code Map} is {@code null}
+     * @throws AssertionError           if the given {@code Map} does not contain the given keys
      */
     public <K, V> void assertContainsOnlyKeys(AssertionInfo info, Map<K, V> actual, K[] keys) {
         doCommonContainsCheck(info, actual, keys);
@@ -286,12 +286,12 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param values the given values.
-     * @throws AssertionError       if the actual map is {@code null}.
-     * @throws AssertionError       if the actual map not contains the given values.
-     * @throws NullPointerException if values vararg is {@code null}.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param values the given values
+     * @throws AssertionError       if the actual map is {@code null}
+     * @throws AssertionError       if the actual map does not contain the given values
+     * @throws NullPointerException if values vararg is {@code null}
      */
     public <K, V> void assertContainsValues(AssertionInfo info, Map<K, V> actual,
                                             @SuppressWarnings("unchecked") V... values) {
@@ -309,12 +309,12 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param values the given values.
-     * @throws AssertionError       if the actual map is {@code null}.
-     * @throws AssertionError       if the actual map contains the given values.
-     * @throws NullPointerException if values vararg is {@code null}.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param values the given values
+     * @throws AssertionError       if the actual map is {@code null}
+     * @throws AssertionError       if the actual map contains the given values
+     * @throws NullPointerException if values vararg is {@code null}
      */
     public <K, V> void assertDoesNotContainValues(AssertionInfo info, Map<K, V> actual,
                                                   @SuppressWarnings("unchecked") V... values) {
@@ -332,11 +332,11 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param value  the given value.
-     * @throws AssertionError if the actual map is {@code null}.
-     * @throws AssertionError if the actual map not contains the given value.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param value  the given value
+     * @throws AssertionError if the actual map is {@code null}
+     * @throws AssertionError if the actual map does not contain the given value
      */
     public <K, V> void assertContainsValue(AssertionInfo info, Map<K, V> actual, V value) {
         assertNotNull(info, actual);
@@ -348,11 +348,11 @@ public final class Maps {
      *
      * @param <K>    key type
      * @param <V>    value type
-     * @param info   contains information about the assertion.
-     * @param actual the given {@code Map}.
-     * @param value  the given value.
-     * @throws AssertionError if the actual map is {@code null}.
-     * @throws AssertionError if the actual map contains the given value.
+     * @param info   contains information about the assertion
+     * @param actual the given {@code Map}
+     * @param value  the given value
+     * @throws AssertionError if the actual map is {@code null}
+     * @throws AssertionError if the actual map contains the given value
      */
     public <K, V> void assertDoesNotContainValue(AssertionInfo info, Map<K, V> actual, V value) {
         assertNotNull(info, actual);
@@ -362,12 +362,12 @@ public final class Maps {
     /**
      * Asserts that the number of entries in the given {@code Map} has the same size as the other array.
      *
-     * @param info  contains information about the assertion.
-     * @param map   the given {@code Map}.
-     * @param other the group to compare.
-     * @throws AssertionError if the given {@code Map} is {@code null}.
-     * @throws AssertionError if the given array is {@code null}.
-     * @throws AssertionError if the number of entries in the given {@code Map} does not have the same size.
+     * @param info  contains information about the assertion
+     * @param map   the given {@code Map}
+     * @param other the group to compare
+     * @throws AssertionError if the given {@code Map} is {@code null}
+     * @throws AssertionError if the given array is {@code null}
+     * @throws AssertionError if the number of entries in the given {@code Map} does not have the same size
      */
     public void assertHasSameSizeAs(AssertionInfo info, Map<?, ?> map, Object other) {
         assertNotNull(info, map);

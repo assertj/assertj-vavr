@@ -13,46 +13,53 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
-import io.vavr.collection.HashMap;
-import io.vavr.collection.Map;
+import io.vavr.collection.HashMultimap;
+import io.vavr.collection.Multimap;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class MapAssert_doesContainValue_Test {
+class MultimapAssert_doesNotContainValue_Test {
 
     @Test
-    void should_pass_if_Map_does_not_contain_given_value() {
-        final Map<String, String> actual = HashMap.of("key1", "value1", "key2", "value2");
+    void should_pass_if_Multimap_does_not_contain_given_value() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of("key1", "value1", "key2", "value2");
 
         assertThat(actual).doesNotContainValue("value4");
     }
 
     @Test
-    void should_fail_when_Map_is_null() {
+    void should_fail_when_Multimap_is_null() {
         assertThatThrownBy(
-                () -> assertThat((Map<String, String>) null).doesNotContainValue("value")
+                () -> assertThat((Multimap<String, String>) null).doesNotContainValue("value")
         )
-            .isInstanceOf(AssertionError.class)
-            .hasMessage(shouldNotBeNull().create());
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
-    void should_fail_if_Map_contains_given_values() {
-        final Map<String, String> actual = HashMap.of("key-1", "value-1", "key-2", "value-2");
+    void should_pass_if_Multimap_does_not_contain_null_value() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of("key", "value");
+
+        assertThat(actual).doesNotContainValue(null);
+    }
+
+    @Test
+    void should_fail_if_Multimap_contains_a_given_value() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of("key-1", "value-1", "key-2", "value-2");
 
         assertThatThrownBy(
-            () -> assertThat(actual).doesNotContainValue("value-2")
+            () -> assertThat(actual).doesNotContainValue("value-1")
         )
             .isInstanceOf(AssertionError.class)
             .hasMessage(
                 "\n" +
                     "Expecting:\n" +
-                    "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
+                    "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
                     "not to contain value:\n" +
-                    "  <\"value-2\">"
+                    "  <\"value-1\">"
             );
     }
 }

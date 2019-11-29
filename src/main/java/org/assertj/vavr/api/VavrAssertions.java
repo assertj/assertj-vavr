@@ -15,6 +15,7 @@ package org.assertj.vavr.api;
 import io.vavr.Lazy;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
+import io.vavr.collection.Multimap;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -35,7 +36,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.control.Either}.
+     * Creates assertion for {@link io.vavr.control.Either}.
      *
      * @param <LEFT>  the type of a value contained on left by <code>actual {@link Either}</code>.
      * @param <RIGHT> the type of a value contained on right by <code>actual {@link Either}</code>.
@@ -48,7 +49,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link Lazy}.
+     * Creates assertion for {@link Lazy}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Lazy}</code>.
      * @param actual  the actual value.
@@ -60,7 +61,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.control.Option}.
+     * Creates assertion for {@link io.vavr.control.Option}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Option}</code>.
      * @param actual  the actual value.
@@ -72,7 +73,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.control.Try}.
+     * Creates assertion for {@link io.vavr.control.Try}.
      *
      * @param <VALUE> the type of a value contained by <code>actual {@link Try}</code>.
      * @param actual  the actual value.
@@ -84,7 +85,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.collection.List}.
+     * Creates assertion for {@link io.vavr.collection.List}.
      *
      * @param <VALUE> the type of elements contained by <code>actual {@link List}</code>.
      * @param actual  the actual value.
@@ -96,7 +97,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.control.Validation}.
+     * Creates assertion for {@link io.vavr.control.Validation}.
      *
      * @param <INVALID> type of the value in the case of the invalid {@link Validation}.
      * @param <VALID>   type of the value in the case of the valid {@link Validation}.
@@ -109,7 +110,7 @@ public final class VavrAssertions {
     }
 
     /**
-     * Create assertion for {@link io.vavr.collection.Map}.
+     * Creates assertion for {@link io.vavr.collection.Map}.
      *
      * @param <KEY>   key type of the {@link Map}.
      * @param <VALUE> value type of the {@link Map}.
@@ -119,6 +120,19 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <KEY, VALUE> MapAssert<KEY, VALUE> assertThat(Map<KEY, VALUE> actual) {
         return new MapAssert<>(actual);
+    }
+
+    /**
+     * Creates assertion for {@link io.vavr.collection.Multimap}.
+     *
+     * @param <KEY>   key type of the {@link Multimap}.
+     * @param <VALUE> value type of the {@link Multimap}.
+     * @param actual  the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <KEY, VALUE> MultimapAssert<KEY, VALUE> assertThat(Multimap<KEY, VALUE> actual) {
+        return new MultimapAssert<>(actual);
     }
 
 }

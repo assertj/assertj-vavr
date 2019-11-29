@@ -4,7 +4,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 
 /**
- * Creates an error message indicating that an assertion that verifies a map does not contains values.
+ * Creates an error message indicating that an assertion that verifies a map does not contain values.
  * 
  * @author Michał Chmielarz
  */
