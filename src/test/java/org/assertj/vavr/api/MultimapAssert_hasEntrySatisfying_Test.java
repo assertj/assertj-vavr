@@ -13,8 +13,8 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
-import io.vavr.collection.HashMap;
-import io.vavr.collection.Map;
+import io.vavr.collection.HashMultimap;
+import io.vavr.collection.Multimap;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 
@@ -23,14 +23,14 @@ import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 @SuppressWarnings("unchecked")
-class MapAssert_hasEntrySatisfying_Test {
+class MultimapAssert_hasEntrySatisfying_Test {
 
     private Condition<String> passingCondition = new TestCondition<>(true);
     private Condition<String> notPassingCondition = new TestCondition<>();
 
     @Test
-    void should_pass_if_Map_contains_entry_satisfying_condition() {
-        final Map<String, String> actual = HashMap.of(
+    void should_pass_if_Multimap_contains_entry_satisfying_condition() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of(
                 "key1", "value1", "key2", "value2"
         );
 
@@ -38,31 +38,31 @@ class MapAssert_hasEntrySatisfying_Test {
     }
 
     @Test
-    void should_fail_if_Map_is_empty() {
-        final Map<String, String> actual = HashMap.empty();
+    void should_fail_if_Multimap_is_empty() {
+        Multimap<String, String> actual = HashMultimap.withSeq().empty();
 
         assertThatThrownBy(
                 () -> assertThat(actual).hasEntrySatisfying("key1", passingCondition)
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <HashMap()>\n" +
+                        " <HashMultimap[List]()>\n" +
                         "to contain key:\n" +
                         " <\"key1\">");
     }
 
     @Test
-    void should_fail_when_Map_is_null() {
+    void should_fail_when_Multimap_is_null() {
         assertThatThrownBy(
-                () -> assertThat((Map<String, String>) null).hasEntrySatisfying("key1", passingCondition)
+                () -> assertThat((Multimap<String, String>) null).hasEntrySatisfying("key1", passingCondition)
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
-    void should_fail_when_Map_does_not_contain_given_key() {
-        final Map<String, String> actual = HashMap.of(
+    void should_fail_when_Multimap_does_not_contain_given_key() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of(
                 "key1", "value1", "key2", "value2"
         );
 
@@ -71,14 +71,14 @@ class MapAssert_hasEntrySatisfying_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <HashMap((key1, value1), (key2, value2))>\n" +
+                        " <HashMultimap[List]((key1, value1), (key2, value2))>\n" +
                         "to contain key:\n" +
                         " <\"key3\">");
     }
 
     @Test
     void should_fail_when_condition_is_null() {
-        final Map<String, String> actual = HashMap.of(
+        Multimap<String, String> actual = HashMultimap.withSeq().of(
                 "key1", "value1", "key2", "value2"
         );
 
@@ -90,13 +90,13 @@ class MapAssert_hasEntrySatisfying_Test {
     }
 
     @Test
-    void should_fail_if_Map_does_not_contain_entry_satisfying_condition() {
-        final Map<String, String> actual = HashMap.of("key1", "value1", "key3", "value3");
+    void should_fail_if_Multimap_does_not_contain_entry_satisfying_condition() {
+        Multimap<String, String> actual = HashMultimap.withSeq().of("key1", "value1", "key3", "value3");
 
         assertThatThrownBy(
                 () -> assertThat(actual).hasEntrySatisfying("key1", notPassingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting elements:\n<Some(value1)>\n of \n<HashMap((key1, value1), (key3, value3))>\n to be <TestCondition>");
+                .hasMessage("\nExpecting elements:\n<Some(List(value1))>\n of \n<HashMultimap[List]((key1, value1), (key3, value3))>\n to be <TestCondition>");
     }
 }
