@@ -18,6 +18,7 @@ import io.vavr.collection.Set;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
@@ -35,5 +36,16 @@ public class SetAssert_isEmpty_Test {
         )
               .isInstanceOf(AssertionError.class)
               .hasMessage(actualIsNull());
+    }
+
+    @Test
+    void should_fail_if_Set_is_not_empty() {
+        final Set<String> actual = HashSet.of("value");
+
+        assertThatThrownBy(
+                () -> assertThat(actual).isEmpty()
+        )
+                .isInstanceOf(AssertionError.class)
+                .hasMessage(shouldBeEmpty(actual).create());
     }
 }
