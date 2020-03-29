@@ -26,7 +26,7 @@ public class SetAssert_hasSize_Test {
     }
 
     @Test
-    void should_fail_if_Map_is_not_of_expected_size() {
+    void should_fail_if_Set_is_not_of_expected_size() {
         final Set<String> actual = HashSet.empty();
 
         assertThatThrownBy(
