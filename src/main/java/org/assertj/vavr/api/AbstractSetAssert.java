@@ -6,7 +6,7 @@ import org.assertj.core.api.EnumerableAssert;
 
 import java.util.Comparator;
 
-public class AbstractSetAssert<SELF extends AbstractSetAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>,
+abstract class AbstractSetAssert<SELF extends AbstractSetAssert<SELF, ACTUAL, ELEMENT, ELEMENT_ASSERT>,
         ACTUAL extends Set<? extends ELEMENT>,
         ELEMENT,
         ELEMENT_ASSERT extends AbstractAssert<ELEMENT_ASSERT, ELEMENT>>
@@ -15,15 +15,5 @@ public class AbstractSetAssert<SELF extends AbstractSetAssert<SELF, ACTUAL, ELEM
 
     AbstractSetAssert(ACTUAL actual, Class<?> selfType) {
         super(actual, selfType);
-    }
-
-    @Override
-    protected ELEMENT_ASSERT toAssert(ELEMENT element, String s) {
-        return null;
-    }
-
-    @Override
-    protected SELF newAbstractIterableAssert(Iterable<? extends ELEMENT> iterable) {
-        return null;
     }
 }
