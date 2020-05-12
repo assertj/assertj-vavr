@@ -4,6 +4,7 @@ import io.vavr.Lazy;
 import io.vavr.collection.Map;
 import io.vavr.collection.Multimap;
 import io.vavr.collection.Seq;
+import io.vavr.collection.Set;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
@@ -124,6 +125,19 @@ public class VavrAssumptions {
     @SuppressWarnings("unchecked")
     public static <VALUE> AbstractOptionAssert<?, VALUE> assumeThat(Option<VALUE> actual) {
         return asAssumption(OptionAssert.class, Option.class, actual);
+    }
+
+    /**
+     * Creates a new instance of <code>{@link SetAssert}</code> assumption.
+     *
+     * @param <ELEMENT> type of elements contained in the {@link Set}.
+     * @param actual  the actual value.
+     * @return the created assumption for assertion object.
+     */
+    @CheckReturnValue
+    @SuppressWarnings("unchecked")
+    public static <ELEMENT> AbstractSetAssert<?, ?, ELEMENT, ?> assumeThat(Set<ELEMENT> actual) {
+        return asAssumption(SetAssert.class, Set.class, actual);
     }
 
     /**

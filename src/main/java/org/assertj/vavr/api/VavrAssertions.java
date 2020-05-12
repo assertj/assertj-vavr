@@ -13,10 +13,7 @@
 package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
-import io.vavr.collection.List;
-import io.vavr.collection.Map;
-import io.vavr.collection.Multimap;
-import io.vavr.collection.Seq;
+import io.vavr.collection.*;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
@@ -107,6 +104,18 @@ public final class VavrAssertions {
     @CheckReturnValue
     public static <INVALID, VALID> ValidationAssert<INVALID, VALID> assertThat(Validation<INVALID, VALID> actual) {
         return new ValidationAssert<>(actual);
+    }
+
+    /**
+     * Creates assertion for {@link io.vavr.collection.Set}.
+     *
+     * @param <VALUE> the type of elements contained by <code> actual {@link Set}</code>.
+     * @param actual the actual value.
+     * @return the created assertion object.
+     */
+    @CheckReturnValue
+    public static <VALUE> SetAssert<VALUE>  assertThat(Set<VALUE> actual) {
+        return new SetAssert<>(actual);
     }
 
     /**
