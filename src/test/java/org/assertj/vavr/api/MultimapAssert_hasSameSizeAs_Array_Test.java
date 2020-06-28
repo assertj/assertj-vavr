@@ -49,7 +49,7 @@ class MultimapAssert_hasSameSizeAs_Array_Test {
                 () -> assertThat(actual).hasSameSizeAs(array)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(shouldHaveSameSizeAs(actual, 0, 1).create());
+                .hasMessage(shouldHaveSameSizeAs(actual, array, 0, 1).create());
     }
 
     @Test

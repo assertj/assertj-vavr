@@ -75,10 +75,12 @@ class MultimapAssert_containsExactly_Test {
                 .hasMessage(
                         "\nActual and expected should have same size but actual size is:\n" +
                         " <0>\n" +
-                        "while expected is:\n" +
+                        "while expected size is:\n" +
                         " <1>\n" +
                         "Actual was:\n" +
-                        "<HashMultimap[List]()>"
+                        " HashMultimap[List]()\n" +
+                        "Expected was:\n" +
+                        " [(key1, value1)]"
                 );
     }
 

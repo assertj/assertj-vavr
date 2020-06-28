@@ -85,11 +85,11 @@ class MapAssert_containsOnly_Test {
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
-                "Expecting:\n" +
+                "Expecting HashMap:\n" +
                 "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
                 "to contain only:\n" +
                 "  <HashMap((key-1, value-1))>\n" +
-                "but the following elements were unexpected:\n" +
+                "but the following element(s) were unexpected:\n" +
                 "  <HashMap((key-2, value-2))>\n"
         );
   }
@@ -104,13 +104,13 @@ class MapAssert_containsOnly_Test {
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
-                "Expecting:\n" +
+                "Expecting HashMap:\n" +
                 "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
                 "to contain only:\n" +
                 "  <HashMap((key-1, value-1), (key-3, value-3))>\n" +
-                "elements not found:\n" +
+                "element(s) not found:\n" +
                 "  <HashMap((key-3, value-3))>\n" +
-                "and elements not expected:\n" +
+                "and element(s) not expected:\n" +
                 "  <HashMap((key-2, value-2))>\n"
         );
   }

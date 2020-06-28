@@ -18,12 +18,17 @@ import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
+import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
+import static org.assertj.core.error.ShouldHaveSizeGreaterThan.shouldHaveSizeGreaterThan;
+import static org.assertj.core.error.ShouldHaveSizeGreaterThanOrEqualTo.shouldHaveSizeGreaterThanOrEqualTo;
+import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
+import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveSizeLessThanOrEqualTo;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.IterableUtil.sizeOf;
 import static org.assertj.core.util.Preconditions.checkNotNull;
 
-class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
+abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractValueAssert<SELF, ACTUAL> implements EnumerableAssert<SELF, Tuple2<? extends KEY, ? extends VALUE>> {
 
     private final Multimaps multimaps = Multimaps.instance();
@@ -339,12 +344,53 @@ class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, K
     }
 
     @Override
+    public SELF hasSizeGreaterThan(int boundary) {
+        isNotNull();
+        if (actual.size() <= boundary)
+            throwAssertionError(shouldHaveSizeGreaterThan(actual, actual.size(), boundary));
+        return myself;
+    }
+
+    @Override
+    public SELF hasSizeGreaterThanOrEqualTo(int boundary) {
+        isNotNull();
+        if (actual.size() < boundary)
+            throwAssertionError(shouldHaveSizeGreaterThanOrEqualTo(actual, actual.size(), boundary));
+        return myself;
+    }
+
+    @Override
+    public SELF hasSizeLessThan(int boundary) {
+        isNotNull();
+        if (actual.size() >= boundary)
+            throwAssertionError(shouldHaveSizeLessThan(actual, actual.size(), boundary));
+        return myself;
+    }
+
+    @Override
+    public SELF hasSizeLessThanOrEqualTo(int boundary) {
+        isNotNull();
+        if (actual.size() > boundary)
+            throwAssertionError(shouldHaveSizeLessThanOrEqualTo(actual, actual.size(), boundary));
+        return myself;
+    }
+
+    @Override
+    public SELF hasSizeBetween(int lowerBoundary, int higherBoundary) {
+        isNotNull();
+        if ((actual.size() > higherBoundary) || (actual.size() < lowerBoundary)) {
+            throwAssertionError(shouldHaveSizeBetween(actual, actual.size(), lowerBoundary, higherBoundary));
+        }
+        return myself;
+    }
+
+    @Override
     public SELF hasSameSizeAs(Iterable<?> other) {
         isNotNull();
         checkNotNull(other, "The other Iterable to compare actual size with should not be null");
         final long expectedSize = sizeOf(other);
         if (actual.size() != expectedSize)
-            throwAssertionError(shouldHaveSameSizeAs(actual, actual.size(), expectedSize));
+            throwAssertionError(shouldHaveSameSizeAs(actual, other, actual.size(), expectedSize));
         return myself;
     }
 
