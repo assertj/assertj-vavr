@@ -81,6 +81,6 @@ class MultimapAssert_doesNotContain_entries_Test {
                 () -> assertThat(actual).doesNotContain(ENTRY1, ENTRY2)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting\n <HashMultimap[List]((key1, value1), (key2, value2))>\nnot to contain\n <[(key1, value1), (key2, value2)]>\nbut found\n <HashSet((key1, value1), (key2, value2))>\n");
+                .hasMessage("\nExpecting\n <[(key1, value1), (key2, value2)]>\nnot to contain\n <[(key1, value1), (key2, value2)]>\nbut found\n <[(key1, value1), (key2, value2)]>\n");
     }
 }

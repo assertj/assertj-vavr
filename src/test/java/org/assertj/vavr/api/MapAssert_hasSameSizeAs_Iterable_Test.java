@@ -51,7 +51,7 @@ class MapAssert_hasSameSizeAs_Iterable_Test {
                 () -> assertThat(actual).hasSameSizeAs(iterable)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(shouldHaveSameSizeAs(actual, 0, 1).create());
+                .hasMessage(shouldHaveSameSizeAs(actual, iterable, 0, 1).create());
     }
 
     @Test

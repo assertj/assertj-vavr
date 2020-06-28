@@ -84,12 +84,12 @@ class MultimapAssert_containsOnly_Test {
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
-                "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "Expecting HashMultimap:\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "to contain only:\n" +
-                "  <HashMultimap[List]((key-1, value-1))>\n" +
-                "but the following elements were unexpected:\n" +
-                "  <HashMultimap[List]((key-2, value-2))>\n"
+                "  <[(key-1, value-1)]>\n" +
+                "but the following element(s) were unexpected:\n" +
+                "  <[(key-2, value-2)]>\n"
         );
   }
 
@@ -103,14 +103,14 @@ class MultimapAssert_containsOnly_Test {
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
-                "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "Expecting HashMultimap:\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "to contain only:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-3, value-3))>\n" +
-                "elements not found:\n" +
-                "  <HashMultimap[List]((key-3, value-3))>\n" +
-                "and elements not expected:\n" +
-                "  <HashMultimap[List]((key-2, value-2))>\n"
+                "  <[(key-1, value-1), (key-3, value-3)]>\n" +
+                "element(s) not found:\n" +
+                "  <[(key-3, value-3)]>\n" +
+                "and element(s) not expected:\n" +
+                "  <[(key-2, value-2)]>\n"
         );
   }
 }

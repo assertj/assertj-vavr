@@ -42,7 +42,7 @@ class TryAssert_contains_usingFieldByFieldValueComparator_Test {
                         .contains(null)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <Success(Foo{value='something'})>\nto contain:\n  <null>\nbut did not.");
+                .hasMessage("\nExpecting:\n  <[Foo{value='something'}]>\nto contain:\n  <null>\nbut did not.");
     }
 
     @Test

@@ -73,13 +73,13 @@ class MultimapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "to contain only following keys:\n" +
-                "  <HashSet(key-1)>\n" +
+                "  <[\"key-1\"]>\n" +
                 "keys not found:\n" +
-                "  <HashSet()>\n" +
+                "  <[]>\n" +
                 "and keys not expected:\n" +
-                "  <HashSet(key-2)>\n"
+                "  <[\"key-2\"]>\n"
         );
   }
 
@@ -94,13 +94,13 @@ class MultimapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "to contain only following keys:\n" +
-                "  <HashSet(key-1, key-3)>\n" +
+                "  <[\"key-1\", \"key-3\"]>\n" +
                 "keys not found:\n" +
-                "  <HashSet(key-3)>\n" +
+                "  <[\"key-3\"]>\n" +
                 "and keys not expected:\n" +
-                "  <HashSet(key-2)>\n"
+                "  <[\"key-2\"]>\n"
         );
   }
 }
