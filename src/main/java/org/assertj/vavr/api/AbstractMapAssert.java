@@ -150,6 +150,7 @@ abstract class AbstractMapAssert<SELF extends AbstractMapAssert<SELF, ACTUAL, KE
      */
     @SuppressWarnings("unchecked")
     public SELF containsAllEntriesOf(Iterable<Tuple2<KEY, VALUE>> other) {
+        checkNotNull(other, "The Iterable<Tuple2<K, V>> expressing the expected entries must not be null");
         final Tuple2<KEY, VALUE>[] entries = StreamSupport.stream(other.spliterator(), false).toArray(Tuple2[]::new);
         maps.assertContains(info, actual, entries);
         return myself;

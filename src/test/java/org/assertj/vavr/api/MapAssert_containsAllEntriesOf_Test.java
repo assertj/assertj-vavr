@@ -61,7 +61,7 @@ class MapAssert_containsAllEntriesOf_Test {
                 () -> assertThat(HashMap.<String, String>empty()).containsAllEntriesOf(null)
         )
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage(null);
+                .hasMessage("The Iterable<Tuple2<K, V>> expressing the expected entries must not be null");
     }
 
     @Test
