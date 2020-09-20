@@ -50,6 +50,6 @@ class MapAssert_containsEntry_Test {
                 () -> assertThat(actual).containsEntry("key2", "value2")
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n <HashMap((key1, value1), (key3, value3))>\nto contain:\n <[(key2, value2)]>\nbut could not find:\n <HashSet((key2, value2))>\n");
+                .hasMessage("\nExpecting HashMap:\n <[(key1, value1), (key3, value3)]>\nto contain:\n <[(key2, value2)]>\nbut could not find the following element(s):\n <[(key2, value2)]>\n");
     }
 }

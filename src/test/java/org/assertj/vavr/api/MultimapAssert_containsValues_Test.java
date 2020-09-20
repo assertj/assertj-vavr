@@ -61,7 +61,7 @@ class MultimapAssert_containsValues_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "to contain value:\n" +
                 "  <\"value-3\">"
         );

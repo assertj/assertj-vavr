@@ -13,49 +13,38 @@ package org.assertj.vavr.api;
  * Copyright 2012-2019 the original author or authors.
  */
 
-import io.vavr.collection.HashMap;
-import io.vavr.collection.Map;
+import io.vavr.collection.HashMultimap;
+import io.vavr.collection.Multimap;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
 import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-@SuppressWarnings("unchecked")
-class MapAssert_doesNotContainEntry_Test {
-
+public class MultimapAssert_hasSizeLessThan_Test {
     @Test
-    void should_pass_if_Map_does_not_contain_the_given_entry() {
-        final Map<String, String> actual = HashMap.of(
-                "key1", "value1", "key2", "value2"
-        );
-
-        assertThat(actual).doesNotContainEntry("key3", "value3");
+    void should_pass_if_Multimap_is_of_expected_size() {
+        assertThat(HashMultimap.withSeq().of("key", "value")).hasSizeLessThan(2);
     }
 
     @Test
-    void should_pass_if_Map_is_empty() {
-        final Map<String, String> actual = HashMap.empty();
-        assertThat(actual).doesNotContainEntry("key3", "value3");
-    }
-
-    @Test
-    void should_fail_when_Map_is_null() {
+    void should_fail_when_Multimap_is_null() {
         assertThatThrownBy(
-                () -> assertThat((Map<String, String>) null).doesNotContainEntry("key1", "value1")
+                () -> assertThat((Multimap<String, String>) null).hasSizeLessThan(10)
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(shouldNotBeNull().create());
     }
 
     @Test
-    void should_fail_if_Map_contains_the_given_entry() {
-        final Map<String, String> actual = HashMap.of("key1", "value1", "key3", "value3");
+    void should_fail_if_Multimap_is_not_of_expected_size() {
+        final Multimap<Object, Object> actual = HashMultimap.withSeq().of("key", "value");
 
         assertThatThrownBy(
-                () -> assertThat(actual).doesNotContainEntry("key1", "value1")
+                () -> assertThat(actual).hasSizeLessThan(1)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting\n <[(key1, value1), (key3, value3)]>\nnot to contain\n <[(key1, value1)]>\nbut found\n <[(key1, value1)]>\n");
+                .hasMessage(shouldHaveSizeLessThan(actual, 1, 1).create());
     }
 }

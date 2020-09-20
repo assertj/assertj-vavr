@@ -50,7 +50,7 @@ class MapAssert_doesNotContainKey_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
+                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
                 "not to contain key:\n" +
                 "  <\"key-1\">"
         );
@@ -74,7 +74,7 @@ class MapAssert_doesNotContainKey_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMap((null, value-1), (key-2, value-2))>\n" +
+                "  <[(null, value-1), (key-2, value-2)]>\n" +
                 "not to contain key:\n" +
                 "  <null>"
         );

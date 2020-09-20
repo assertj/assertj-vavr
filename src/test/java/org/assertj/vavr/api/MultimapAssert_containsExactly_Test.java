@@ -75,10 +75,12 @@ class MultimapAssert_containsExactly_Test {
                 .hasMessage(
                         "\nActual and expected should have same size but actual size is:\n" +
                         " <0>\n" +
-                        "while expected is:\n" +
+                        "while expected size is:\n" +
                         " <1>\n" +
                         "Actual was:\n" +
-                        "<HashMultimap[List]()>"
+                        " []\n" +
+                        "Expected was:\n" +
+                        " [(key1, value1)]"
                 );
     }
 
@@ -112,13 +114,13 @@ class MultimapAssert_containsExactly_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
                         "\nExpecting:\n" +
-                        "  <HashMultimap[List]((key1, value1), (key3, value3))>\n" +
+                        "  <[(key1, value1), (key3, value3)]>\n" +
                         "to contain exactly (and in same order):\n" +
-                        "  <List((key1, value1), (key2, value2))>\n" +
+                        "  <[(key1, value1), (key2, value2)]>\n" +
                         "but some elements were not found:\n" +
-                        "  <LinkedHashMultimap[List]((key2, value2))>\n" +
+                        "  <[(key2, value2)]>\n" +
                         "and others were not expected:\n" +
-                        "  <HashMultimap[List]((key3, value3))>\n"
+                        "  <[(key3, value3)]>\n"
                 );
     }
 
