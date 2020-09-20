@@ -26,7 +26,7 @@ class MapAssert_isNotEqualTo_Test {
     @Test
     void should_pass_if_Map_is_not_equal_to() {
         assertThat(HashMap.of(
-                "key1", "value2", 
+                "key1", "value2",
                 "key2", "value2"))
                 .isNotEqualTo(HashMap.of(
                         "otherKey1", "value2",

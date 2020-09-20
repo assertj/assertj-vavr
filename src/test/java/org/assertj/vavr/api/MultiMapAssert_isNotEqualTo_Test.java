@@ -18,9 +18,6 @@ import org.junit.jupiter.api.Test;
 import io.vavr.collection.HashMultimap;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.description.EmptyTextDescription.emptyDescription;
-import static org.assertj.core.error.ShouldBeEqual.shouldBeEqual;
-import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 class MultiMapAssert_isNotEqualTo_Test {
