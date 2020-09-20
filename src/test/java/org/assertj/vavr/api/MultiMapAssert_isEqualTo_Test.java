@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.collection.HashMultimap;
-import io.vavr.collection.Multimap;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
