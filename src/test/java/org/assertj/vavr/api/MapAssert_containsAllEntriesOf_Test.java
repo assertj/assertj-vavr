@@ -60,8 +60,7 @@ class MapAssert_containsAllEntriesOf_Test {
         assertThatThrownBy(
                 () -> assertThat(HashMap.<String, String>empty()).containsAllEntriesOf(null)
         )
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage(null);
+                .isInstanceOf(NullPointerException.class);
     }
 
     @Test
