@@ -58,6 +58,11 @@
             <url>https://alex-diez.github.io/</url>
             <id>Alex-Diez</id>
         </developer>
+        <developer>
+            <name>Sean C. Sullivan</name>
+            <url>https://github.com/sullis</url>
+            <id>sullis</id>
+        </developer>
     </developers>
 
     <issueManagement>
