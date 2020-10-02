@@ -1,3 +1,15 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ *
+ * Copyright 2017-2020 the original author or authors.
+ */
 package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
@@ -24,7 +36,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success("some value")).containsSame(null)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <Success(some value)>\nto contain the instance (i.e. compared with ==):\n  <null>\nbut did not.");
+                .hasMessage("\nExpecting:\n  <[\"some value\"]>\nto contain the instance (i.e. compared with ==):\n  <null>\nbut did not.");
     }
 
     @Test
@@ -40,7 +52,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success(actual)).containsSame(expected)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
+                .hasMessage("\nExpecting:\n  <[\"OK\"]>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
     }
 
     @Test
@@ -51,7 +63,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success(actual)).containsSame(expected)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
+                .hasMessage("\nExpecting:\n  <[\"OK\"]>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
     }
 
     @Test

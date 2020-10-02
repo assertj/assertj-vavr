@@ -4,14 +4,19 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.assertj</groupId>
+    <parent>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-parent-pom</artifactId>
+        <version>2.2.8</version>
+    </parent>
+
     <artifactId>assertj-vavr</artifactId>
     <version>0.2.0</version>
 
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
     <inceptionYear>2017</inceptionYear>
-  
+
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -51,6 +56,11 @@
             <email>alex.dukhno@icloud.com</email>
             <url>https://alex-diez.github.io/</url>
             <id>Alex-Diez</id>
+        </developer>
+        <developer>
+            <name>Sean C. Sullivan</name>
+            <url>https://github.com/sullis</url>
+            <id>sullis</id>
         </developer>
     </developers>
 
@@ -92,7 +102,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.11.1</version>
+            <version>3.17.2</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -123,17 +133,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <configuration>
+                    <!-- needed to fix javadoc on java 11+ https://github.com/joel-costigliola/assertj-core/issues/1403 -->
+                    <source>8</source>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -143,58 +156,15 @@
                     </execution>
                 </executions>
             </plugin>
-          
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
             </plugin>
 
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <goals>
