@@ -102,6 +102,6 @@ class MultimapAssert_contains_entries_Test {
                 () -> assertThat(actual).contains(ENTRY1, ENTRY2)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting HashMultimap:\n <[(key1, value1), (key3, value3)]>\nto contain:\n <[(key1, value1), (key2, value2)]>\nbut could not find the following element(s):\n <[(key2, value2)]>\n");
+                .hasMessage("\nExpecting HashMultimap:\n <HashMultimap[List]((key1, value1), (key3, value3))>\nto contain:\n <[(key1, value1), (key2, value2)]>\nbut could not find the following element(s):\n <HashSet((key2, value2))>\n");
     }
 }

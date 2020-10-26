@@ -71,10 +71,11 @@ public class SetAssert_allSatisfy_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\n" +
                         "Expecting all elements of:\n" +
-                        "  <[\"value1\", \"value2\"]>\n" +
+                        "  <HashSet(value1, value2)>\n" +
                         "to satisfy given requirements, but these elements did not:\n" +
                         "\n" +
-                        "  <\"value2\"> error: \n" +
+                        "  <\"value2\">\n" +
+                        "error: \n" +
                         "Expecting:\n" +
                         " <\"value2\">\n" +
                         "to be equal to:\n" +

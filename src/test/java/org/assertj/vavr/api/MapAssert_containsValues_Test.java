@@ -73,7 +73,7 @@ class MapAssert_containsValues_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
+                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
                 "to contain value:\n" +
                 "  <\"value-3\">"
         );

@@ -58,7 +58,7 @@ class MapAssert_hasEntrySatisfying_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <[]>\n" +
+                        " <HashMap()>\n" +
                         "to contain key:\n" +
                         " <\"key1\">");
     }
@@ -83,7 +83,7 @@ class MapAssert_hasEntrySatisfying_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <[(key1, value1), (key2, value2)]>\n" +
+                        " <HashMap((key1, value1), (key2, value2))>\n" +
                         "to contain key:\n" +
                         " <\"key3\">");
     }
@@ -109,6 +109,6 @@ class MapAssert_hasEntrySatisfying_Test {
                 () -> assertThat(actual).hasEntrySatisfying("key1", notPassingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting elements:\n<[\"value1\"]>\n of \n<[(key1, value1), (key3, value3)]>\n to be <TestCondition>");
+                .hasMessage("\nExpecting elements:\n<Some(value1)>\n of \n<HashMap((key1, value1), (key3, value3))>\n to be <TestCondition>");
     }
 }

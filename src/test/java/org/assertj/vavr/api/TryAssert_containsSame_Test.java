@@ -36,7 +36,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success("some value")).containsSame(null)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <[\"some value\"]>\nto contain the instance (i.e. compared with ==):\n  <null>\nbut did not.");
+                .hasMessage("\nExpecting:\n  <Success(some value)>\nto contain the instance (i.e. compared with ==):\n  <null>\nbut did not.");
     }
 
     @Test
@@ -52,7 +52,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success(actual)).containsSame(expected)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <[\"OK\"]>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"OK\">\nbut did not.");
     }
 
     @Test
@@ -63,7 +63,7 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.success(actual)).containsSame(expected)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <[\"OK\"]>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain the instance (i.e. compared with ==):\n  <\"different\">\nbut did not.");
     }
 
     @Test
