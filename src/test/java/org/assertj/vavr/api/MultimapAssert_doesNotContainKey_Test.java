@@ -62,7 +62,7 @@ class MultimapAssert_doesNotContainKey_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
+                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
                 "not to contain key:\n" +
                 "  <\"key-1\">"
         );
@@ -86,7 +86,7 @@ class MultimapAssert_doesNotContainKey_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <[(null, value-1), (key-2, value-2)]>\n" +
+                "  <HashMultimap[List]((null, value-1), (key-2, value-2))>\n" +
                 "not to contain key:\n" +
                 "  <null>"
         );
