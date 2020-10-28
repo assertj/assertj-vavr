@@ -104,6 +104,6 @@ class MapAssert_contains_anyOf_entries_Test {
                 () -> assertThat(actual).containsAnyOf(ENTRY2)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <[(key1, value1), (key3, value3)]>\nto contain at least one of the following elements:\n  <[(key2, value2)]>\nbut none were found ");
+                .hasMessage("\nExpecting:\n  <HashMap((key1, value1), (key3, value3))>\nto contain at least one of the following elements:\n  <[(key2, value2)]>\nbut none were found ");
     }
 }

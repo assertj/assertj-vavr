@@ -85,13 +85,13 @@ class MapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
+                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
                 "to contain only following keys:\n" +
-                "  <[\"key-1\"]>\n" +
+                "  <HashSet(key-1)>\n" +
                 "keys not found:\n" +
-                "  <[]>\n" +
+                "  <HashSet()>\n" +
                 "and keys not expected:\n" +
-                "  <[\"key-2\"]>\n"
+                "  <HashSet(key-2)>\n"
         );
   }
 
@@ -106,13 +106,13 @@ class MapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <[(key-1, value-1), (key-2, value-2)]>\n" +
+                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
                 "to contain only following keys:\n" +
-                "  <[\"key-1\", \"key-3\"]>\n" +
+                "  <HashSet(key-1, key-3)>\n" +
                 "keys not found:\n" +
-                "  <[\"key-3\"]>\n" +
+                "  <HashSet(key-3)>\n" +
                 "and keys not expected:\n" +
-                "  <[\"key-2\"]>\n"
+                "  <HashSet(key-2)>\n"
         );
   }
 }

@@ -67,8 +67,8 @@ class MultiMapAssert_isNotEqualTo_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\n"
                         + "Expecting:\n"
-                        + " <[(key1, value2), (key2, value2)]>\n"
+                        + " <HashMultimap[List]((key1, value2), (key2, value2))>\n"
                         + "not to be equal to:\n"
-                        + " <[(key1, value2), (key2, value2)]>\n");
+                        + " <HashMultimap[List]((key1, value2), (key2, value2))>\n");
     }
 }
