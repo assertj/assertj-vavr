@@ -26,14 +26,14 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Either;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Build error message when an {@link Either} should contain a value being an instance of a specific class.
  *
  * @author Michał Chmielarz
  */
-class EitherShouldContainInstanceOf extends BasicErrorMessageFactory {
+class EitherShouldContainInstanceOf extends VavrErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was left-sided.";
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on left side:%n  <%s>%nbut was right-sided.";

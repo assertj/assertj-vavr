@@ -14,17 +14,17 @@ package org.assertj.vavr.api;
 
 import org.assertj.core.api.Condition;
 import org.assertj.core.data.Index;
-import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 
 import io.vavr.collection.Seq;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Builds error message when a given condition is not met at specified index in actual {@link io.vavr.collection.Seq}
  *
  * @author Michał Chmielarz
  */
-class SeqShouldHaveAtIndex extends BasicErrorMessageFactory {
+class SeqShouldHaveAtIndex extends VavrErrorMessageFactory {
 
   private <T> SeqShouldHaveAtIndex(Seq<? extends T> actual, Condition<? super T> condition, Index index, T found) {
     super("%nExpecting:%n <%s>%nat index <%s> to have:%n <%s>%nin:%n <%s>%n", found, index.value, condition, actual);

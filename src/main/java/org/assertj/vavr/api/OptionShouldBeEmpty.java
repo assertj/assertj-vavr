@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Build error message when an {@link io.vavr.control.Option} should be empty.
  *
  * @author Grzegorz Piwowarek
  */
-class OptionShouldBeEmpty extends BasicErrorMessageFactory {
+class OptionShouldBeEmpty extends VavrErrorMessageFactory {
 
     private OptionShouldBeEmpty(Option expected) {
         super("%nExpecting an Option to be empty but was <%s>.", expected.get());

@@ -51,7 +51,7 @@ class TryAssert_contains_Test {
                 () -> assertThat(Try.success(actual)).contains(expected)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <[\"OK\"]>\nto contain:\n  <\"different\">\nbut did not.");
+                .hasMessage("\nExpecting:\n  <Success(OK)>\nto contain:\n  <\"different\">\nbut did not.");
     }
 
     @Test

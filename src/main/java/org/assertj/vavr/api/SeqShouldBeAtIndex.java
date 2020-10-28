@@ -15,8 +15,8 @@ package org.assertj.vavr.api;
 import io.vavr.collection.Seq;
 import org.assertj.core.api.Condition;
 import org.assertj.core.data.Index;
-import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Creates an error message indicating that an assertion that verifies a group of elements contains a value at a given index that
@@ -24,7 +24,7 @@ import org.assertj.core.error.ErrorMessageFactory;
  *
  * @author Michał Chmielarz
  */
-public class SeqShouldBeAtIndex extends BasicErrorMessageFactory {
+public class SeqShouldBeAtIndex extends VavrErrorMessageFactory {
 
   public static <T> ErrorMessageFactory shouldBeAtIndex(Seq<? extends T> actual, Condition<? super T> condition, Index index, T found) {
     return new SeqShouldBeAtIndex(actual, condition, index, found);

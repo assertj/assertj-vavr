@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Either;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Build error message when an {@link Either} should be right.
  *
  * @author Michał Chmielarz
  */
-class EitherShouldBeRight extends BasicErrorMessageFactory {
+class EitherShouldBeRight extends VavrErrorMessageFactory {
 
     private EitherShouldBeRight(Either actual) {
         super("%nExpecting an Either to be right but was left <%s>.", actual.getLeft());

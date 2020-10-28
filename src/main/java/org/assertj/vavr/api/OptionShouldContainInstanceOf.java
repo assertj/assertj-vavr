@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Option;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Build an error message when a value should be instance of a specific class.
  *
  * @author Grzegorz Piwowarek
  */
-class OptionShouldContainInstanceOf extends BasicErrorMessageFactory {
+class OptionShouldContainInstanceOf extends VavrErrorMessageFactory {
 
     private OptionShouldContainInstanceOf(String message) {
         super(message);

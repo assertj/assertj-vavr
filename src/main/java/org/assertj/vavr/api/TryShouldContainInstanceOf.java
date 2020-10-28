@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Build an error message when a {@link Try} does not contain a value being an instance of an expected class.
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldContainInstanceOf extends BasicErrorMessageFactory {
+class TryShouldContainInstanceOf extends VavrErrorMessageFactory {
 
     private TryShouldContainInstanceOf(String message) {
         super(message);

@@ -13,14 +13,14 @@
 package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 import static java.lang.String.format;
 
 /**
  * Build error message when a {@link Lazy} value should be evaluated.
  */
-class LazyShouldBeEvaluated extends BasicErrorMessageFactory {
+class LazyShouldBeEvaluated extends VavrErrorMessageFactory {
 
     private LazyShouldBeEvaluated() {
         super(format("%nExpecting Lazy to be evaluated, but it was not"));

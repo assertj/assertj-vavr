@@ -12,7 +12,7 @@
  */
 package org.assertj.vavr.api;
 
-import org.assertj.core.error.BasicErrorMessageFactory;
+import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 import java.io.StringWriter;
 
@@ -23,7 +23,7 @@ import static java.lang.String.format;
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldBeSuccess extends BasicErrorMessageFactory {
+class TryShouldBeSuccess extends VavrErrorMessageFactory {
 
     private TryShouldBeSuccess(Class<? extends Throwable> clazz, String message, StackTraceElement[] stackTrace) {
         super(format("%nExpecting Try to be a Success, but was a Failure:" +
