@@ -1,36 +1,31 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * Copyright 2017-2020 the original author or authors.
- */
-package org.assertj.vavr.api;
+package org.assertj.vavr.api.soft;
 
 import io.vavr.Lazy;
-import io.vavr.collection.*;
+import io.vavr.collection.List;
+import io.vavr.collection.Map;
+import io.vavr.collection.Multimap;
+import io.vavr.collection.Seq;
+import io.vavr.collection.Set;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
+import org.assertj.core.api.StandardSoftAssertionsProvider;
 import org.assertj.core.util.CheckReturnValue;
+import org.assertj.vavr.api.EitherAssert;
+import org.assertj.vavr.api.LazyAssert;
+import org.assertj.vavr.api.MapAssert;
+import org.assertj.vavr.api.MultimapAssert;
+import org.assertj.vavr.api.OptionAssert;
+import org.assertj.vavr.api.SeqAssert;
+import org.assertj.vavr.api.SetAssert;
+import org.assertj.vavr.api.TryAssert;
+import org.assertj.vavr.api.ValidationAssert;
 
 /**
- * Entry point for assertion methods for different Vavr types. Each method in this class is a static factory for a
- * type-specific assertion object.
  *
- * @author Grzegorz Piwowarek
  */
-@CheckReturnValue
-public final class VavrAssertions {
-
-    private VavrAssertions() {
-    }
+public interface StandardSoftVavrAssertionsProvider extends StandardSoftAssertionsProvider {
 
     /**
      * Creates assertion for {@link io.vavr.control.Either}.
@@ -41,8 +36,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assertThat(Either<LEFT, RIGHT> actual) {
-        return new EitherAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assertThat(Either<LEFT, RIGHT> actual) {
+        return proxy(EitherAssert.class, Either.class, actual);
     }
 
     /**
@@ -53,8 +49,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> LazyAssert<VALUE> assertThat(Lazy<VALUE> actual) {
-        return new LazyAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <VALUE> LazyAssert<VALUE> assertThat(Lazy<VALUE> actual) {
+        return proxy(LazyAssert.class, Lazy.class, actual);
     }
 
     /**
@@ -65,8 +62,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> OptionAssert<VALUE> assertThat(Option<VALUE> actual) {
-        return new OptionAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <VALUE> OptionAssert<VALUE> assertThat(Option<VALUE> actual) {
+        return proxy(OptionAssert.class, Option.class, actual);
     }
 
     /**
@@ -77,8 +75,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
-        return new TryAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <VALUE> TryAssert<VALUE> assertThat(Try<VALUE> actual) {
+        return proxy(TryAssert.class, Try.class, actual);
     }
 
     /**
@@ -89,8 +88,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> SeqAssert<VALUE> assertThat(Seq<VALUE> actual) {
-        return new SeqAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <VALUE> SeqAssert<VALUE> assertThat(Seq<VALUE> actual) {
+        return proxy(SeqAssert.class, Seq.class, actual);
     }
 
     /**
@@ -102,8 +102,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <INVALID, VALID> ValidationAssert<INVALID, VALID> assertThat(Validation<INVALID, VALID> actual) {
-        return new ValidationAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <INVALID, VALID> ValidationAssert<INVALID, VALID> assertThat(Validation<INVALID, VALID> actual) {
+        return proxy(ValidationAssert.class, Validation.class, actual);
     }
 
     /**
@@ -114,8 +115,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> SetAssert<VALUE> assertThat(Set<VALUE> actual) {
-        return new SetAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <VALUE> SetAssert<VALUE> assertThat(Set<VALUE> actual) {
+        return proxy(SetAssert.class, Set.class, actual);
     }
 
     /**
@@ -127,8 +129,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <KEY, VALUE> MapAssert<KEY, VALUE> assertThat(Map<KEY, VALUE> actual) {
-        return new MapAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <KEY, VALUE> MapAssert<KEY, VALUE> assertThat(Map<KEY, VALUE> actual) {
+        return proxy(MapAssert.class, Map.class, actual);
     }
 
     /**
@@ -140,8 +143,9 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <KEY, VALUE> MultimapAssert<KEY, VALUE> assertThat(Multimap<KEY, VALUE> actual) {
-        return new MultimapAssert<>(actual);
+    @SuppressWarnings("unchecked")
+    default <KEY, VALUE> MultimapAssert<KEY, VALUE> assertThat(Multimap<KEY, VALUE> actual) {
+        return proxy(MultimapAssert.class, Multimap.class, actual);
     }
 
 }
