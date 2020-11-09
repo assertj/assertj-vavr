@@ -29,9 +29,7 @@ public class VavrRepresentation extends StandardRepresentation {
     }
 
     private String toStringOf(Either<?, ?> either) {
-        return either.fold(
-                v -> v == null ? "null" : String.format("Left(%s)", v),
-                v -> v == null ? "null" : String.format("Right(%s)", v));
+        return either.toString();
     }
 
     private String toStringOf(Try<?> aTry) {
