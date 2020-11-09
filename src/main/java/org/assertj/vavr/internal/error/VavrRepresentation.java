@@ -21,11 +21,12 @@ public class VavrRepresentation extends StandardRepresentation {
 
     @Override
     public String toStringOf(Object object) {
-        if (object == null) return null;
-        if (object instanceof Either) return toStringOf((Either<?, ?>) object);
-        if (object instanceof Try) return toStringOf((Try<?>) object);
-        if (object instanceof Validation) return toStringOf((Validation<?, ?>) object);
-        return super.toStringOf(object);
+        if (object instanceof Either
+            || object instanceof Try
+            || object instanceof Validation) {
+                return object.toString();
+          }
+          return super.toStringOf(object);
     }
 
     private String toStringOf(Either<?, ?> either) {
