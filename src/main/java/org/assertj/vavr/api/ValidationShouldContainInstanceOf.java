@@ -26,14 +26,14 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Validation;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
+import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
  * Build error message when a {@link Validation} should contain a value being an instance of a specific class.
  *
  * @author Michał Chmielarz
  */
-class ValidationShouldContainInstanceOf extends VavrErrorMessageFactory {
+class ValidationShouldContainInstanceOf extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_INVALID = "%nExpecting:%n  <%s>%nto contain a valid:%n  <%s>%nbut was invalid.";
     private static final String EXPECTING_TO_CONTAIN_BUT_IS_VALID = "%nExpecting:%n  <%s>%nto contain an invalid:%n  <%s>%nbut was valid.";

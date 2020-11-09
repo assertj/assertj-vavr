@@ -13,20 +13,20 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Validation;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
+import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
  * Build error message when an {@link Validation} should be valid.
  *
  * @author Michał Chmielarz
  */
-class ValidationShouldBeValid extends VavrErrorMessageFactory {
+class ValidationShouldBeValid extends BasicErrorMessageFactory {
 
-    private ValidationShouldBeValid(Validation actual) {
+    private ValidationShouldBeValid(Validation<?, ?> actual) {
         super("%nExpecting a Validation to be valid but was invalid <%s>.", actual.getError());
     }
 
-    static ValidationShouldBeValid shouldBeValid(Validation actual) {
+    static ValidationShouldBeValid shouldBeValid(Validation<?, ?> actual) {
         return new ValidationShouldBeValid(actual);
     }
 }

@@ -15,7 +15,6 @@ package org.assertj.vavr.api;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.WritableAssertionInfo;
 import org.assertj.core.internal.Objects;
-import org.assertj.vavr.internal.error.VavrRepresentation;
 
 class AbstractValueAssert<SELF extends AbstractValueAssert<SELF, ACTUAL>, ACTUAL>
         extends AbstractObjectAssert<SELF, ACTUAL>
@@ -25,7 +24,6 @@ class AbstractValueAssert<SELF extends AbstractValueAssert<SELF, ACTUAL>, ACTUAL
 
     AbstractValueAssert(ACTUAL actual, Class<?> selfType) {
         super(actual, selfType);
-        info().useRepresentation(new VavrRepresentation());
     }
 
     public ACTUAL actual() {

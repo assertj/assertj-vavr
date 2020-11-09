@@ -26,14 +26,14 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Validation;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
+import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
  * Build error message when an {@link Validation} should contain a specific value.
  *
  * @author Michał Chmielarz
  */
-class ValidationShouldContain extends VavrErrorMessageFactory {
+class ValidationShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";

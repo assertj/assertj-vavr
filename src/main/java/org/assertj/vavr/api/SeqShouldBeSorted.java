@@ -13,9 +13,8 @@
 package org.assertj.vavr.api;
 
 import io.vavr.collection.Seq;
+import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
-
 import java.util.Comparator;
 
 /**
@@ -23,7 +22,7 @@ import java.util.Comparator;
  *
  * @author Michał Chmielarz
  */
-class SeqShouldBeSorted extends VavrErrorMessageFactory {
+class SeqShouldBeSorted extends BasicErrorMessageFactory {
 
   static <T> ErrorMessageFactory shouldBeSorted(int i, Seq<? extends T> group) {
     return new SeqShouldBeSorted(

@@ -12,15 +12,15 @@
  */
 package org.assertj.vavr.api;
 
+import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
 
 /**
  * Creates an error message indicating that an assertion that verifies a map does not contain values.
  * 
  * @author Michał Chmielarz
  */
-public class ShouldNotContainValues extends VavrErrorMessageFactory {
+public class ShouldNotContainValues extends BasicErrorMessageFactory {
 
   /**
    * Creates a new <code>{@link ShouldNotContainValues}</code>.

@@ -12,8 +12,7 @@
  */
 package org.assertj.vavr.api;
 
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
-
+import org.assertj.core.error.BasicErrorMessageFactory;
 import static java.lang.String.format;
 
 /**
@@ -21,7 +20,7 @@ import static java.lang.String.format;
  *
  * @author Grzegorz Piwowarek
  */
-class OptionShouldBePresent extends VavrErrorMessageFactory {
+class OptionShouldBePresent extends BasicErrorMessageFactory {
 
     private OptionShouldBePresent() {
         super(format("%nExpecting Option to contain a value but it didn't."));

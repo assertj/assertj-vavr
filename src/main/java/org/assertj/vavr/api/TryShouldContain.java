@@ -26,7 +26,7 @@ package org.assertj.vavr.api;
  */
 
 import io.vavr.control.Try;
-import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
+import org.assertj.core.error.BasicErrorMessageFactory;
 
 /**
  * Build error message when an {@link Try}
@@ -34,7 +34,7 @@ import org.assertj.vavr.internal.error.VavrErrorMessageFactory;
  *
  * @author Grzegorz Piwowarek
  */
-class TryShouldContain extends VavrErrorMessageFactory {
+class TryShouldContain extends BasicErrorMessageFactory {
 
     private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
