@@ -15,7 +15,6 @@ package org.assertj.vavr.api;
 import io.vavr.collection.Seq;
 import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
-
 import java.util.Comparator;
 
 /**
@@ -25,7 +24,7 @@ import java.util.Comparator;
  */
 class SeqShouldBeSorted extends BasicErrorMessageFactory {
 
-  static ErrorMessageFactory shouldBeSorted(int i, Seq<? extends Object> group) {
+  static <T> ErrorMessageFactory shouldBeSorted(int i, Seq<? extends T> group) {
     return new SeqShouldBeSorted(
             "%nsequence is not sorted because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%nsequence was:%n <%s>",
             i, group.get(i), i + 1, group.get(i + 1), group);
@@ -35,7 +34,7 @@ class SeqShouldBeSorted extends BasicErrorMessageFactory {
     return new SeqShouldBeSorted("%nsome elements are not mutually comparable in sequence:%n<%s>", actual);
   }
 
-  static ErrorMessageFactory shouldBeSortedAccordingToGivenComparator(int i, Seq<? extends Object> actual,
+  static <T> ErrorMessageFactory shouldBeSortedAccordingToGivenComparator(int i, Seq<? extends T> actual,
                                                                              Comparator<?> comparator) {
     return new SeqShouldBeSorted(
             "%nsequence is not sorted according to %s comparator because element %s:%n <%s>%nis not less or equal than element %s:%n <%s>%nsequence was:%n <%s>",

@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
 import org.assertj.core.error.BasicErrorMessageFactory;
-
 import static java.lang.String.format;
 
 /**

@@ -14,7 +14,6 @@ package org.assertj.vavr.api;
 
 import io.vavr.Lazy;
 import org.assertj.core.error.BasicErrorMessageFactory;
-
 import static java.lang.String.format;
 
 /**
@@ -22,7 +21,7 @@ import static java.lang.String.format;
  */
 class LazyShouldBeNotEvaluated extends BasicErrorMessageFactory {
 
-    private LazyShouldBeNotEvaluated(Lazy actual) {
+    private LazyShouldBeNotEvaluated(Lazy<?> actual) {
         super(format("%nExpecting Lazy to be not evaluated but it was <%s>", actual));
     }
 

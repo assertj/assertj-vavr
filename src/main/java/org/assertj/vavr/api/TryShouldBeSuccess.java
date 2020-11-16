@@ -13,7 +13,6 @@
 package org.assertj.vavr.api;
 
 import org.assertj.core.error.BasicErrorMessageFactory;
-
 import java.io.StringWriter;
 
 import static java.lang.String.format;
