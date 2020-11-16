@@ -22,11 +22,11 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  */
 class ValidationShouldBeValid extends BasicErrorMessageFactory {
 
-    private ValidationShouldBeValid(Validation actual) {
+    private ValidationShouldBeValid(Validation<?, ?> actual) {
         super("%nExpecting a Validation to be valid but was invalid <%s>.", actual.getError());
     }
 
-    static ValidationShouldBeValid shouldBeValid(Validation actual) {
+    static ValidationShouldBeValid shouldBeValid(Validation<?, ?> actual) {
         return new ValidationShouldBeValid(actual);
     }
 }

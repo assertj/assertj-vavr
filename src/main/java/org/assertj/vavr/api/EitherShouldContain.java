@@ -36,10 +36,11 @@ import org.assertj.core.error.BasicErrorMessageFactory;
  */
 class EitherShouldContain extends BasicErrorMessageFactory {
 
-    private static final String EXPECTING_TO_CONTAIN = "%nExpecting:%n  <%s>%nto contain:%n  <%s>%nbut did not.";
+    private static final String EXPECTING_TO_CONTAIN_ON_LEFT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [LEFT]%nbut did not.";
+    private static final String EXPECTING_TO_CONTAIN_ON_RIGHT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [RIGHT]%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
-    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was left sided.";
-    private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on right side:%n  <%s>%nbut was right sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut was left sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on the [RIGHT]:%n  <%s>%nbut was right sided.";
     private static final String EXPECTING_TO_CONTAIN_ON_THE_LEFT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [LEFT]%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_ON_THE_RIGHT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [RIGHT]%nbut did not.";
     private static final String EXPECTING_ON_THE_LEFT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut had <%s> on the [RIGHT].";
@@ -47,6 +48,7 @@ class EitherShouldContain extends BasicErrorMessageFactory {
 
     private EitherShouldContain(String message, Object actual, Object expected) {
         super(message, actual, expected);
+
     }
 
     private EitherShouldContain(String format, Object... arguments) {
@@ -96,7 +98,7 @@ class EitherShouldContain extends BasicErrorMessageFactory {
      */
     static <LEFT, RIGHT> EitherShouldContain shouldContainOnRight(Either<LEFT, RIGHT> either, RIGHT expectedValue) {
         return either.isRight() ?
-          new EitherShouldContain(EXPECTING_TO_CONTAIN, either, expectedValue) :
+          new EitherShouldContain(EXPECTING_TO_CONTAIN_ON_RIGHT, either, expectedValue) :
           shouldContainButIsLeft(either, expectedValue);
     }
 
@@ -128,7 +130,7 @@ class EitherShouldContain extends BasicErrorMessageFactory {
     static <LEFT, RIGHT> EitherShouldContain shouldContainOnLeft(Either<LEFT, RIGHT> either,
                                                                  LEFT expectedValue) {
         return either.isLeft() ?
-          new EitherShouldContain(EXPECTING_TO_CONTAIN, either, expectedValue) :
+          new EitherShouldContain(EXPECTING_TO_CONTAIN_ON_LEFT, either, expectedValue) :
           shouldContainButIsRight(either, expectedValue);
     }
 

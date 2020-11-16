@@ -23,7 +23,7 @@ import org.assertj.core.error.BasicErrorMessageFactory;
 class EitherShouldBeLeft extends BasicErrorMessageFactory {
 
     private EitherShouldBeLeft(Either actual) {
-        super("%nExpecting an Either to be left but was right <%s>.", actual.right().get());
+        super("%nExpecting an Either to be left but was <%s>.", actual);
     }
 
     static EitherShouldBeLeft shouldBeLeft(Either actual) {
