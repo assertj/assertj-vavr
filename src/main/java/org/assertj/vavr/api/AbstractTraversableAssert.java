@@ -31,6 +31,11 @@ abstract class AbstractTraversableAssert<SELF extends AbstractTraversableAssert<
         super(actual, selfType);
     }
 
+    public SELF containsExactlyInAnyOrder(Traversable<ELEMENT> values) {
+        this.iterables.assertContainsExactlyInAnyOrder(this.info, this.actual, values.toJavaArray());
+        return myself;
+    }
+
     public ACTUAL actual() {
         return actual;
     }
