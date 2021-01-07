@@ -22,9 +22,6 @@ import org.assertj.vavr.api.SetAssert;
 import org.assertj.vavr.api.TryAssert;
 import org.assertj.vavr.api.ValidationAssert;
 
-/**
- *
- */
 public interface StandardSoftVavrAssertionsProvider extends StandardSoftAssertionsProvider {
 
     /**
