@@ -123,9 +123,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(39))
                 .startsWith(format("org.opentest4j.AssertionFailedError: %nExpecting message to be:%n  <\"another message\">%nbut was:%n  <\"not ok\">"));
         assertThat(errors.get(40))
-                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was right <2>."));
+                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was <Right(2)>."));
         assertThat(errors.get(41))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <1>%nbut did not."));
+                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <1> on the [RIGHT]%nbut did not."));
         assertThat(errors.get(42))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain the instance (i.e. compared with ==):%n  <1>%nbut did not."));
         assertThat(errors.get(43))
@@ -133,13 +133,13 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(44))
                 .contains(format("org.opentest4j.AssertionFailedError: %nExpecting:%n <2>%nto be equal to:%n <0>%nbut was not."));
         assertThat(errors.get(45))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <3>%nbut did not."));
+                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <3> on the [RIGHT]%nbut did not."));
         assertThat(errors.get(46))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <3>%nbut did not."));
+                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <3> on the [RIGHT]%nbut did not."));
         assertThat(errors.get(47))
-                .contains(format("java.lang.AssertionError: %nExpecting an Either to be right but was left <\"not ok\">."));
+                .contains(format("java.lang.AssertionError: %nExpecting an Either to be right but was <Left(not ok)>."));
         assertThat(errors.get(48))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Left(not ok)>%nto contain:%n  <\"ok\">%nbut did not."));
+                .contains(format("java.lang.AssertionError: %nExpecting:%n  <Left(not ok)>%nto contain:%n  <\"ok\"> on the [LEFT]%nbut did not."));
         assertThat(errors.get(49))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <Left(not ok)>%nto contain the instance (i.e. compared with ==):%n  <\"ok\">%nbut did not."));
         assertThat(errors.get(50))
@@ -147,9 +147,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(51))
                 .contains(format("java.lang.AssertionError: %nExpected size:<1> but was:<6> in:%n<\"not ok\">"));
         assertThat(errors.get(52))
-                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was right <2>."));
+                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was <Right(2)>."));
         assertThat(errors.get(53))
-                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was right <2>."));
+                .contains(format("java.lang.AssertionError: %nExpecting an Either to be left but was <Right(2)>."));
         assertThat(errors.get(54))
                 .contains(format("java.lang.AssertionError: %nExpecting actual not to be empty"));
         assertThat(errors.get(55))
