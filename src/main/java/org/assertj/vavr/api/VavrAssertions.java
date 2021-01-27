@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -114,7 +114,7 @@ public final class VavrAssertions {
      * @return the created assertion object.
      */
     @CheckReturnValue
-    public static <VALUE> SetAssert<VALUE>  assertThat(Set<VALUE> actual) {
+    public static <VALUE> SetAssert<VALUE> assertThat(Set<VALUE> actual) {
         return new SetAssert<>(actual);
     }
 
