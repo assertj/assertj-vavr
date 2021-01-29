@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -104,6 +104,6 @@ class MapAssert_contains_anyOf_entries_Test {
                 () -> assertThat(actual).containsAnyOf(ENTRY2)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <HashMap((key1, value1), (key3, value3))>\nto contain at least one of the following elements:\n  <[(key2, value2)]>\nbut none were found ");
+                .hasMessage("\nExpecting:\n  HashMap((key1, value1), (key3, value3))\nto contain at least one of the following elements:\n  [(key2, value2)]\nbut none were found ");
     }
 }

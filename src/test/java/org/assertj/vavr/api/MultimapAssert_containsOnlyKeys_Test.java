@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -85,13 +85,13 @@ class MultimapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "  HashMultimap[List]((key-1, value-1), (key-2, value-2))\n" +
                 "to contain only following keys:\n" +
-                "  <HashSet(key-1)>\n" +
+                "  HashSet(key-1)\n" +
                 "keys not found:\n" +
-                "  <HashSet()>\n" +
+                "  HashSet()\n" +
                 "and keys not expected:\n" +
-                "  <HashSet(key-2)>\n"
+                "  HashSet(key-2)\n"
         );
   }
 
@@ -106,13 +106,13 @@ class MultimapAssert_containsOnlyKeys_Test {
         .hasMessage(
             "\n" +
                 "Expecting:\n" +
-                "  <HashMultimap[List]((key-1, value-1), (key-2, value-2))>\n" +
+                "  HashMultimap[List]((key-1, value-1), (key-2, value-2))\n" +
                 "to contain only following keys:\n" +
-                "  <HashSet(key-1, key-3)>\n" +
+                "  HashSet(key-1, key-3)\n" +
                 "keys not found:\n" +
-                "  <HashSet(key-3)>\n" +
+                "  HashSet(key-3)\n" +
                 "and keys not expected:\n" +
-                "  <HashSet(key-2)>\n"
+                "  HashSet(key-2)\n"
         );
   }
 }

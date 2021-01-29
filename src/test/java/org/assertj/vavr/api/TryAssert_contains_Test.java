@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -61,7 +61,7 @@ class TryAssert_contains_Test {
                 () -> assertThat(Try.failure(exception)).contains(exception)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
+                .hasMessageStartingWith("\nExpecting Try to contain:\n  <java.lang.NullPointerException");
     }
 
     @Test

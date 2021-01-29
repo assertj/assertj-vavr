@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -54,7 +54,7 @@ class EitherAssert_hasLeftValueSatisfying_Test {
                 () -> assertThat(actual).hasLeftValueSatisfying(it -> assertThat(it).isEqualTo(24))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(format("%nExpecting:%n <42>%nto be equal to:%n <24>%nbut was not."));
+                .hasMessage(format("%nexpected: 24%nbut was : 42"));
     }
 
     @Test

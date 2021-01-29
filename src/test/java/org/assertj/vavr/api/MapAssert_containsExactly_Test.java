@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -86,13 +86,13 @@ class MapAssert_containsExactly_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
                         "\nActual and expected should have same size but actual size is:\n" +
-                        " <0>\n" +
+                        "  0\n" +
                         "while expected size is:\n" +
-                        " <1>\n" +
+                        "  1\n" +
                         "Actual was:\n" +
-                        " LinkedHashMap()\n" +
+                        "  LinkedHashMap()\n" +
                         "Expected was:\n" +
-                        " [(key1, value1)]"
+                        "  [(key1, value1)]"
                 );
     }
 
@@ -126,13 +126,13 @@ class MapAssert_containsExactly_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
                         "\nExpecting:\n" +
-                        "  <LinkedHashMap((key1, value1), (key3, value3))>\n" +
+                        "  LinkedHashMap((key1, value1), (key3, value3))\n" +
                         "to contain exactly (and in same order):\n" +
-                        "  <List((key1, value1), (key2, value2))>\n" +
+                        "  List((key1, value1), (key2, value2))\n" +
                         "but some elements were not found:\n" +
-                        "  <LinkedHashMap((key2, value2))>\n" +
+                        "  LinkedHashMap((key2, value2))\n" +
                         "and others were not expected:\n" +
-                        "  <LinkedHashMap((key3, value3))>\n"
+                        "  LinkedHashMap((key3, value3))\n"
                 );
     }
 
@@ -146,9 +146,9 @@ class MapAssert_containsExactly_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
                         "\nActual and expected have the same elements but not in the same order, at index 0 actual element was:\n" +
-                        "  <(key1, value1)>\n" +
+                        "  (key1, value1)\n" +
                         "whereas expected element was:\n" +
-                        "  <(key3, value3)>\n"
+                        "  (key3, value3)\n"
                 );
     }
 }

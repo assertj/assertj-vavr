@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -70,6 +70,6 @@ class SeqAssert_satisfies_atIndex_Test {
                 () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(0))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n <\"a\">\nto start with:\n <\"something\">\n");
+                .hasMessage("\nExpecting:\n  \"a\"\nto start with:\n  \"something\"\n");
     }
 }

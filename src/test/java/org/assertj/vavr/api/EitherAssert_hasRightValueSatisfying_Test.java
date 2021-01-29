@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -54,7 +54,7 @@ class EitherAssert_hasRightValueSatisfying_Test {
                 () -> assertThat(actual).hasRightValueSatisfying(it -> assertThat(it).isEqualTo("something else"))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(format("%nExpecting:%n <\"something\">%nto be equal to:%n <\"something else\">%nbut was not."));
+                .hasMessage(format("%nexpected: \"something else\"%nbut was : \"something\""));
     }
 
     @Test

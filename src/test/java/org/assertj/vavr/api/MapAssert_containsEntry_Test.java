@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -62,6 +62,6 @@ class MapAssert_containsEntry_Test {
                 () -> assertThat(actual).containsEntry("key2", "value2")
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting HashMap:\n <HashMap((key1, value1), (key3, value3))>\nto contain:\n <[(key2, value2)]>\nbut could not find the following element(s):\n <HashSet((key2, value2))>\n");
+                .hasMessage("\nExpecting HashMap:\n  HashMap((key1, value1), (key3, value3))\nto contain:\n  [(key2, value2)]\nbut could not find the following element(s):\n  HashSet((key2, value2))\n");
     }
 }

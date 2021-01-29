@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -98,11 +98,11 @@ class MapAssert_containsOnly_Test {
         .hasMessage(
             "\n" +
                 "Expecting HashMap:\n" +
-                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
+                "  HashMap((key-1, value-1), (key-2, value-2))\n" +
                 "to contain only:\n" +
-                "  <HashMap((key-1, value-1))>\n" +
+                "  HashMap((key-1, value-1))\n" +
                 "but the following element(s) were unexpected:\n" +
-                "  <HashMap((key-2, value-2))>\n"
+                "  HashMap((key-2, value-2))\n"
         );
   }
 
@@ -117,13 +117,13 @@ class MapAssert_containsOnly_Test {
         .hasMessage(
             "\n" +
                 "Expecting HashMap:\n" +
-                "  <HashMap((key-1, value-1), (key-2, value-2))>\n" +
+                "  HashMap((key-1, value-1), (key-2, value-2))\n" +
                 "to contain only:\n" +
-                "  <HashMap((key-1, value-1), (key-3, value-3))>\n" +
+                "  HashMap((key-1, value-1), (key-3, value-3))\n" +
                 "element(s) not found:\n" +
-                "  <HashMap((key-3, value-3))>\n" +
+                "  HashMap((key-3, value-3))\n" +
                 "and element(s) not expected:\n" +
-                "  <HashMap((key-2, value-2))>\n"
+                "  HashMap((key-2, value-2))\n"
         );
   }
 }

@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -67,8 +67,8 @@ class MultiMapAssert_isNotEqualTo_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\n"
                         + "Expecting:\n"
-                        + " <HashMultimap[List]((key1, value2), (key2, value2))>\n"
+                        + "  HashMultimap[List]((key1, value2), (key2, value2))\n"
                         + "not to be equal to:\n"
-                        + " <HashMultimap[List]((key1, value2), (key2, value2))>\n");
+                        + "  HashMultimap[List]((key1, value2), (key2, value2))\n");
     }
 }

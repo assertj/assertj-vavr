@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2020 the original author or authors.
+ * Copyright 2017-2021 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -58,9 +58,9 @@ class MultimapAssert_hasEntrySatisfying_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <HashMultimap[List]()>\n" +
+                        "  HashMultimap[List]()\n" +
                         "to contain key:\n" +
-                        " <\"key1\">");
+                        "  \"key1\"");
     }
 
     @Test
@@ -83,9 +83,9 @@ class MultimapAssert_hasEntrySatisfying_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\nExpecting:\n" +
-                        " <HashMultimap[List]((key1, value1), (key2, value2))>\n" +
+                        "  HashMultimap[List]((key1, value1), (key2, value2))\n" +
                         "to contain key:\n" +
-                        " <\"key3\">");
+                        "  \"key3\"");
     }
 
     @Test
@@ -109,6 +109,6 @@ class MultimapAssert_hasEntrySatisfying_Test {
                 () -> assertThat(actual).hasEntrySatisfying("key1", notPassingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting elements:\n<Some(List(value1))>\n of \n<HashMultimap[List]((key1, value1), (key3, value3))>\n to be <TestCondition>");
+                .hasMessage("\nExpecting elements:\n  Some(List(value1))\nof\n  HashMultimap[List]((key1, value1), (key3, value3))\nto be TestCondition");
     }
 }
