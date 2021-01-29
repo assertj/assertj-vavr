@@ -54,7 +54,7 @@ class EitherAssert_hasRightValueSatisfying_Test {
                 () -> assertThat(actual).hasRightValueSatisfying(it -> assertThat(it).isEqualTo("something else"))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(format("%nExpecting:%n <\"something\">%nto be equal to:%n <\"something else\">%nbut was not."));
+                .hasMessage(format("%nexpected: \"something else\"%nbut was : \"something\""));
     }
 
     @Test

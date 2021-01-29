@@ -54,7 +54,7 @@ class TryAssert_hasValueSatisfying_Test {
                         .hasValueSatisfying(val -> assertThat(val).isBlank())
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting blank but was:<\"OK\">");
+                .hasMessage("\nExpecting blank but was: \"OK\"");
     }
 
     @Test

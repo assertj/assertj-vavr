@@ -50,7 +50,7 @@ class SeqAssert_containsExactly_inAnyOrder_Test {
                 () -> assertThat(actual).containsExactlyInAnyOrder(expectedInAnyOrder)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <List(something, else)>\nto contain exactly in any order:\n  <[\"other\", \"and\", \"else\", \"something\"]>\nbut could not find the following elements:\n  <[\"other\", \"and\"]>\n");
+                .hasMessage("\nExpecting:\n  List(something, else)\nto contain exactly in any order:\n  [\"other\", \"and\", \"else\", \"something\"]\nbut could not find the following elements:\n  [\"other\", \"and\"]\n");
     }
 
     @Test
@@ -61,7 +61,7 @@ class SeqAssert_containsExactly_inAnyOrder_Test {
                 () -> assertThat(actual).containsExactlyInAnyOrder(expectedInAnyOrder)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  <List(something, else, more)>\nto contain exactly in any order:\n  <[\"else\", \"something\"]>\nbut the following elements were unexpected:\n  <[\"more\"]>\n");
+                .hasMessage("\nExpecting:\n  List(something, else, more)\nto contain exactly in any order:\n  [\"else\", \"something\"]\nbut the following elements were unexpected:\n  [\"more\"]\n");
     }
 
     @Test

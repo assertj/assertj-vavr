@@ -58,6 +58,6 @@ class OptionAssert_hasValueSatisfying_Test {
                         .hasValueSatisfying(s -> assertThat(s).isEqualTo("something"))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n <\"something else\">\nto be equal to:\n <\"something\">\nbut was not.");
+                .hasMessage("\nexpected: \"something\"\nbut was : \"something else\"");
     }
 }

@@ -24,7 +24,7 @@ import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
 class OptionAssert_contains_usingValueComparator_Test {
 
-    private static Comparator<Foo> FOO_COMPARATOR = Comparator
+    private static final Comparator<Foo> FOO_COMPARATOR = Comparator
             .comparing(o -> o.getValue().toLowerCase());
 
     @Test

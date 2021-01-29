@@ -79,6 +79,6 @@ class TryAssert_containsSame_Test {
                 () -> assertThat(Try.failure(exception)).containsSame(exception)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting Try to contain:\n  <java.lang.NullPointerException>\nbut was empty.");
+                .hasMessageStartingWith("\nExpecting Try to contain:\n  <java.lang.NullPointerException");
     }
 }
