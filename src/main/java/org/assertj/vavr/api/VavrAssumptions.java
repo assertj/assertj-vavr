@@ -47,7 +47,7 @@ public class VavrAssumptions {
      * This NamingStrategy takes the original class's name and adds a suffix to distinguish it.
      * The default is ByteBuddy but for debugging purposes, it makes sense to add AssertJ as a name.
      */
-    private static ByteBuddy BYTE_BUDDY = new ByteBuddy().with(TypeValidation.DISABLED)
+    private static final ByteBuddy BYTE_BUDDY = new ByteBuddy().with(TypeValidation.DISABLED)
             .with(new AuxiliaryType.NamingStrategy.SuffixingRandom("Assertj$Assumptions"));
 
     private static final Implementation ASSUMPTION = MethodDelegation.to(AssumptionMethodInterceptor.class);
@@ -81,7 +81,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <LEFT, RIGHT> AbstractEitherAssert<?, LEFT, RIGHT> assumeThat(Either<LEFT, RIGHT> actual) {
+    public static <LEFT, RIGHT> EitherAssert<LEFT, RIGHT> assumeThat(Either<LEFT, RIGHT> actual) {
         return asAssumption(EitherAssert.class, Either.class, actual);
     }
 
@@ -94,7 +94,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <VALUE> AbstractLazyAssert<?, VALUE> assumeThat(Lazy<VALUE> actual) {
+    public static <VALUE> LazyAssert<VALUE> assumeThat(Lazy<VALUE> actual) {
         return asAssumption(LazyAssert.class, Lazy.class, actual);
     }
 
@@ -108,7 +108,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <K, V> AbstractMapAssert<?, ?, K, V> assumeThat(Map<K, V> actual) {
+    public static <K, V> MapAssert<K, V> assumeThat(Map<K, V> actual) {
         return asAssumption(MapAssert.class, Map.class, actual);
     }
 
@@ -122,7 +122,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <K, V> AbstractMultimapAssert<?, ?, K, V> assumeThat(Multimap<K, V> actual) {
+    public static <K, V> MultimapAssert<K, V> assumeThat(Multimap<K, V> actual) {
         return asAssumption(MultimapAssert.class, Multimap.class, actual);
     }
 
@@ -135,7 +135,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <VALUE> AbstractOptionAssert<?, VALUE> assumeThat(Option<VALUE> actual) {
+    public static <VALUE> OptionAssert<VALUE> assumeThat(Option<VALUE> actual) {
         return asAssumption(OptionAssert.class, Option.class, actual);
     }
 
@@ -148,7 +148,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <ELEMENT> AbstractSetAssert<?, ?, ELEMENT, ?> assumeThat(Set<ELEMENT> actual) {
+    public static <ELEMENT> SetAssert<ELEMENT> assumeThat(Set<ELEMENT> actual) {
         return asAssumption(SetAssert.class, Set.class, actual);
     }
 
@@ -161,7 +161,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <ELEMENT> AbstractSeqAssert<?, ?, ELEMENT, ?> assumeThat(Seq<ELEMENT> actual) {
+    public static <ELEMENT> SeqAssert<ELEMENT> assumeThat(Seq<ELEMENT> actual) {
         return asAssumption(SeqAssert.class, Seq.class, actual);
     }
 
@@ -174,7 +174,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <VALUE> AbstractTryAssert<?, VALUE> assumeThat(Try<VALUE> actual) {
+    public static <VALUE> TryAssert<VALUE> assumeThat(Try<VALUE> actual) {
         return asAssumption(TryAssert.class, Try.class, actual);
     }
 
@@ -188,7 +188,7 @@ public class VavrAssumptions {
      */
     @CheckReturnValue
     @SuppressWarnings("unchecked")
-    public static <INVALID, VALID> AbstractValidationAssert<?, INVALID, VALID> assumeThat(Validation<INVALID, VALID> actual) {
+    public static <INVALID, VALID> ValidationAssert<INVALID, VALID> assumeThat(Validation<INVALID, VALID> actual) {
         return asAssumption(ValidationAssert.class, Validation.class, actual);
     }
 
