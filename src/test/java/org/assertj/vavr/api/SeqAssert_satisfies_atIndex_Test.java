@@ -70,6 +70,6 @@ class SeqAssert_satisfies_atIndex_Test {
                 () -> assertThat(actual).satisfies(CONDITION_TO_SATISFY, atIndex(0))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  \"a\"\nto start with:\n  \"something\"\n");
+                .hasMessage("\nExpecting actual:\n  \"a\"\nto start with:\n  \"something\"\n");
     }
 }

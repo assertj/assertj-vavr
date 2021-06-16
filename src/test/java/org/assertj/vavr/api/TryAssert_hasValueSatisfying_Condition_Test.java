@@ -54,7 +54,7 @@ class TryAssert_hasValueSatisfying_Condition_Test {
                 () -> assertThat(Try.success("OK")).hasValueSatisfying(notPassingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n  \"OK\"\nto be TestCondition");
+                .hasMessage("\nExpecting actual:\n  \"OK\"\nto be TestCondition");
     }
 
     @Test

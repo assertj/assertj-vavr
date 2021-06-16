@@ -112,7 +112,7 @@ class MapAssert_containsExactly_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
-                        "\nExpecting:\n" +
+                        "\nExpecting actual:\n" +
                         "  LinkedHashMap((key1, value1), (key3, value3))\n" +
                         "to contain exactly (and in same order):\n" +
                         "  List((key1, value1), (key2, value2))\n" +

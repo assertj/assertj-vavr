@@ -55,7 +55,7 @@ class MapAssert_isNotEqualTo_Test {
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("\n"
-                        + "Expecting:\n"
+                        + "Expecting actual:\n"
                         + "  HashMap((key1, value2), (key2, value2))\n"
                         + "not to be equal to:\n"
                         + "  HashMap((key1, value2), (key2, value2))\n");

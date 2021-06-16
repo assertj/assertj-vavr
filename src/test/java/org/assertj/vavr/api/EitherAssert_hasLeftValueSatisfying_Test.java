@@ -54,7 +54,7 @@ class EitherAssert_hasLeftValueSatisfying_Test {
                 () -> assertThat(actual).hasLeftValueSatisfying(it -> assertThat(it).isEqualTo(24))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(format("%nexpected: 24%nbut was : 42"));
+                .hasMessage(format("%nexpected: 24%n but was: 42"));
     }
 
     @Test
