@@ -49,7 +49,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(2))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <Some(value)>%nto contain the instance (i.e. compared with ==):%n  <\"value\">%nbut did not."));
         assertThat(errors.get(3))
-                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: \"xyz\"%nbut was : \"value\""));
+                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: \"xyz\"%n but was: \"value\""));
         assertThat(errors.get(4))
                 .contains(format("java.lang.AssertionError: %nExpecting an Option to be empty but was <\"value\">."));
         assertThat(errors.get(5))
@@ -59,15 +59,15 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(7))
                 .contains(format("java.lang.AssertionError: %nExpecting Lazy to be evaluated, but it was not"));
         assertThat(errors.get(8))
-                .startsWith(format("java.lang.AssertionError: %nExpecting all elements of:%n  HashSet(Frodo, Bilbo)%nto satisfy given requirements, but these elements did not:%n%n\"Bilbo\"%nerror: %nExpecting:%n  \"Bilbo\"%nto start with:%n  \"F\"%n"));
+                .startsWith(format("java.lang.AssertionError: %nExpecting all elements of:%n  HashSet(Frodo, Bilbo)%nto satisfy given requirements, but these elements did not:%n%n\"Bilbo\"%nerror: %nExpecting actual:%n  \"Bilbo\"%nto start with:%n  \"F\"%n"));
         assertThat(errors.get(9))
                 .contains(format("java.lang.AssertionError: %nExpected size: 1 but was: 2 in:%nHashSet(Frodo, Bilbo)"));
         assertThat(errors.get(10))
                 .contains(format("java.lang.AssertionError: %nExpecting empty but was: HashSet(Frodo, Bilbo)"));
         assertThat(errors.get(11))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  \"Frodo\"%nat index 1 but found:%n  \"Bilbo\"%nin:%n  List(Frodo, Bilbo)%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nat index 1 but found:%n  \"Bilbo\"%nin:%n  List(Frodo, Bilbo)%n"));
         assertThat(errors.get(12))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  List(Frodo, Bilbo)%nnot to contain:%n  \"Frodo\"%nat index 0%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  List(Frodo, Bilbo)%nnot to contain:%n  \"Frodo\"%nat index 0%n"));
         assertThat(errors.get(13))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n <\"Bilbo\">%nat index <1> to have:%n <starts with some>%nin:%n <List(Frodo, Bilbo)>%n"));
         assertThat(errors.get(14))
@@ -75,7 +75,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(15))
                 .contains(format("java.lang.AssertionError: %nsequence is not sorted according to INSTANCE comparator because element 0:%n <\"Frodo\">%nis not less or equal than element 1:%n <\"Bilbo\">%nsequence was:%n <List(Frodo, Bilbo)>"));
         assertThat(errors.get(16))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  \"Frodo\"%nto start with:%n  \"some\"%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nto start with:%n  \"some\"%n"));
         assertThat(errors.get(17))
                 .contains(format("java.lang.AssertionError: %nExpecting a Validation to be invalid but was valid <\"ok\">."));
         assertThat(errors.get(18))
@@ -113,9 +113,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(34))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <Success(ok)>%nto contain the instance (i.e. compared with ==):%n  <\"not same\">%nbut did not."));
         assertThat(errors.get(35))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  \"ok\"%nto be starts with some"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  \"ok\"%nto be starts with some"));
         assertThat(errors.get(36))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  \"ok\"%nto start with:%n  \"some\"%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  \"ok\"%nto start with:%n  \"some\"%n"));
         assertThat(errors.get(37))
                 .startsWith(format("java.lang.AssertionError: %nExpecting Try to be a Success, but was a Failure:%n- exception class: java.lang.IllegalStateException%n- message: not ok"));
         assertThat(errors.get(38))
@@ -131,7 +131,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(43))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n <Right>%nto contain a value that is an instance of:%n <java.lang.String>%nbut did contain an instance of:%n <java.lang.Integer>"));
         assertThat(errors.get(44))
-                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: 0%nbut was : 2"));
+                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: 0%n but was: 2"));
         assertThat(errors.get(45))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <Right(2)>%nto contain:%n  <3> on the [RIGHT]%nbut did not."));
         assertThat(errors.get(46))
@@ -155,9 +155,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(55))
                 .contains(format("java.lang.AssertionError: %nExpecting empty but was: HashMap((Frodo, Baggins))"));
         assertThat(errors.get(56))
-                .startsWith(format("java.lang.AssertionError: %nExpecting:%n  \"Frodo\"%nto start with:%n  \"key\""));
+                .startsWith(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nto start with:%n  \"key\""));
         assertThat(errors.get(57))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
         assertThat(errors.get(58))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMap:%n  HashMap((Frodo, Baggins))%nto contain:%n  [(Peregrin, Took)]%nbut could not find the following element(s):%n  HashSet((Peregrin, Took))%n"));
         assertThat(errors.get(59))
@@ -165,25 +165,25 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(60))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMap:%n  HashMap((Frodo, Baggins))%nto contain:%n  [(Bilbo, Baggins)]%nbut could not find the following element(s):%n  HashSet((Bilbo, Baggins))%n"));
         assertThat(errors.get(61))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain exactly (and in same order):%n  List((Peregrin, Took))%nbut some elements were not found:%n  LinkedHashMap((Peregrin, Took))%nand others were not expected:%n  HashMap((Frodo, Baggins))%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain exactly (and in same order):%n  List((Peregrin, Took))%nbut some elements were not found:%n  LinkedHashMap((Peregrin, Took))%nand others were not expected:%n  HashMap((Frodo, Baggins))%n"));
         assertThat(errors.get(62))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain key:%n  \"Peregrin\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain key:%n  \"Peregrin\""));
         assertThat(errors.get(63))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain keys:%n  [\"Bilbo\", \"Peregrin\"]"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain keys:%n  [\"Bilbo\", \"Peregrin\"]"));
         assertThat(errors.get(64))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain value:%n  \"Took\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain value:%n  \"Took\""));
         assertThat(errors.get(65))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nto contain values:%n  [\"Took\", \"Brandybuck\"]"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain values:%n  [\"Took\", \"Brandybuck\"]"));
         assertThat(errors.get(66))
                 .contains(format("java.lang.AssertionError: %nExpecting%n  HashMap((Frodo, Baggins))%nnot to contain%n  [(Frodo, Baggins)]%nbut found%n  HashSet((Frodo, Baggins))%n"));
         assertThat(errors.get(67))
                 .contains(format("java.lang.AssertionError: %nExpecting%n  HashMap((Frodo, Baggins))%nnot to contain%n  [(Frodo, Baggins)]%nbut found%n  HashSet((Frodo, Baggins))%n"));
         assertThat(errors.get(68))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
         assertThat(errors.get(69))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
         assertThat(errors.get(70))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nnot to contain value:%n  \"Baggins\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nnot to contain value:%n  \"Baggins\""));
         assertThat(errors.get(71))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <HashMap((Frodo, Baggins))>%nnot to contain values:%n  <[\"Baggins\"]>"));
         assertThat(errors.get(72))
@@ -199,9 +199,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(77))
                 .contains(format("java.lang.AssertionError: %nExpecting size of:%n  HashMap((Frodo, Baggins))%nto be less than 1 but was 1"));
         assertThat(errors.get(78))
-                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: HashMap()%nbut was : HashMap((Frodo, Baggins))"));
+                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: HashMap()%n but was: HashMap((Frodo, Baggins))"));
         assertThat(errors.get(79))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMap((Frodo, Baggins))%nnot to be equal to:%n  HashMap((Frodo, Baggins))%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nnot to be equal to:%n  HashMap((Frodo, Baggins))%n"));
         assertThat(errors.get(80))
                 .contains(format("java.lang.AssertionError: %nExpecting null or empty but was: HashMap((Frodo, Baggins))"));
         assertThat(errors.get(81))
@@ -209,9 +209,9 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(82))
                 .contains(format("java.lang.AssertionError: %nExpecting empty but was: HashMultimap[List]((Frodo, Baggins))"));
         assertThat(errors.get(83))
-                .startsWith(format("java.lang.AssertionError: %nExpecting:%n  \"Frodo\"%nto start with:%n  \"key\""));
+                .startsWith(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nto start with:%n  \"key\""));
         assertThat(errors.get(84))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
         assertThat(errors.get(85))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMultimap:%n  HashMultimap[List]((Frodo, Baggins))%nto contain:%n  [(Peregrin, Took)]%nbut could not find the following element(s):%n  HashSet((Peregrin, Took))%n"));
         assertThat(errors.get(86))
@@ -219,25 +219,25 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(87))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMultimap:%n  HashMultimap[List]((Frodo, Baggins))%nto contain:%n  [(Bilbo, Baggins)]%nbut could not find the following element(s):%n  HashSet((Bilbo, Baggins))%n"));
         assertThat(errors.get(88))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain exactly (and in same order):%n  List((Peregrin, Took))%nbut some elements were not found:%n  LinkedHashMultimap[List]((Peregrin, Took))%nand others were not expected:%n  HashMultimap[List]((Frodo, Baggins))%n"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain exactly (and in same order):%n  List((Peregrin, Took))%nbut some elements were not found:%n  LinkedHashMultimap[List]((Peregrin, Took))%nand others were not expected:%n  HashMultimap[List]((Frodo, Baggins))%n"));
         assertThat(errors.get(89))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain key:%n  \"Peregrin\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain key:%n  \"Peregrin\""));
         assertThat(errors.get(90))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain keys:%n  [\"Bilbo\", \"Peregrin\"]"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain keys:%n  [\"Bilbo\", \"Peregrin\"]"));
         assertThat(errors.get(91))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain value:%n  \"Took\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain value:%n  \"Took\""));
         assertThat(errors.get(92))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nto contain values:%n  [\"Took\", \"Brandybuck\"]"));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain values:%n  [\"Took\", \"Brandybuck\"]"));
         assertThat(errors.get(93))
                 .contains(format("java.lang.AssertionError: %nExpecting%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain%n  [(Frodo, Baggins)]%nbut found%n  HashSet((Frodo, Baggins))%n"));
         assertThat(errors.get(94))
                 .contains(format("java.lang.AssertionError: %nExpecting%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain%n  [(Frodo, Baggins)]%nbut found%n  HashSet((Frodo, Baggins))%n"));
         assertThat(errors.get(95))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
         assertThat(errors.get(96))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain key:%n  \"Frodo\""));
         assertThat(errors.get(97))
-                .contains(format("java.lang.AssertionError: %nExpecting:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain value:%n  \"Baggins\""));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nnot to contain value:%n  \"Baggins\""));
         assertThat(errors.get(98))
                 .contains(format("java.lang.AssertionError: %nExpecting:%n  <HashMultimap[List]((Frodo, Baggins))>%nnot to contain values:%n  <[\"Baggins\"]>"));
         assertThat(errors.get(99))
@@ -253,7 +253,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(104))
                 .contains(format("java.lang.AssertionError: %nExpecting size of:%n  HashMultimap[List]((Frodo, Baggins))%nto be less than 1 but was 1"));
         assertThat(errors.get(105))
-                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: HashMap()%nbut was : HashMultimap[List]((Frodo, Baggins))"));
+                .contains(format("org.opentest4j.AssertionFailedError: %nexpected: HashMap()%n but was: HashMultimap[List]((Frodo, Baggins))"));
         assertThat(errors.get(106))
                 .contains(format("java.lang.AssertionError: %nExpecting null or empty but was: HashMultimap[List]((Frodo, Baggins))"));
     }

@@ -71,6 +71,6 @@ class MultimapAssert_allSatisfy_Test {
                 })
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nexpected: \"key1\"\nbut was : \"key2\"");
+                .hasMessage("\nexpected: \"key1\"\n but was: \"key2\"");
     }
 }

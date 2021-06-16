@@ -77,6 +77,6 @@ public class SetAssert_allSatisfy_Test {
                         "\"value2\"\n" +
                         "error: \n" +
                         "expected: \"value1\"\n" +
-                        "but was : \"value2\"");
+                        " but was: \"value2\"");
     }
 }

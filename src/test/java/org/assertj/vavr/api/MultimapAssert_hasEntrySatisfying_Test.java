@@ -44,7 +44,7 @@ class MultimapAssert_hasEntrySatisfying_Test {
                 () -> assertThat(actual).hasEntrySatisfying("key1", passingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n" +
+                .hasMessage("\nExpecting actual:\n" +
                         "  HashMultimap[List]()\n" +
                         "to contain key:\n" +
                         "  \"key1\"");
@@ -69,7 +69,7 @@ class MultimapAssert_hasEntrySatisfying_Test {
                 () -> assertThat(actual).hasEntrySatisfying("key3", passingCondition)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting:\n" +
+                .hasMessage("\nExpecting actual:\n" +
                         "  HashMultimap[List]((key1, value1), (key2, value2))\n" +
                         "to contain key:\n" +
                         "  \"key3\"");

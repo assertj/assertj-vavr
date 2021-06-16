@@ -70,7 +70,7 @@ class MultimapAssert_doesNotContainKeys_Test {
         .isInstanceOf(AssertionError.class)
         .hasMessage(
             "\n" +
-                "Expecting:\n" +
+                "Expecting actual:\n" +
                 "  HashMultimap[List]((key-1, value-1), (key-2, value-2))\n" +
                 "not to contain key:\n" +
                 "  \"key-1\""
