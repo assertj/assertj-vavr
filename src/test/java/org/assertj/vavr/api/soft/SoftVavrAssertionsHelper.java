@@ -157,7 +157,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(56))
                 .startsWith(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nto start with:%n  \"key\""));
         assertThat(errors.get(57))
-                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMap((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found"));
         assertThat(errors.get(58))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMap:%n  HashMap((Frodo, Baggins))%nto contain:%n  [(Peregrin, Took)]%nbut could not find the following element(s):%n  HashSet((Peregrin, Took))%n"));
         assertThat(errors.get(59))
@@ -211,7 +211,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(83))
                 .startsWith(format("java.lang.AssertionError: %nExpecting actual:%n  \"Frodo\"%nto start with:%n  \"key\""));
         assertThat(errors.get(84))
-                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found "));
+                .contains(format("java.lang.AssertionError: %nExpecting actual:%n  HashMultimap[List]((Frodo, Baggins))%nto contain at least one of the following elements:%n  [(Bilbo, Baggins)]%nbut none were found"));
         assertThat(errors.get(85))
                 .contains(format("java.lang.AssertionError: %nExpecting HashMultimap:%n  HashMultimap[List]((Frodo, Baggins))%nto contain:%n  [(Peregrin, Took)]%nbut could not find the following element(s):%n  HashSet((Peregrin, Took))%n"));
         assertThat(errors.get(86))

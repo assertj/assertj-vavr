@@ -91,6 +91,6 @@ class MultimapAssert_contains_anyOf_entries_Test {
                 () -> assertThat(actual).containsAnyOf(ENTRY2)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\nExpecting actual:\n  HashMultimap[List]((key1, value1), (key3, value3))\nto contain at least one of the following elements:\n  [(key2, value2)]\nbut none were found ");
+                .hasMessage("\nExpecting actual:\n  HashMultimap[List]((key1, value1), (key3, value3))\nto contain at least one of the following elements:\n  [(key2, value2)]\nbut none were found");
     }
 }
