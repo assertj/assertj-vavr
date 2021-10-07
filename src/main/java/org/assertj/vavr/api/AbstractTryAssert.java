@@ -40,7 +40,7 @@ import static org.assertj.vavr.api.TryShouldContainInstanceOf.shouldContainInsta
 abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VALUE> extends
         AbstractValueAssert<SELF, Try<VALUE>> {
 
-    private Conditions conditions = Conditions.instance();
+    private final Conditions conditions = Conditions.instance();
 
     private ComparisonStrategy tryValueComparisonStrategy;
 
@@ -90,6 +90,9 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      *
      * @param requirement to further assert on the object contained inside the {@link io.vavr.control.Try}.
      * @return this assertion object.
+     * @throws AssertionError       if the actual {@link Try} is null or empty.
+     * @throws NullPointerException if the given condition is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given condition.
      */
     public SELF hasValueSatisfying(Consumer<VALUE> requirement) {
         assertIsSuccess();
@@ -98,11 +101,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
     }
 
     /**
-     * Verifies that the actual {@link Try} contains a value which satisfies the given {@link Condition}.
+     * Verifies that the actual {@link io.vavr.control.Try} contains a value which satisfies the given {@link Condition}.
      *
      * @param condition the given condition.
      * @return this assertion object.
-     * @throws AssertionError       if the actual {@link Try} is null or empty.
+     * @throws AssertionError       if the actual {@link io.vavr.control.Try} is null or empty.
      * @throws NullPointerException if the given condition is {@code null}.
      * @throws AssertionError       if the actual value does not satisfy the given condition.
      */

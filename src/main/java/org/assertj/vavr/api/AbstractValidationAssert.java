@@ -12,15 +12,19 @@
  */
 package org.assertj.vavr.api;
 
+import io.vavr.control.Try;
 import io.vavr.control.Validation;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.Conditions;
 import org.assertj.core.internal.FieldByFieldComparator;
 import org.assertj.core.internal.StandardComparisonStrategy;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.util.Comparator;
+import java.util.function.Consumer;
 
 import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
@@ -39,6 +43,8 @@ import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldConta
  */
 abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SELF, INVALID, VALID>, INVALID, VALID> extends
         AbstractValueAssert<SELF, Validation<INVALID, VALID>> {
+
+    private final Conditions conditions = Conditions.instance();
 
     private ComparisonStrategy validationValueComparisonStrategy;
 
@@ -146,6 +152,70 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
         assertIsInvalid();
         if (!clazz.isInstance(actual.getError()))
             throwAssertionError(shouldContainInvalidInstanceOf(actual, clazz));
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Validation} contains a valid value and gives this value to the given
+     * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the
+     * containing object, as further requirement(s) for the value.
+     *
+     * @param requirement to further assert on the object contained inside the {@link io.vavr.control.Validation}.
+     * @return this assertion object.
+     * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or invalid.
+     * @throws NullPointerException if the given condition is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     */
+    public SELF containsValidSatisfying(Consumer<VALID> requirement) {
+        assertIsValid();
+        requirement.accept(actual.get());
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Validation} contains a valid value which satisfies the given {@link Condition}.
+     *
+     * @param condition the given condition.
+     * @return this assertion object.
+     * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or invalid.
+     * @throws NullPointerException if the given condition is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     */
+    public SELF containsValidSatisfying(Condition<? super VALID> condition) {
+        assertIsValid();
+        conditions.assertIs(info, actual.get(), condition);
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Validation} contains an invalid value and gives this value to the given
+     * {@link java.util.function.Consumer} for further assertions. Should be used as a way of deeper asserting on the
+     * containing object, as further requirement(s) for the value.
+     *
+     * @param requirement to further assert on the object contained inside the {@link io.vavr.control.Validation}.
+     * @return this assertion object.
+     * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or valid.
+     * @throws NullPointerException if the given condition is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     */
+    public SELF containsInvalidSatisfying(Consumer<INVALID> requirement) {
+        assertIsInvalid();
+        requirement.accept(actual.getError());
+        return myself;
+    }
+
+    /**
+     * Verifies that the actual {@link io.vavr.control.Validation} contains an invalid value which satisfies the given {@link Condition}.
+     *
+     * @param condition the given condition.
+     * @return this assertion object.
+     * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or valid.
+     * @throws NullPointerException if the given condition is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     */
+    public SELF containsInvalidSatisfying(Condition<? super INVALID> condition) {
+        assertIsInvalid();
+        conditions.assertIs(info, actual.getError(), condition);
         return myself;
     }
 
