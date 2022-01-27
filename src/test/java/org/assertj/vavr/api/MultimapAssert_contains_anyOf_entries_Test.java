@@ -53,7 +53,7 @@ class MultimapAssert_contains_anyOf_entries_Test {
                 () -> assertThat(actual).containsAnyOf(entries)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("actual is not empty");
+                .hasMessage("actual is not empty while group of values to look for is.");
     }
 
     @Test
