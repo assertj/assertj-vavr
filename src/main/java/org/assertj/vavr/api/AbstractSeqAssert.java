@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ShouldBeSorted.shouldHaveComparableElementsAccordingToGivenComparator;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
@@ -325,7 +326,7 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
 
     private void assertConditionIsMetAtIndex(Condition<? super ELEMENT> condition, Index index, Runnable errorProvider) {
         isNotNull();
-        checkNotNull(condition, "The condition to evaluate should not be null");
+        requireNonNull(condition, "The condition to evaluate should not be null");
 
         assertNotEmpty();
         assertIndexIsValid(index);
