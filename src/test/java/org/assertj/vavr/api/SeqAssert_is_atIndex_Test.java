@@ -15,26 +15,30 @@ package org.assertj.vavr.api;
 import io.vavr.collection.Array;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
+import static org.assertj.vavr.api.SeqShouldBeAtIndex.shouldBeAtIndex;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class SeqAssert_contains_atIndex_Test {
+class SeqAssert_is_atIndex_Test {
+
+    private final Condition<String> condition = new Condition<>(str -> str.startsWith("some"), "starts with some");
 
     @Test
-    void should_pass_if_List_contains_expected_value_at_given_index() {
+    void should_pass_if_element_on_List_at_given_index_is_value_fulfilling_provided_condition() {
         final String value = "something";
-        assertThat(Array.of(value)).contains("something", atIndex(0));
+        assertThat(Array.of(value)).is(condition, atIndex(0));
     }
 
     @Test
     void should_fail_when_List_is_null() {
         assertThatThrownBy(
-                () -> assertThat((List<String>) null).contains("something", atIndex(0))
+                () -> assertThat((List<String>) null).is(condition, atIndex(0))
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(actualIsNull());
@@ -44,29 +48,29 @@ class SeqAssert_contains_atIndex_Test {
     void should_fail_if_given_index_is_greater_than_list_size() {
         final Seq<String> actual = Array.of("something");
         assertThatThrownBy(
-                () -> assertThat(actual).contains(null, atIndex(2))
+                () -> assertThat(actual).is(condition, atIndex(2))
         )
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("Index should be between <0> and <0> (inclusive) but was:\n <2>");
     }
 
     @Test
-    void should_fail_when_expected_values_are_null() {
+    void should_fail_when_provided_condition_is_null() {
         final Seq<String> actual = Array.of("something");
         assertThatThrownBy(
-                () -> assertThat(actual).contains(null, atIndex(0))
+                () -> assertThat(actual).is(null, atIndex(0))
         )
-                .isInstanceOf(AssertionError.class)
-                .hasMessage(shouldContainAtIndex(actual, null, atIndex(0), "something").create());
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("The condition to evaluate should not be null");
     }
 
     @Test
-    void should_fail_if_List_contains_no_expected_element_at_given_index() {
+    void should_fail_if_element_on_List_at_given_index_is_not_value_fulfilling_provided_condition() {
         Seq<String> actual = Array.of("a", "b", "c");
         assertThatThrownBy(
-                () -> assertThat(actual).contains("a", atIndex(2))
+                () -> assertThat(actual).is(condition, atIndex(2))
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage(shouldContainAtIndex(actual, "a", atIndex(2), "c").create());
+                .hasMessage(shouldBeAtIndex(actual, condition, atIndex(2), "c").create());
     }
 }

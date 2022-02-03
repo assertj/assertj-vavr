@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2021 the original author or authors.
+ * Copyright 2017-2022 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ShouldBeSorted.shouldHaveComparableElementsAccordingToGivenComparator;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
@@ -325,7 +326,7 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
 
     private void assertConditionIsMetAtIndex(Condition<? super ELEMENT> condition, Index index, Runnable errorProvider) {
         isNotNull();
-        checkNotNull(condition, "The condition to evaluate should not be null");
+        requireNonNull(condition, "The condition to evaluate should not be null");
 
         assertNotEmpty();
         assertIndexIsValid(index);
