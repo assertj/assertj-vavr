@@ -13,8 +13,8 @@
 package org.assertj.vavr.api;
 
 import io.vavr.control.Try;
-import org.assertj.core.internal.bytebuddy.dynamic.loading.ClassInjector;
-import org.assertj.core.internal.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.dynamic.loading.ClassInjector;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
