@@ -19,6 +19,7 @@ import org.assertj.core.api.IndexedObjectEnumerableAssert;
 import org.assertj.core.data.Index;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
+import org.assertj.core.internal.Iterables;
 import org.assertj.core.internal.StandardComparisonStrategy;
 import org.assertj.core.util.CheckReturnValue;
 
@@ -67,6 +68,7 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
      */
     @CheckReturnValue
     public SELF usingElementComparator(Comparator<? super ELEMENT> customComparator) {
+        this.iterables = new Iterables(new ComparatorBasedComparisonStrategy(customComparator));
         seqElementComparisonStrategy = new ComparatorBasedComparisonStrategy(customComparator);
         return myself;
     }
