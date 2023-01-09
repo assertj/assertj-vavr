@@ -33,6 +33,15 @@ class SeqAssert_containsExactly_inAnyOrder_Test {
     }
 
     @Test
+    void should_pass_if_List_contains_exactly_elements_in_any_order_using_element_comparator() {
+        final Set<String> expectedInAnyOrder = HashSet.of("other", "and", "else", "something");
+        final List<String> uppercaseList = expectedInAnyOrder.map(String::toUpperCase).toList().reverse();
+        assertThat(uppercaseList)
+                .usingElementComparator(String::compareToIgnoreCase)
+                .containsExactlyInAnyOrder(expectedInAnyOrder);
+    }
+
+    @Test
     void should_fail_when_List_is_null() {
         final Set<String> expectedInAnyOrder = HashSet.of("other", "and", "else", "something");
         assertThatThrownBy(

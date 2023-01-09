@@ -44,7 +44,7 @@ public class JUnitSoftVavrAssertionsFailureTest {
         // THEN
         List<Throwable> failures = multipleFailuresError.getFailures();
         assertThat(failures).hasSize(2);
-        assertThat(failures.get(0)).hasMessageStartingWith(format("[contains] %nExpecting:%n  <Left(something)>%nto contain:%n  <\"else\">%nbut did not."));
+        assertThat(failures.get(0)).hasMessageStartingWith(format("[contains] %nExpecting:%n  <Left(something)>%nto contain:%n  <\"else\"> on the [LEFT]%nbut did not."));
         assertThat(failures.get(1)).hasMessageStartingWith(format("[instance] %nExpecting:%n" +
                 " <Left>%n" +
                 "to contain a value that is an instance of:%n" +
