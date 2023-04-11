@@ -12,9 +12,7 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.control.Try;
 import io.vavr.control.Validation;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.core.internal.ComparatorBasedComparisonStrategy;
 import org.assertj.core.internal.ComparisonStrategy;
@@ -34,11 +32,11 @@ import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldConta
 import static org.assertj.vavr.api.ValidationShouldContainInstanceOf.shouldContainValidInstanceOf;
 
 /**
- * Assertions for {@link Validation}.
+ * Assertions for {@link io.vavr.control.Validation}.
  *
  * @param <SELF>    the "self" type of this assertion class.
- * @param <INVALID> type of the value in the case of the invalid {@link Validation}.
- * @param <VALID>   type of the value in the case of the valid {@link Validation}.
+ * @param <INVALID> type of the value in the case of the invalid {@link io.vavr.control.Validation}.
+ * @param <VALID>   type of the value in the case of the valid {@link io.vavr.control.Validation}.
  * @author Michał Chmielarz
  */
 abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SELF, INVALID, VALID>, INVALID, VALID> extends
@@ -54,7 +52,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link Validation} is invalid.
+     * Verifies that the actual {@link io.vavr.control.Validation} is invalid.
      *
      * @return this assertion object.
      */
@@ -64,7 +62,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link Validation} is valid.
+     * Verifies that the actual {@link io.vavr.control.Validation} is valid.
      *
      * @return this assertion object.
      */
@@ -74,10 +72,10 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link Validation} is {@link Validation.Valid}
+     * Verifies that the actual {@link io.vavr.control.Validation} is {@link io.vavr.control.Validation.Valid}
      * and contains the given value.
      *
-     * @param expectedValue the expected value inside the {@link Validation}.
+     * @param expectedValue the expected value inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsValid(VALID expectedValue) {
@@ -88,10 +86,10 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link Validation} is {@link Validation.Invalid}
+     * Verifies that the actual {@link io.vavr.control.Validation} is {@link io.vavr.control.Validation.Invalid}
      * and contains the given error value.
      *
-     * @param expectedErrorValue the expected error value inside the {@link Validation}.
+     * @param expectedErrorValue the expected error value inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsInvalid(INVALID expectedErrorValue) {
@@ -103,9 +101,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual valid {@link Validation} contains the instance given as an argument.
+     * Verifies that the actual valid {@link io.vavr.control.Validation} contains the instance given as an argument.
      *
-     * @param expectedValue the expected value inside the {@link Validation}.
+     * @param expectedValue the expected value inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsValidSame(VALID expectedValue) {
@@ -116,9 +114,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual invalid {@link Validation} contains the instance given as an argument.
+     * Verifies that the actual invalid {@link io.vavr.control.Validation} contains the instance given as an argument.
      *
-     * @param expectedErrorValue the expected value inside the {@link Validation}.
+     * @param expectedErrorValue the expected value inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsInvalidSame(VALID expectedErrorValue) {
@@ -130,9 +128,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual valid {@link Validation} contains a value that is an instance of the argument.
+     * Verifies that the actual valid {@link io.vavr.control.Validation} contains a value that is an instance of the argument.
      *
-     * @param clazz the expected class of the value inside the valid {@link Validation}.
+     * @param clazz the expected class of the value inside the valid {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsValidInstanceOf(Class<?> clazz) {
@@ -143,9 +141,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual invalid {@link Validation} contains a value that is an instance of the argument.
+     * Verifies that the actual invalid {@link io.vavr.control.Validation} contains a value that is an instance of the argument.
      *
-     * @param clazz the expected class of the value inside the invalid {@link Validation}.
+     * @param clazz the expected class of the value inside the invalid {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
     public SELF containsInvalidInstanceOf(Class<?> clazz) {
@@ -163,8 +161,8 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      * @param requirement to further assert on the object contained inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or invalid.
-     * @throws NullPointerException if the given condition is {@code null}.
-     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     * @throws NullPointerException if the given requirement is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given requirement.
      */
     public SELF containsValidSatisfying(Consumer<VALID> requirement) {
         assertIsValid();
@@ -173,7 +171,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Validation} contains a valid value which satisfies the given {@link Condition}.
+     * Verifies that the actual {@link io.vavr.control.Validation} contains a valid value which satisfies the given {@link org.assertj.core.api.Condition}.
      *
      * @param condition the given condition.
      * @return this assertion object.
@@ -195,8 +193,8 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      * @param requirement to further assert on the object contained inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      * @throws AssertionError       if the actual {@link io.vavr.control.Validation} is null or valid.
-     * @throws NullPointerException if the given condition is {@code null}.
-     * @throws AssertionError       if the actual value does not satisfy the given condition.
+     * @throws NullPointerException if the given requirement is {@code null}.
+     * @throws AssertionError       if the actual value does not satisfy the given requirement.
      */
     public SELF containsInvalidSatisfying(Consumer<INVALID> requirement) {
         assertIsInvalid();
@@ -205,7 +203,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Verifies that the actual {@link io.vavr.control.Validation} contains an invalid value which satisfies the given {@link Condition}.
+     * Verifies that the actual {@link io.vavr.control.Validation} contains an invalid value which satisfies the given {@link org.assertj.core.api.Condition}.
      *
      * @param condition the given condition.
      * @return this assertion object.
@@ -221,11 +219,11 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
 
     /**
      * Use given custom comparator instead of relying on actual type A <code>equals</code> method to compare the
-     * {@link Validation} value's object for incoming assertion checks.
+     * {@link io.vavr.control.Validation} value's object for incoming assertion checks.
      *
      * @param customComparator the comparator to use for incoming assertion checks.
      * @return {@code this} assertion object.
-     * @throws NullPointerException if the given comparator is {@code null}.
+     * @throws NullPointerException if the given customComparator is {@code null}.
      */
     @CheckReturnValue
     public SELF usingValueComparator(Comparator<?> customComparator) {
@@ -235,9 +233,9 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
 
     /**
      * Use field/property by field/property comparison (including inherited fields/properties) instead of relying on
-     * actual type A <code>equals</code> method to compare the {@link Validation} value's object for incoming assertion
+     * actual type A <code>equals</code> method to compare the {@link io.vavr.control.Validation} value's object for incoming assertion
      * checks. Private fields are included but this can be disabled using
-     * {@link Assertions#setAllowExtractingPrivateFields(boolean)}.
+     * {@link org.assertj.core.api.Assertions#setAllowExtractingPrivateFields(boolean)}.
      *
      * @return {@code this} assertion object.
      */
@@ -247,7 +245,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
     }
 
     /**
-     * Revert to standard comparison for incoming assertion {@link Validation} value checks.
+     * Revert to standard comparison for incoming assertion {@link io.vavr.control.Validation} value checks.
      * <p>
      * This method should be used to disable a custom comparison strategy set by calling
      * {@link #usingValueComparator(Comparator)}.
