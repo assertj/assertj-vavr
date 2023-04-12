@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2023 the original author or authors.
+ * Copyright 2017-2022 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -23,7 +23,6 @@ import io.vavr.control.Try;
 import io.vavr.control.Validation;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.TypeCache;
-import net.bytebuddy.TypeCache.SimpleKey;
 import net.bytebuddy.dynamic.scaffold.TypeValidation;
 import net.bytebuddy.implementation.Implementation;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -52,7 +51,7 @@ public class VavrAssumptions {
 
     private static final Implementation ASSUMPTION = MethodDelegation.to(AssumptionMethodInterceptor.class);
 
-    private static final TypeCache<SimpleKey> CACHE = new TypeCache.WithInlineExpunction<>(TypeCache.Sort.SOFT);
+    private static final TypeCache<TypeCache.SimpleKey> CACHE = new TypeCache.WithInlineExpunction<>(TypeCache.Sort.SOFT);
 
     private static final class AssumptionMethodInterceptor {
 
@@ -212,7 +211,7 @@ public class VavrAssumptions {
 
     @SuppressWarnings("unchecked")
     private static <ASSERTION> Class<? extends ASSERTION> createAssumptionClass(Class<ASSERTION> assertClass) {
-        SimpleKey cacheKey = new SimpleKey(assertClass);
+        TypeCache.SimpleKey cacheKey = new TypeCache.SimpleKey(assertClass);
         return (Class<ASSERTION>) CACHE.findOrInsert(VavrAssumptions.class.getClassLoader(),
                 cacheKey,
                 () -> generateAssumptionClass(assertClass));

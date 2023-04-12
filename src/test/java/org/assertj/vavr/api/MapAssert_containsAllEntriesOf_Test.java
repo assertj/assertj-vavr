@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-@SuppressWarnings("unchecked")
 class MapAssert_containsAllEntriesOf_Test {
 
     private static final Tuple2<String, String> ENTRY1 = Tuple.of("key1", "value1");
@@ -51,7 +50,7 @@ class MapAssert_containsAllEntriesOf_Test {
                 () -> assertThat(actual).containsAllEntriesOf(List.empty())
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("actual is not empty");
+                .hasMessage("actual is not empty while group of values to look for is.");
     }
 
     @Test
