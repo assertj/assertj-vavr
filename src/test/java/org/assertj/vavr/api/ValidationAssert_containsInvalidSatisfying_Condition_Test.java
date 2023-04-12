@@ -16,7 +16,6 @@ import io.vavr.control.Validation;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.ValidationShouldBeInvalid.shouldBeInvalid;
