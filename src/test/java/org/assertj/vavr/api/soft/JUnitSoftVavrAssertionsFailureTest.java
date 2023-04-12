@@ -26,7 +26,6 @@ import static org.mockito.Mockito.mock;
 
 public class JUnitSoftVavrAssertionsFailureTest {
 
-//    @Rule
     public final JUnitSoftVavrAssertions softly = new JUnitSoftVavrAssertions();
 
     @Test
