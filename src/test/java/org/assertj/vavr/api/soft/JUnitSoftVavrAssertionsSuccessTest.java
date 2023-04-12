@@ -15,15 +15,6 @@ package org.assertj.vavr.api.soft;
 import io.vavr.control.Either;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.model.Statement;
-import org.opentest4j.MultipleFailuresError;
-
-import java.util.List;
-
-import static java.lang.String.format;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
-import static org.mockito.Mockito.mock;
 
 public class JUnitSoftVavrAssertionsSuccessTest {
 
