@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2022 the original author or authors.
+ * Copyright 2017-2023 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -21,22 +21,23 @@ import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.TypeCache;
-import net.bytebuddy.dynamic.scaffold.TypeValidation;
-import net.bytebuddy.implementation.Implementation;
-import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.SuperCall;
-import net.bytebuddy.implementation.bind.annotation.This;
+import org.assertj.core.internal.bytebuddy.ByteBuddy;
+import org.assertj.core.internal.bytebuddy.TypeCache;
+import org.assertj.core.internal.bytebuddy.TypeCache.SimpleKey;
+import org.assertj.core.internal.bytebuddy.dynamic.scaffold.TypeValidation;
+import org.assertj.core.internal.bytebuddy.implementation.Implementation;
+import org.assertj.core.internal.bytebuddy.implementation.MethodDelegation;
+import org.assertj.core.internal.bytebuddy.implementation.auxiliary.AuxiliaryType;
+import org.assertj.core.internal.bytebuddy.implementation.bind.annotation.RuntimeType;
+import org.assertj.core.internal.bytebuddy.implementation.bind.annotation.SuperCall;
+import org.assertj.core.internal.bytebuddy.implementation.bind.annotation.This;
 import org.assertj.core.util.CheckReturnValue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
-import static net.bytebuddy.matcher.ElementMatchers.any;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.any;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.vavr.api.ClassLoadingStrategyFactory.classLoadingStrategy;
 
@@ -51,7 +52,7 @@ public class VavrAssumptions {
 
     private static final Implementation ASSUMPTION = MethodDelegation.to(AssumptionMethodInterceptor.class);
 
-    private static final TypeCache<TypeCache.SimpleKey> CACHE = new TypeCache.WithInlineExpunction<>(TypeCache.Sort.SOFT);
+    private static final TypeCache<SimpleKey> CACHE = new TypeCache.WithInlineExpunction<>(TypeCache.Sort.SOFT);
 
     private static final class AssumptionMethodInterceptor {
 
@@ -211,7 +212,7 @@ public class VavrAssumptions {
 
     @SuppressWarnings("unchecked")
     private static <ASSERTION> Class<? extends ASSERTION> createAssumptionClass(Class<ASSERTION> assertClass) {
-        TypeCache.SimpleKey cacheKey = new TypeCache.SimpleKey(assertClass);
+        SimpleKey cacheKey = new SimpleKey(assertClass);
         return (Class<ASSERTION>) CACHE.findOrInsert(VavrAssumptions.class.getClassLoader(),
                 cacheKey,
                 () -> generateAssumptionClass(assertClass));
