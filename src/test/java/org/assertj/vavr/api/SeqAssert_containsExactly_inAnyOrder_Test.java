@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2022 the original author or authors.
+ * Copyright 2017-2023 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -29,15 +29,6 @@ class SeqAssert_containsExactly_inAnyOrder_Test {
     void should_pass_if_List_contains_exactly_elements_in_any_order() {
         final Set<String> expectedInAnyOrder = HashSet.of("other", "and", "else", "something");
         assertThat(List.of("something", "else", "and", "other"))
-                .containsExactlyInAnyOrder(expectedInAnyOrder);
-    }
-
-    @Test
-    void should_pass_if_List_contains_exactly_elements_in_any_order_using_element_comparator() {
-        final Set<String> expectedInAnyOrder = HashSet.of("other", "and", "else", "something");
-        final List<String> uppercaseList = expectedInAnyOrder.map(String::toUpperCase).toList().reverse();
-        assertThat(uppercaseList)
-                .usingElementComparator(String::compareToIgnoreCase)
                 .containsExactlyInAnyOrder(expectedInAnyOrder);
     }
 

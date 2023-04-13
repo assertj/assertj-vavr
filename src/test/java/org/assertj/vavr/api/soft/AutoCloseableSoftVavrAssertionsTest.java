@@ -8,34 +8,17 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2022 the original author or authors.
+ * Copyright 2017-2023 the original author or authors.
  */
 package org.assertj.vavr.api.soft;
 
 import io.vavr.Lazy;
-import io.vavr.Tuple;
-import io.vavr.collection.HashMap;
-import io.vavr.collection.HashMultimap;
-import io.vavr.collection.HashSet;
 import io.vavr.collection.List;
-import io.vavr.collection.Map;
-import io.vavr.collection.Multimap;
-import io.vavr.collection.Seq;
-import io.vavr.collection.Set;
-import io.vavr.control.Either;
 import io.vavr.control.Option;
-import io.vavr.control.Try;
-import io.vavr.control.Validation;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Condition;
-import org.assertj.vavr.api.VavrAssertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.MultipleFailuresError;
 
-import static java.lang.String.format;
-import static java.util.Comparator.naturalOrder;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.vavr.api.soft.SoftVavrAssertionsHelper.runSoftlyAssertions;
 import static org.assertj.vavr.api.soft.SoftVavrAssertionsHelper.verifyErrors;
 import static org.junit.jupiter.api.Assertions.fail;

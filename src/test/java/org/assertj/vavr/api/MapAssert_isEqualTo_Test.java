@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2022 the original author or authors.
+ * Copyright 2017-2023 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -27,7 +27,7 @@ class MapAssert_isEqualTo_Test {
     @Test
     void should_pass_if_Map_is_equal_to() {
         assertThat(HashMap.of(
-                "key1", "value2", 
+                "key1", "value2",
                 "key2", "value2"))
                 .isEqualTo(HashMap.of(
                         "key1", "value2",
