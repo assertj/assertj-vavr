@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>assertj-vavr</artifactId>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>0.4.3-SNAPSHOT</version>
 
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
