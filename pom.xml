@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>assertj-vavr</artifactId>
-    <version>0.4.3-SNAPSHOT</version>
+    <version>0.4.3</version>
 
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
@@ -27,7 +27,7 @@
         <developerConnection>scm:git:git@github.com:assertj/assertj-vavr.git</developerConnection>
         <connection>scm:git:git@github.com:assertj/assertj-vavr.git</connection>
         <url>git@github.com:assertj/assertj-vavr</url>
-        <tag>HEAD</tag>
+        <tag>v0.4.3</tag>
     </scm>
 
     <url>https://github.com/assertj/assertj-vavr</url>
