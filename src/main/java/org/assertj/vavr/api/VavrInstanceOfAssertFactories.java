@@ -21,8 +21,15 @@ import io.vavr.control.Either;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import io.vavr.control.Validation;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.InstanceOfAssertFactory;
 
+/**
+ * Static {@link VavrInstanceOfAssertFactories VavrInstanceOfAssertFactories} for {@link Assert#asInstanceOf(InstanceOfAssertFactory)}.
+ *
+ * @author Eduard Dudar
+ * @since 0.4.4
+ */
 @SuppressWarnings({
         "rawtypes", // using Class instance
         "unused", // parameter needed for type inference.
