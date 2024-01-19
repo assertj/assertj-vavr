@@ -27,7 +27,7 @@ import org.assertj.core.util.CheckReturnValue;
  * @author Grzegorz Piwowarek
  */
 @CheckReturnValue
-public final class VavrAssertions {
+public final class VavrAssertions implements VavrInstanceOfAssertFactories {
 
     private VavrAssertions() {
     }
