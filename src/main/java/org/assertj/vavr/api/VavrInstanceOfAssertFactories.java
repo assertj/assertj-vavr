@@ -28,7 +28,7 @@ import org.assertj.core.api.InstanceOfAssertFactory;
  * Static {@link VavrInstanceOfAssertFactories VavrInstanceOfAssertFactories} for {@link Assert#asInstanceOf(InstanceOfAssertFactory)}.
  *
  * @author Eduard Dudar
- * @since 0.4.4
+ * @since 0.5.0
  */
 @SuppressWarnings({
         "rawtypes", // using Class instance
