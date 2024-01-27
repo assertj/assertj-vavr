@@ -52,7 +52,10 @@ class MultimapAssert_contains_entries_Test {
                 () -> assertThat(actual).contains(entries)
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("actual is not empty while group of values to look for is.");
+                .hasMessage("\n" +
+                        "Actual:\n" +
+                        "  HashMultimap[List]((key1, value1), (key3, value3))\n" +
+                        "is not empty while group of values to look for is.");
     }
 
     @Test
