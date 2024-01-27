@@ -25,6 +25,8 @@ import org.assertj.core.internal.Objects;
 import java.util.function.Predicate;
 
 import static io.vavr.Predicates.not;
+import static java.util.Objects.deepEquals;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ElementsShouldBe.elementsShouldBe;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainAnyOf.shouldContainAnyOf;
@@ -41,9 +43,7 @@ import static org.assertj.core.error.ShouldNotContainValue.shouldNotContainValue
 import static org.assertj.core.internal.Arrays.assertIsArray;
 import static org.assertj.core.internal.CommonValidations.failIfEmptySinceActualIsNotEmpty;
 import static org.assertj.core.internal.CommonValidations.hasSameSizeAsCheck;
-import static org.assertj.core.util.Objects.areEqual;
 import static org.assertj.core.util.Preconditions.checkArgument;
-import static org.assertj.core.util.Preconditions.checkNotNull;
 import static org.assertj.vavr.api.ShouldNotContainValues.shouldNotContainValues;
 
 public final class Multimaps {
@@ -91,7 +91,7 @@ public final class Multimaps {
                                            Tuple2<K, V>[] entries) {
         doCommonContainsCheck(info, actual, entries);
         if (actual.isEmpty() && entries.length == 0) return;
-        failIfEmptySinceActualIsNotEmpty(entries);
+        failIfEmptySinceActualIsNotEmpty(info, failures, actual, entries);
         for (Tuple2<? extends K, ? extends V> entry : entries) {
             if (containsEntry(actual, entry)) return;
         }
@@ -116,7 +116,7 @@ public final class Multimaps {
                                       Tuple2<K, V>[] entries) {
         doCommonContainsCheck(info, actual, entries);
         if (actual.isEmpty() && entries.length == 0) return;
-        failIfEmptySinceActualIsNotEmpty(entries);
+        failIfEmptySinceActualIsNotEmpty(info, failures, actual, entries);
         final Set<Tuple2<K, V>> notFound = Array.of(entries).filter(entryNotPresentIn(actual)).toSet();
         if (isNotEmpty(notFound)) {
             throw failures.failure(info, shouldContain(actual, entries, notFound));
@@ -214,7 +214,7 @@ public final class Multimaps {
                                             Tuple2<K, V>[] entries) {
         failIfNullOrEmpty(entries);
         assertNotNull(info, actual);
-        failIfEmptySinceActualIsNotEmpty(entries);
+        failIfEmptySinceActualIsNotEmpty(info, failures, actual, entries);
         final Set<Tuple2<K, V>> found = Array.of(entries).filter(actual::contains).toSet();
         if (isNotEmpty(found)) {
             throw failures.failure(info, shouldNotContain(actual, entries, found));
@@ -327,7 +327,7 @@ public final class Multimaps {
     public <K, V> void assertContainsValues(AssertionInfo info, Multimap<K, V> actual,
                                             @SuppressWarnings("unchecked") V... values) {
         assertNotNull(info, actual);
-        checkNotNull(values, "The array of values to look for should not be null");
+        requireNonNull(values, "The array of values to look for should not be null");
         if (actual.isEmpty() && values.length == 0) return;
 
         Set<V> expected = HashSet.of(values);
@@ -366,7 +366,7 @@ public final class Multimaps {
     public <K, V> void assertDoesNotContainValues(AssertionInfo info, Multimap<K, V> actual,
                                                   @SuppressWarnings("unchecked") V... values) {
         assertNotNull(info, actual);
-        checkNotNull(values, "The array of values to look for should not be null");
+        requireNonNull(values, "The array of values to look for should not be null");
         if (actual.isEmpty() && values.length == 0) return;
 
         Set<V> expected = HashSet.of(values);
@@ -423,12 +423,12 @@ public final class Multimaps {
     }
 
     private <K, V> boolean containsEntry(Multimap<K, V> actual, Tuple2<? extends K, ? extends V> entry) {
-        checkNotNull(entry, "Entry to look for should not be null");
+        requireNonNull(entry, "Entry to look for should not be null");
         return actual.containsKey(entry._1) && actual.get(entry._1).get().contains(entry._2);
     }
 
     private static <K> boolean areNotEqual(K actualKey, K expectedKey) {
-        return !areEqual(actualKey, expectedKey);
+        return !deepEquals(actualKey, expectedKey);
     }
 
     private static <K, V> void failIfNullOrEmpty(Tuple2<? extends K, ? extends V>[] entries) {
@@ -437,15 +437,15 @@ public final class Multimaps {
     }
 
     private static <K, V> void failIfNull(Iterable<Tuple2<K, V>> entries) {
-        checkNotNull(entries, "The entries should not be null");
+        requireNonNull(entries, "The entries should not be null");
     }
 
     private static <K> void failIfNull(K[] keys) {
-        checkNotNull(keys, "The array of keys to look for should not be null");
+        requireNonNull(keys, "The array of keys to look for should not be null");
     }
 
     private static <K, V> void failIfNull(Tuple2<? extends K, ? extends V>[] entries) {
-        checkNotNull(entries, "The array of entries should not be null");
+        requireNonNull(entries, "The array of entries should not be null");
     }
 
     private static <K, V> void failIfEmpty(Iterable<Tuple2<K, V>> entries) {
