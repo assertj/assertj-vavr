@@ -163,7 +163,7 @@
                 <configuration>
                     <properties>
                         <!-- Values to be substituted in template -->
-                        <currentYear>2023</currentYear>
+                        <currentYear>2024</currentYear>
                     </properties>
                 </configuration>
             </plugin>
