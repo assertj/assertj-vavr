@@ -23,7 +23,6 @@ import org.assertj.core.util.CheckReturnValue;
 import java.util.Comparator;
 import java.util.function.Consumer;
 
-import static org.assertj.core.util.Preconditions.checkArgument;
 import static org.assertj.vavr.api.EitherShouldBeLeft.shouldBeLeft;
 import static org.assertj.vavr.api.EitherShouldBeRight.shouldBeRight;
 import static org.assertj.vavr.api.EitherShouldContain.*;
@@ -253,10 +252,6 @@ abstract class AbstractEitherAssert<SELF extends AbstractEitherAssert<SELF, LEFT
         // fall back to default strategy to compare actual with other objects.
         eitherValueComparisonStrategy = StandardComparisonStrategy.instance();
         return myself;
-    }
-
-    private void checkNotNull(Object expectedValue) {
-        checkArgument(expectedValue != null, "The expected value should not be <null>.");
     }
 
     private void assertIsRight() {

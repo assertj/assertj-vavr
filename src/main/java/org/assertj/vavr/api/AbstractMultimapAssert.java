@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.function.BiConsumer;
 import java.util.stream.StreamSupport;
 
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldHaveSameSizeAs.shouldHaveSameSizeAs;
@@ -38,7 +39,6 @@ import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveS
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.IterableUtil.sizeOf;
-import static org.assertj.core.util.Preconditions.checkNotNull;
 
 abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractValueAssert<SELF, ACTUAL> implements EnumerableAssert<SELF, Tuple2<? extends KEY, ? extends VALUE>> {
@@ -138,7 +138,7 @@ abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, 
      * @throws AssertionError       if one or more entries don't satisfy the given requirements.
      */
     public SELF allSatisfy(BiConsumer<? super KEY, ? super VALUE> entryRequirements) {
-        checkNotNull(entryRequirements, "The BiConsumer<K, V> expressing the assertions requirements must not be null");
+        requireNonNull(entryRequirements, "The BiConsumer<K, V> expressing the assertions requirements must not be null");
         isNotNull();
         actual.forEach(entry -> entryRequirements.accept(entry._1, entry._2));
         return myself;
@@ -399,7 +399,7 @@ abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, 
     @Override
     public SELF hasSameSizeAs(Iterable<?> other) {
         isNotNull();
-        checkNotNull(other, "The other Iterable to compare actual size with should not be null");
+        requireNonNull(other, "The other Iterable to compare actual size with should not be null");
         final long expectedSize = sizeOf(other);
         if (actual.size() != expectedSize)
             throwAssertionError(shouldHaveSameSizeAs(actual, other, actual.size(), expectedSize));

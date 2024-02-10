@@ -26,11 +26,11 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ShouldBeSorted.shouldHaveComparableElementsAccordingToGivenComparator;
 import static org.assertj.core.error.ShouldContainAtIndex.shouldContainAtIndex;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainAtIndex.shouldNotContainAtIndex;
-import static org.assertj.core.util.Preconditions.checkNotNull;
 import static org.assertj.vavr.api.SeqShouldBeAtIndex.shouldBeAtIndex;
 import static org.assertj.vavr.api.SeqShouldBeSorted.*;
 import static org.assertj.vavr.api.SeqShouldHaveAtIndex.shouldHaveAtIndex;
@@ -292,18 +292,18 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
      */
     public SELF satisfies(Consumer<? super ELEMENT> requirements, Index index) {
         isNotNull();
-        checkNotNull(requirements, "The Consumer expressing the assertions requirements must not be null");
+        requireNonNull(requirements, "The Consumer expressing the assertions requirements must not be null");
         assertIndexIsValid(index);
         requirements.accept(actual.get(index.value));
         return myself;
     }
 
     private void assertIsSortedAccordingToComparator(Comparator<?> comparator) {
-        checkNotNull(comparator, "The given comparator should not be null");
+        requireNonNull(comparator, "The given comparator should not be null");
         try {
             // Empty collections are considered sorted even if comparator can't be applied to their element type
             // We can't verify that point because of erasure type at runtime.
-            if (actual.size() == 0) return;
+            if (actual.isEmpty()) return;
             Comparator rawComparator = comparator;
             if (actual.size() == 1) {
                 // Compare unique element with itself to verify that it is compatible with comparator (a ClassCastException is
@@ -320,12 +320,11 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
             throwAssertionError(
                     shouldHaveComparableElementsAccordingToGivenComparator(actual, comparator));
         }
-        return;
     }
 
     private void assertConditionIsMetAtIndex(Condition<? super ELEMENT> condition, Index index, Runnable errorProvider) {
         isNotNull();
-        checkNotNull(condition, "The condition to evaluate should not be null");
+        requireNonNull(condition, "The condition to evaluate should not be null");
 
         assertNotEmpty();
         assertIndexIsValid(index);
@@ -336,7 +335,7 @@ abstract class AbstractSeqAssert<SELF extends AbstractSeqAssert<SELF, ACTUAL, EL
     }
 
     private void assertIndexIsValid(Index index) {
-        checkNotNull(index, "Index should not be null");
+        requireNonNull(index, "Index should not be null");
         final int maximum = actual.size() - 1;
         if (index.value > maximum) {
             String errorMessage = "Index should be between <0> and <%d> (inclusive) but was:%n <%d>";
