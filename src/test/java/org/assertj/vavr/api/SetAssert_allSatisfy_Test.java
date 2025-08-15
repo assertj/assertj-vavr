@@ -69,13 +69,13 @@ public class SetAssert_allSatisfy_Test {
                 })
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\n" +
+                .hasMessageStartingWith("\n" +
                         "Expecting all elements of:\n" +
                         "  HashSet(value1, value2)\n" +
                         "to satisfy given requirements, but these elements did not:\n" +
                         "\n" +
                         "\"value2\"\n" +
-                        "error: \n" +
+                        "error: org.opentest4j.AssertionFailedError: \n" +
                         "expected: \"value1\"\n" +
                         " but was: \"value2\"");
     }

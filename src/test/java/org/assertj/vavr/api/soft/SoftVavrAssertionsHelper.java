@@ -59,7 +59,7 @@ class SoftVavrAssertionsHelper {
         assertThat(errors.get(7))
                 .contains(format("java.lang.AssertionError: %nExpecting Lazy to be evaluated, but it was not"));
         assertThat(errors.get(8))
-                .startsWith(format("java.lang.AssertionError: %nExpecting all elements of:%n  HashSet(Frodo, Bilbo)%nto satisfy given requirements, but these elements did not:%n%n\"Bilbo\"%nerror: %nExpecting actual:%n  \"Bilbo\"%nto start with:%n  \"F\"%n"));
+                .startsWith(format("java.lang.AssertionError: %nExpecting all elements of:%n  HashSet(Frodo, Bilbo)%nto satisfy given requirements, but these elements did not:%n%n\"Bilbo\"%nerror: java.lang.AssertionError: %nExpecting actual:%n  \"Bilbo\"%nto start with:%n  \"F\"%n"));
         assertThat(errors.get(9))
                 .contains(format("java.lang.AssertionError: %nExpected size: 1 but was: 2 in:%nHashSet(Frodo, Bilbo)"));
         assertThat(errors.get(10))

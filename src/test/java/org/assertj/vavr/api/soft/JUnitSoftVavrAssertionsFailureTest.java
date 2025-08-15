@@ -37,13 +37,17 @@ public class JUnitSoftVavrAssertionsFailureTest {
         softly.assertThat(actual).as("instance").containsLeftInstanceOf(Long.class);
 
         // WHEN simulating the rule
-        MultipleFailuresError multipleFailuresError = catchThrowableOfType(() -> softly.apply(mock(Statement.class), null).evaluate(),
-                MultipleFailuresError.class);
+        MultipleFailuresError multipleFailuresError = catchThrowableOfType(MultipleFailuresError.class,
+                () -> softly.apply(mock(Statement.class), null).evaluate());
 
         // THEN
         List<Throwable> failures = multipleFailuresError.getFailures();
         assertThat(failures).hasSize(2);
-        assertThat(failures.get(0)).hasMessageStartingWith(format("[contains] %nExpecting:%n  <Left(something)>%nto contain:%n  <\"else\">%nbut did not."));
+        assertThat(failures.get(0)).hasMessageStartingWith(format("[contains] %nExpecting:%n" +
+                "  <Left(something)>%" +
+                "nto contain:%n" +
+                "  <\"else\"> on the [LEFT]%n" +
+                "but did not."));
         assertThat(failures.get(1)).hasMessageStartingWith(format("[instance] %nExpecting:%n" +
                 " <Left>%n" +
                 "to contain a value that is an instance of:%n" +

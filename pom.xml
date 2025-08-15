@@ -5,8 +5,8 @@
 
     <parent>
         <groupId>org.assertj</groupId>
-        <artifactId>assertj-parent-pom</artifactId>
-        <version>2.2.18</version>
+        <artifactId>assertj-parent</artifactId>
+        <version>3.27.6</version>
     </parent>
 
     <artifactId>assertj-vavr</artifactId>
@@ -15,13 +15,6 @@
     <name>AssertJ fluent assertions for Vavr</name>
     <description>Rich and fluent assertions for testing Vavr tools</description>
     <inceptionYear>2017</inceptionYear>
-
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
 
     <scm>
         <developerConnection>scm:git:git@github.com:assertj/assertj-vavr.git</developerConnection>
@@ -68,40 +61,11 @@
         <url>https://github.com/assertj/assertj-vavr/issues</url>
     </issueManagement>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.11.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.13.2</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.26.3</version>
+            <version>3.27.6</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -132,12 +96,6 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <maven.compiler.release>8</maven.compiler.release>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -156,23 +114,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <configuration>
-                    <properties>
-                        <!-- Values to be substituted in template -->
-                        <currentYear>2024</currentYear>
-                    </properties>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
