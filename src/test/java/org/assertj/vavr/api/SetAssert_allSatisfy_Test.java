@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2017-2024 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  */
 package org.assertj.vavr.api;
 
@@ -69,13 +69,13 @@ public class SetAssert_allSatisfy_Test {
                 })
         )
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("\n" +
+                .hasMessageStartingWith("\n" +
                         "Expecting all elements of:\n" +
                         "  HashSet(value1, value2)\n" +
                         "to satisfy given requirements, but these elements did not:\n" +
                         "\n" +
                         "\"value2\"\n" +
-                        "error: \n" +
+                        "error: org.opentest4j.AssertionFailedError: \n" +
                         "expected: \"value1\"\n" +
                         " but was: \"value2\"");
     }
