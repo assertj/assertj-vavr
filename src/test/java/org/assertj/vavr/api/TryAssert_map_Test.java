@@ -15,44 +15,41 @@
  */
 package org.assertj.vavr.api;
 
-import io.vavr.control.Option;
+import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
 
-import static io.vavr.API.Some;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.vavr.api.VavrAssertions.assertThat;
 
-class OptionAssert_map_Test {
+class TryAssert_map_Test {
 
     @Test
-    void should_fail_when_Option_is_null() {
+    void should_fail_when_Try_is_null() {
         assertThatThrownBy(
-                () -> assertThat((Option<String>) null).map(String::length)
+                () -> assertThat((Try<String>) null).map(String::length)
         )
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(actualIsNull());
     }
 
     @Test
-    void should_pass_when_Option_is_empty() {
-        assertThat(Option.<String>none()).map(String::length).isEmpty();
+    void should_pass_when_Try_is_failure() {
+        assertThat(Try.<String>failure(new RuntimeException("boom")))
+                .map(String::length)
+                .isFailure();
     }
 
     @Test
-    void should_pass_when_Option_contains_a_value() {
-        assertThat(Option.of("42"))
+    void should_pass_when_Try_contains_a_value() {
+        assertThat(Try.success("42"))
                 .map(String::length)
                 .contains(2);
-        assertThat(Option.of("42"))
-                .map(s -> null)
-                .isEqualTo(Some(null));
     }
 
     @Test
-    void should_return_OptionAssert_to_allow_chaining() {
-        // Verify that map returns the concrete OptionAssert type, not an inaccessible abstract type
-        OptionAssert<Integer> mapped = assertThat(Option.of("42")).map(String::length);
+    void should_return_TryAssert_to_allow_chaining() {
+        TryAssert<Integer> mapped = assertThat(Try.success("42")).map(String::length);
         mapped.contains(2);
     }
 }

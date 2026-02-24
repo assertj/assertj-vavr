@@ -188,11 +188,11 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
      *
      * @param <U> the type of a value contained in {@link Option}.
      * @param mapper the {@link Function} to use in the {@link Option#flatMap(Function) flatMap} operation.
-     * @return a new {@link org.assertj.vavr.api.AbstractOptionAssert} for assertions chaining on the flatMap of the Option.
+     * @return a new {@link org.assertj.vavr.api.OptionAssert} for assertions chaining on the flatMap of the Option.
      * @throws AssertionError if the actual {@link Option} is null.
      */
     @CheckReturnValue
-    public <U> AbstractOptionAssert<?, U> flatMap(Function<? super VALUE, Option<U>> mapper) {
+    public <U> OptionAssert<U> flatMap(Function<? super VALUE, Option<U>> mapper) {
         isNotNull();
         return VavrAssertions.assertThat(actual.flatMap(mapper));
     }
@@ -202,11 +202,11 @@ abstract class AbstractOptionAssert<SELF extends AbstractOptionAssert<SELF, VALU
      *
      * @param <U> the type of a value contained in {@link Option}.
      * @param mapper the {@link Function} to use in the {@link Option#map(Function) map} operation.
-     * @return a new {@link org.assertj.vavr.api.AbstractOptionAssert} for assertions chaining on the map of the Option.
+     * @return a new {@link org.assertj.vavr.api.OptionAssert} for assertions chaining on the map of the Option.
      * @throws AssertionError if the actual {@link Option} is null.
      */
     @CheckReturnValue
-    public <U> AbstractOptionAssert<?, U> map(Function<? super VALUE, ? extends U> mapper) {
+    public <U> OptionAssert<U> map(Function<? super VALUE, ? extends U> mapper) {
         isNotNull();
         return VavrAssertions.assertThat(actual.map(mapper));
     }
