@@ -94,7 +94,7 @@ class ValidationShouldContain extends BasicErrorMessageFactory {
      * @param <VALID>            type of the value in the case of the valid {@link Validation}.
      * @return an error message factory
      */
-    static <INVALID, VALID> ValidationShouldContain shouldContainInvalidSame(Validation<INVALID, VALID> validation, VALID expectedErrorValue) {
+    static <INVALID, VALID> ValidationShouldContain shouldContainInvalidSame(Validation<INVALID, VALID> validation, INVALID expectedErrorValue) {
         return validation.isInvalid() ?
                 new ValidationShouldContain(EXPECTING_TO_CONTAIN_SAME, validation, expectedErrorValue) :
                 shouldContainButIsValid(validation, expectedErrorValue);

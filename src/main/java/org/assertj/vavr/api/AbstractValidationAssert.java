@@ -111,6 +111,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      */
     public SELF containsValidSame(VALID expectedValue) {
         assertIsValid();
+        checkNotNull(expectedValue);
         if (actual.get() != expectedValue)
             throwAssertionError(shouldContainValidSame(actual, expectedValue));
         return myself;
@@ -122,7 +123,7 @@ abstract class AbstractValidationAssert<SELF extends AbstractValidationAssert<SE
      * @param expectedErrorValue the expected value inside the {@link io.vavr.control.Validation}.
      * @return this assertion object.
      */
-    public SELF containsInvalidSame(VALID expectedErrorValue) {
+    public SELF containsInvalidSame(INVALID expectedErrorValue) {
         assertIsInvalid();
         checkNotNull(expectedErrorValue);
         if (actual.getError() != expectedErrorValue)
