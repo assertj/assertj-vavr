@@ -190,11 +190,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @param <U> type of value contained by successful {@link io.vavr.control.Try} created by {@code mapper} function
      * @param mapper the {@link java.util.function.Function} to use in the {@link io.vavr.control.Try#flatMap(Function) flatMap} operation.
      *
-     * @return a new {@link org.assertj.vavr.api.AbstractTryAssert} for assertions chaining on the flatMap of the Try.
+     * @return a new {@link org.assertj.vavr.api.TryAssert} for assertions chaining on the flatMap of the Try.
      * @throws AssertionError if the actual {@link io.vavr.control.Try} is null.
      */
     @CheckReturnValue
-    public <U> AbstractTryAssert<?, U> flatMap(Function<? super VALUE, Try<U>> mapper) {
+    public <U> TryAssert<U> flatMap(Function<? super VALUE, Try<U>> mapper) {
         isNotNull();
         return VavrAssertions.assertThat(actual.flatMap(mapper));
     }
@@ -205,11 +205,11 @@ abstract class AbstractTryAssert<SELF extends AbstractTryAssert<SELF, VALUE>, VA
      * @param <U> type of value created by {@code mapper} function
      * @param mapper the {@link java.util.function.Function} to use in the {@link io.vavr.control.Try#map(Function) map} operation.
      *
-     * @return a new {@link org.assertj.vavr.api.AbstractTryAssert} for assertions chaining on the map of the Try.
+     * @return a new {@link org.assertj.vavr.api.TryAssert} for assertions chaining on the map of the Try.
      * @throws AssertionError if the actual {@link io.vavr.control.Try} is null.
      */
     @CheckReturnValue
-    public <U> AbstractTryAssert<?, U> map(Function<? super VALUE, ? extends U> mapper) {
+    public <U> TryAssert<U> map(Function<? super VALUE, ? extends U> mapper) {
         isNotNull();
         return VavrAssertions.assertThat(actual.map(mapper));
     }

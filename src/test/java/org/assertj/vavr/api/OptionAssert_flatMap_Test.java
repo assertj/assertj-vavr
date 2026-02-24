@@ -50,4 +50,11 @@ class OptionAssert_flatMap_Test {
                 .flatMap(UPPER_CASE_OPTIONAL_STRING)
                 .contains("PRESENT");
     }
+
+    @Test
+    void should_return_OptionAssert_to_allow_chaining() {
+        // Verify that flatMap returns the concrete OptionAssert type, not an inaccessible abstract type
+        OptionAssert<String> mapped = assertThat(Option.of("present")).flatMap(UPPER_CASE_OPTIONAL_STRING);
+        mapped.contains("PRESENT");
+    }
 }
