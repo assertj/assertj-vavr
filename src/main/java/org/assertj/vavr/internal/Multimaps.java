@@ -185,9 +185,8 @@ public final class Multimaps {
         if (notExpected.isEmpty() && notFound.isEmpty()) {
             // check entries order
             int index = 0;
-            for (K keyFromActual : actual.keySet()) {
-                if (areNotEqual(keyFromActual, entries[index]._1)) {
-                    Tuple2<K, Traversable<V>> actualEntry = Tuple.of(keyFromActual, actual.get(keyFromActual).get());
+            for (Tuple2<K, V> actualEntry : actual) {
+                if (!deepEquals(actualEntry._1, entries[index]._1) || !deepEquals(actualEntry._2, entries[index]._2)) {
                     throw failures.failure(info, elementsDifferAtIndex(actualEntry, entries[index], index));
                 }
                 index++;
