@@ -29,8 +29,8 @@ class EitherShouldContain extends BasicErrorMessageFactory {
     private static final String EXPECTING_TO_CONTAIN_ON_LEFT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [LEFT]%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_ON_RIGHT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [RIGHT]%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_SAME = "%nExpecting:%n  <%s>%nto contain the instance (i.e. compared with ==):%n  <%s>%nbut did not.";
-    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut was left sided.";
-    private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on the [RIGHT]:%n  <%s>%nbut was right sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_LEFT = "%nExpecting:%n  <%s>%nto contain on the [RIGHT]:%n  <%s>%nbut was left sided.";
+    private static final String EXPECTING_TO_CONTAIN_BUT_IS_RIGHT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut was right sided.";
     private static final String EXPECTING_TO_CONTAIN_ON_THE_LEFT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [LEFT]%nbut did not.";
     private static final String EXPECTING_TO_CONTAIN_ON_THE_RIGHT = "%nExpecting:%n  <%s>%nto contain:%n  <%s> on the [RIGHT]%nbut did not.";
     private static final String EXPECTING_ON_THE_LEFT = "%nExpecting:%n  <%s>%nto contain on the [LEFT]:%n  <%s>%nbut had <%s> on the [RIGHT].";
