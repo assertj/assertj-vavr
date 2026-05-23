@@ -18,6 +18,7 @@ package org.assertj.vavr.api;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMultimap;
+import io.vavr.collection.LinkedHashMultimap;
 import io.vavr.collection.Multimap;
 import org.junit.jupiter.api.Test;
 
@@ -136,9 +137,38 @@ class MultimapAssert_containsExactly_Test {
                 .isInstanceOf(AssertionError.class)
                 .hasMessage(
                         "\nActual and expected have the same elements but not in the same order, at index 0 actual element was:\n" +
-                        "  (key1, List(value1))\n" +
+                        "  (key1, value1)\n" +
                         "whereas expected element was:\n" +
                         "  (key3, value3)\n"
                 );
+    }
+
+    @Test
+    void should_pass_if_Multimap_with_duplicate_keys_contains_entries_in_order() {
+        Multimap<String, String> actual = LinkedHashMultimap.withSeq().of(
+                "key1", "value1", "key1", "value2", "key2", "value3"
+        );
+
+        assertThat(actual).containsExactly(
+                Tuple.of("key1", "value1"),
+                Tuple.of("key1", "value2"),
+                Tuple.of("key2", "value3")
+        );
+    }
+
+    @Test
+    void should_fail_if_Multimap_with_duplicate_keys_has_entries_in_wrong_order() {
+        Multimap<String, String> actual = LinkedHashMultimap.withSeq().of(
+                "key1", "value1", "key1", "value2", "key2", "value3"
+        );
+
+        assertThatThrownBy(
+                () -> assertThat(actual).containsExactly(
+                        Tuple.of("key1", "value2"),
+                        Tuple.of("key1", "value1"),
+                        Tuple.of("key2", "value3")
+                )
+        )
+                .isInstanceOf(AssertionError.class);
     }
 }
