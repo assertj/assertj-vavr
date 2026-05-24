@@ -263,8 +263,10 @@ public class VavrAssumptions {
         if (assertion instanceof LazyAssert) return asAssumption(LazyAssert.class, Lazy.class, actual);
         if (assertion instanceof EitherAssert) return asAssumption(EitherAssert.class, Either.class, actual);
         if (assertion instanceof MapAssert) return asAssumption(MapAssert.class, Map.class, actual);
+        if (assertion instanceof MultimapAssert) return asAssumption(MultimapAssert.class, Multimap.class, actual);
         if (assertion instanceof OptionAssert) return asAssumption(OptionAssert.class, Option.class, actual);
         if (assertion instanceof SeqAssert) return asAssumption(SeqAssert.class, Seq.class, actual);
+        if (assertion instanceof SetAssert) return asAssumption(SetAssert.class, Set.class, actual);
         if (assertion instanceof TryAssert) return asAssumption(TryAssert.class, Try.class, actual);
         if (assertion instanceof ValidationAssert) return asAssumption(ValidationAssert.class, Validation.class, actual);
         // @format:on
